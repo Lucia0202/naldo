@@ -13,9 +13,8 @@
     <style>
         /* --- INICIO: Definición de tu fuente TT Norms --- */
         @font-face {
-            /* CORRECCIÓN: El nombre de la fuente (font-family) debe ser un apodo simple */
             font-family: 'TTNorms'; 
-            src: url('TTNormsPro-ExtraBold.woff2') format('woff2'); /* Este es el nombre del ARCHIVO */
+            src: url('TTNormsPro-ExtraBold.woff2') format('woff2'); 
             font-weight: normal;
             font-style: normal;
         }
@@ -28,7 +27,6 @@
             --naldo-black: #000000;
             --font-title: 'Poppins', sans-serif;
             --font-script: 'Hurricane', cursive;
-            /* CORRECCIÓN: Usamos el apodo 'TTNorms' que definimos arriba */
             --font-display: 'TTNorms', sans-serif; 
         }
 
@@ -182,26 +180,32 @@
         #step-instructions .content-instructions {
             width: 90%;
             max-width: 1600px; 
-            text-align: left;
+            /* MODIFICACIÓN: Centramos el contenedor de la lista */
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
             margin: 0 auto;
         }
         
         #step-instructions h2 {
             font-family: var(--font-display); 
-            font-size: 60px; /* TU NUEVO TAMAÑO */
+            font-size: 100px; /* TU CAMBIO: Tamaño 100px */
             color: var(--naldo-red); 
             text-decoration: none; 
             margin-bottom: 3rem;
-            text-align: left;
+            text-align: center; /* TU CAMBIO: Centrado */
         }
 
         #instruction-list {
             list-style: none;
             padding: 0;
             margin: 0;
+            /* Hacemos que la lista no ocupe toda la pantalla */
+            width: 80%; 
+            max-width: 1200px;
         }
         #instruction-list li {
-            font-size: 20px; /* TU NUEVO TAMAÑO */
+            font-size: 40px; /* TU CAMBIO: Tamaño 40px */
             font-weight: 700;
             color: var(--naldo-black);
             display: flex;
@@ -213,8 +217,8 @@
         #instruction-list li::before {
             content: '';
             display: block;
-            width: 7px; /* TU NUEVO TAMAÑO */
-            height: 7px; /* TU NUEVO TAMAÑO */
+            width: 20px; /* TU CAMBIO: Tamaño 20px */
+            height: 20px; /* TU CAMBIO: Tamaño 20px */
             background-color: var(--naldo-red);
             border-radius: 50%;
             margin-right: 2rem;
@@ -233,20 +237,20 @@
             line-height: 0; 
         }
         .icon-wrapper svg {
-            width: 10px; /* TU NUEVO TAMAÑO */
-            height: 10px; /* TU NUEVO TAMAÑO */
+            width: 30px; /* TU CAMBIO: Tamaño 30px */
+            height: 30px; /* TU CAMBIO: Tamaño 30px */
             fill: var(--naldo-red);
         }
         
         .icon-wrapper.check-circle {
-            width: 10px; /* TU NUEVO TAMAÑO */
-            height: 10px; /* TU NUEVO TAMAÑO */
+            width: 30px; /* TU CAMBIO: Tamaño 30px */
+            height: 30px; /* TU CAMBIO: Tamaño 30px */
             background-color: var(--naldo-red);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 2px; /* Ajuste de padding para el nuevo tamaño */ 
+            padding: 5px; /* TU CAMBIO: Padding ajustado */ 
             box-sizing: border-box;
         }
         .icon-wrapper.check-circle svg {
@@ -255,7 +259,7 @@
             fill: var(--naldo-white); 
         }
         
-        /* CORRECCIÓN DE SINTAXIS: Faltaba esta llave de cierre '}' */
+        /* CORRECCIÓN DE SINTAXIS: Faltaba esta llave de cierre '}' en tu código */
         } 
 
         /* Estilo específico para el ícono de regalo (contorno) */
@@ -268,7 +272,7 @@
         /* Estilo para el título de ¿ESTÁS LISTO? */
         #step-ready h1 {
             font-family: var(--font-display); 
-            font-size: 140px; /* Tamaño 140px (igual que BIENVENIDOS) */
+            font-size: 140px; 
             position: relative; 
             z-index: 5;
         }
@@ -424,360 +428,4 @@
         #roulette-wheel {
             width: 100%;
             height: 100%;
-            border-radius: 50%;
-            border: 10px solid var(--naldo-white);
-            background: conic-gradient(
-                #FFD700 0% 16.66%,
-                #C0C0C0 16.66% 33.33%,
-                #CD7F32 33.33% 50%,
-                #FFD700 50% 66.66%,
-                #C0C0C0 66.66% 83.33%,
-                #CD7F32 83.33% 100%
-            );
-            transition: transform 4s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        #roulette-pointer {
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-top: 30px solid var(--naldo-white);
-        }
-        #spin-button {
-            font-family: var(--font-title);
-            font-size: 1.1rem;
-            font-weight: 700;
-            padding: 0.8rem 1.5rem;
-            margin-top: 2rem;
-            background-color: var(--naldo-white);
-            color: var(--naldo-red);
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        #roulette-result {
-            margin-top: 2rem;
-            font-size: 1.5rem;
-            font-weight: 700;
-            display: none;
-        }
-
-    </style>
-</head>
-<body>
-
-    <section id="step-welcome" class="step active">
-        <h1>BIENVENIDOS</h1>
-        <h2>¿ESTÁS LISTO PARA DESCUBRIR LAS <span class="coordenadas-black">COORDENADAS</span> DE TU?</h2>
-        <div class="word-amistad"></div>
-        
-        <img src="logo-blanco.png" alt="Naldo Logo" class="logo">
-    </section>
-
-    <section id="step-instructions" class="step">
-        <div class="content-instructions">
-            <h2>INSTRUCCIONES</h2>
-            
-            <ul id="instruction-list">
-                <li>
-                    <span>El circuito consiste en seguir las indicaciones que dan las pantallas mencionadas en el mapa.</span>
-                    <span class="icon-wrapper">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-                            <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
-                        </svg>
-                    </span>
-                </li>
-                <li>
-                    <span>A medida que recorras los cinco puntos, deberás ir tachando las diferentes misiones.</span>
-                    <span class="icon-wrapper check-circle">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-                           <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                        </svg>
-                    </span>
-                </li>
-                <li>
-                    <span>¿Terminaste? Visitanos en R. Sáenz Peña e Hipólito Yrigoyen que te esperan muchas sorpresas.</span>
-                    <span class="icon-wrapper">
-                        <svg class="icon-regalo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5">
-                            <polyline points="20 12 20 22 4 22 4 12"></polyline>
-                            <rect x="2" y="7" width="20" height="5"></rect>
-                            <line x1="12" y1="22" x2="12" y2="7"></line>
-                            <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
-                            <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
-                        </svg>
-                    </span>
-                </li>
-            </ul>
-        </div>
-        
-        <img src="logo-negro.png" alt="Naldo Logo" class="logo">
-    </section>
-
-    <section id="step-ready" class="step">
-        <h1>¿ESTÁS LISTO?</h1>
-
-        <div class="pin-container">
-            
-            <div class="floating-pin pin-1">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>
-            </div>
-            
-            <div class="floating-pin pin-2">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>
-            </div>
-            
-            <div class="floating-pin pin-3">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>
-            </div>
-            
-            <div class="floating-pin pin-4">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>
-            </div>
-            
-            <div class="floating-pin pin-5">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>
-            </div>
-            
-        </div>
-        
-        <img src="logo-blanco.png" alt="Naldo Logo" class="logo">
-    </section>
-
-    <section id="step-checklist" class="step">
-        <h2>PUNTOS DE AMISTAD</h2>
-        <p>Escanea los QR en cada ubicación para completar la lista.</p>
-        <ul id="task-list">
-            <li data-id="1">
-                <input type="checkbox" disabled>
-                Roque Sáens Peña e Hipólito Yrigoyen
-            </li>
-            <li data-id="2">
-                <input type="checkbox" disabled>
-                Javier Muñíz y Almirante Brown
-            </li>
-            <li data-id="3">
-                <input type="checkbox" disabled>
-                Avenida Rivadavia e Ituzaingó
-            </li>
-            <li data-id="4">
-                <input type="checkbox" disabled>
-                Avenida República y Jorge Newbery
-            </li>
-            <li data-id="5">
-                <input type="checkbox" disabled>
-                Avenida Arias y Primera Junta
-            </li>
-        </ul>
-        <img src="logo-negro.png" alt="Naldo Logo" class="logo">
-    </section>
-
-    <section id="step-congrats" class="step">
-        <h1>FELICITACIONES</h1>
-        <h2>HAS COMPLETADO TODOS LOS PUNTOS</h2>
-        <img src="logo-blanco.png" alt="Naldo Logo" class="logo">
-    </section>
-
-    <section id="step-form" class="step">
-        <h2>DEJANOS TUS DATOS</h2>
-        <p>Y participás por los siguientes premios para disfrutar con ese amigo que te banca en todas:</p>
-        
-        <form id="prize-form">
-            <label for="email" style="display:none;">Email</label>
-            <input type="email" id="email" name="entry.12345678" placeholder="Tu Correo Electrónico" required>
-            
-            <label for="phone" style="display:none;">Teléfono</label>
-            <input type="tel" id="phone" name="entry.87654321" placeholder="Tu Número de Teléfono" required>
-            
-            <button type="submit">Enviar y girar la ruleta</button>
-        </form>
-
-        <ul class="prize-list">
-            <li>• Un viaje para dos personas</li>
-            <li>• Dos entradas para ver el Turismo Carretera</li>
-            <li>• Dos entradas para ver a Sarmiento</li>
-        </ul>
-        <img src="logo-negro.png" alt="Naldo Logo" class="logo">
-    </section>
-
-    <section id="step-roulette" class="step">
-        <h2>¡GRACIAS POR PARTICIPAR!</h2>
-        <p>Gira la ruleta para ganar un premio instantáneo</p>
-        
-        <div id="roulette-container">
-            <div id="roulette-wheel"></div>
-            <div id="roulette-pointer"></div>
-        </div>
-
-        <button id="spin-button">¡GIRAR!</button>
-        <div id="roulette-result"></div>
-
-        <img src="logo-blanco.png" alt="Naldo Logo" class="logo">
-    </section>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const steps = document.querySelectorAll('.step');
-            const storageKey = 'naldoPuntosAmistad';
-            const totalTasks = 5;
-
-            // --- Lógica de Navegación ---
-            function goToStep(stepId) {
-                steps.forEach(step => {
-                    step.classList.remove('active');
-                });
-                document.getElementById(stepId).classList.add('active');
-            }
-
-            // --- Lógica de la Bienvenida (Paso 1) ---
-            function setupWelcomeAnimation() {
-                const word = "amistad";
-                const container = document.querySelector('.word-amistad');
-                container.innerHTML = ''; 
-                word.split('').forEach((char, index) => {
-                    const span = document.createElement('span');
-                    span.className = 'explode-char';
-                    span.textContent = char;
-                    span.style.animationDelay = `${index * 0.1}s`;
-                    container.appendChild(span);
-                });
-            }
-
-            // --- Lógica de Guardado y Carga (LocalStorage) ---
-            
-            function loadProgress() {
-                const progress = getProgress();
-                let completedCount = 0;
-                
-                progress.forEach((isCompleted, index) => {
-                    const taskId = index + 1;
-                    const taskItem = document.querySelector(`#task-list li[data-id="${taskId}"]`);
-                    if (taskItem && isCompleted) {
-                        taskItem.classList.add('completed');
-                        taskItem.querySelector('input[type="checkbox"]').checked = true;
-                        completedCount++;
-                    }
-                });
-                return completedCount;
-            }
-
-            function getProgress() {
-                const saved = localStorage.getItem(storageKey);
-                if (saved) {
-                    return JSON.parse(saved);
-                }
-                return Array(totalTasks).fill(false);
-            }
-
-            function saveProgress(taskId) {
-                const progress = getProgress();
-                if (taskId >= 1 && taskId <= totalTasks) {
-                    progress[taskId - 1] = true;
-                }
-                localStorage.setItem(storageKey, JSON.stringify(progress));
-            }
-
-            function checkAllCompleted() {
-                const progress = getProgress();
-                return progress.every(task => task === true);
-            }
-
-
-            // --- Lógica de Verificación de QR (URL Params) ---
-            function checkUrlForVisit() {
-                const urlParams = new URLSearchParams(window.location.search);
-                const visitId = urlParams.get('visita');
-
-                if (visitId) {
-                    const taskId = parseInt(visitId, 10);
-                    saveProgress(taskId);
-                    window.history.replaceState({}, document.title, window.location.pathname);
-                }
-            }
-
-
-            // --- Lógica del Formulario (Paso 6) ---
-            const form = document.getElementById('prize-form');
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault(); 
-                
-                // *** ¡¡RECUERDA PEGAR TUS ENLACES DE GOOGLE FORM AQUÍ!! ***
-                const GOOGLE_FORM_URL = "TU_URL_DE_GOOGLE_FORM_AQUI"; 
-                // Y no olvides poner los "name" correctos en los inputs del formulario
-                
-                try {
-                    const formData = new FormData(form);
-                    await fetch(GOOGLE_FORM_URL, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        body: formData
-                    });
-                } catch (error) {
-                    console.error('Error al enviar el formulario:', error);
-                }
-                goToStep('step-roulette');
-            });
-
-
-            // --- Lógica de la Ruleta (Paso 7) ---
-            const spinButton = document.getElementById('spin-button');
-            const wheel = document.getElementById('roulette-wheel');
-            const resultDisplay = document.getElementById('roulette-result');
-            
-            const prizes = [
-                "20% de descuento en tu próxima compra",
-                "Una botella térmica",
-                "Una pelota",
-                "Stickers",
-                "Lona de playa",
-                "40% de descuento en cuidado personal"
-            ];
-            const sliceAngle = 360 / prizes.length;
-
-            spinButton.addEventListener('click', () => {
-                spinButton.disabled = true;
-                spinButton.style.opacity = '0.5';
-
-                const prizeIndex = Math.floor(Math.random() * prizes.length);
-                const prize = prizes[prizeIndex];
-                const extraSpins = 360 * (Math.floor(Math.random() * 3) + 3);
-                const targetAngle = (prizeIndex * sliceAngle) + (sliceAngle / 2);
-                const totalRotation = -(extraSpins + targetAngle);
-
-                wheel.style.transform = `rotate(${totalRotation}deg)`;
-
-                setTimeout(() => {
-                    resultDisplay.textContent = `¡Ganaste: ${prize}!`;
-                    resultDisplay.style.display = 'block';
-                }, 4100);
-            });
-
-
-            // --- CONTROLADOR PRINCIPAL (El flujo de la App) ---
-            function mainFlow() {
-                checkUrlForVisit();
-                loadProgress();
-
-                if (checkAllCompleted()) {
-                    goToStep('step-form');
-                    return;
-                }
-                
-                setupWelcomeAnimation();
-
-                // Fases de transición (Instrucciones duran 15 seg)
-                setTimeout(() => { goToStep('step-instructions'); }, 5000); // 5 seg (Bienvenida)
-                setTimeout(() => { goToStep('step-ready'); }, 20000);       // 5 seg (Bienvenida) + 15 seg (Instrucciones)
-                setTimeout(() => { goToStep('step-checklist'); }, 23000);   // 20 seg (Anteriores) + 3 seg (¿Listo?)
-            }
-
-            // Iniciar la aplicación
-            mainFlow();
-        });
-    </script>
-
-</body>
-</html>
+            border-
