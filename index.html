@@ -175,38 +175,42 @@
         }
 
         /* ============================================= */
-        /* --- ESTILOS PASO 2: INSTRUCCIONES (¡AQUÍ ESTÁN TUS CAMBIOS!) --- */
+        /* --- ESTILOS PASO 2: INSTRUCCIONES (¡CON TU ÚLTIMO CAMBIO!) --- */
         /* ============================================= */
         
         #step-instructions .content-instructions {
             width: 90%;
             max-width: 1600px; 
-            /* Centramos el contenedor de la lista */
             display: flex;
             flex-direction: column;
-            align-items: center; /* Alinea la lista al centro */
+            align-items: center; /* Centra el wrapper */
             margin: 0 auto;
+        }
+
+        /* TU CAMBIO AQUÍ: Este nuevo contenedor centrará el bloque (título + lista) */
+        .instructions-wrapper {
+            display: inline-block; /* Permite que el bloque se centre */
+            text-align: left; /* Alinea el contenido (H2 y UL) a la izquierda */
         }
         
         #step-instructions h2 {
             font-family: var(--font-display); 
-            font-size: 100px; /* TU CAMBIO: Tamaño 100px */
+            font-size: 100px; 
             color: var(--naldo-red); 
             text-decoration: none; 
             margin-bottom: 3rem;
-            text-align: center; /* TU CAMBIO: Centrado */
+            /* text-align: center; */ /* TU CAMBIO AQUÍ: Quitamos esto */
         }
 
         #instruction-list {
             list-style: none;
             padding: 0;
             margin: 0;
-            /* Hacemos que la lista no ocupe toda la pantalla */
-            width: 80%; 
+            /* width: 80%; */ /* TU CAMBIO AQUÍ: Quitamos esto para que se alinee solo */
             max-width: 1200px;
         }
         #instruction-list li {
-            font-size: 40px; /* TU CAMBIO: Tamaño 40px */
+            font-size: 40px; 
             font-weight: 700;
             color: var(--naldo-black);
             display: flex;
@@ -218,8 +222,8 @@
         #instruction-list li::before {
             content: '';
             display: block;
-            width: 20px; /* TU CAMBIO: Tamaño 20px */
-            height: 20px; /* TU CAMBIO: Tamaño 20px */
+            width: 20px; 
+            height: 20px; 
             background-color: var(--naldo-red);
             border-radius: 50%;
             margin-right: 2rem;
@@ -227,7 +231,7 @@
         }
         
         #instruction-list li span:not(.icon-wrapper) {
-            flex-grow: 1; /* Esto empuja el ícono a la derecha */
+            flex-grow: 1; 
         }
 
         .icon-wrapper {
@@ -238,20 +242,20 @@
             line-height: 0; 
         }
         .icon-wrapper svg {
-            width: 30px; /* TU CAMBIO: Tamaño 30px */
-            height: 30px; /* TU CAMBIO: Tamaño 30px */
+            width: 30px; 
+            height: 30px; 
             fill: var(--naldo-red);
         }
         
         .icon-wrapper.check-circle {
-            width: 30px; /* TU CAMBIO: Tamaño 30px */
-            height: 30px; /* TU CAMBIO: Tamaño 30px */
+            width: 30px; 
+            height: 30px; 
             background-color: var(--naldo-red);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 5px; /* TU CAMBIO: Padding ajustado */ 
+            padding: 5px; 
             box-sizing: border-box;
         }
         .icon-wrapper.check-circle svg {
@@ -260,14 +264,13 @@
             fill: var(--naldo-white); 
         }
         
-        /* Esta llave '}' era la que faltaba y rompía todo */
         } 
 
         /* Estilo específico para el ícono de regalo (contorno) */
         .icon-wrapper .icon-regalo {
             fill: none; 
             stroke: var(--naldo-red); 
-            stroke-width: 1.5; /* Grosor de línea */
+            stroke-width: 1.5; 
         }
 
         /* ============================================= */
@@ -490,39 +493,42 @@
 
     <section id="step-instructions" class="step">
         <div class="content-instructions">
-            <h2>INSTRUCCIONES</h2>
             
-            <ul id="instruction-list">
-                <li>
-                    <span>El circuito consiste en seguir las indicaciones que dan las pantallas mencionadas en el mapa.</span>
-                    <span class="icon-wrapper">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-                            <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
-                        </svg>
-                    </span>
-                </li>
-                <li>
-                    <span>A medida que recorras los cinco puntos, deberás ir tachando las diferentes misiones.</span>
-                    <span class="icon-wrapper check-circle">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-                           <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                        </svg>
-                    </span>
-                </li>
-                <li>
-                    <span>¿Terminaste? Visitanos en R. Sáenz Peña e Hipólito Yrigoyen que te esperan muchas sorpresas.</span>
-                    <span class="icon-wrapper">
-                        <svg class="icon-regalo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5">
-                            <polyline points="20 12 20 22 4 22 4 12"></polyline>
-                            <rect x="2" y="7" width="20" height="5"></rect>
-                            <line x1="12" y1="22" x2="12" y2="7"></line>
-                            <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
-                            <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
-                        </svg>
-                    </span>
-                </li>
-            </ul>
-        </div>
+            <div class="instructions-wrapper">
+                <h2>INSTRUCCIONES</h2>
+            
+                <ul id="instruction-list">
+                    <li>
+                        <span>El circuito consiste en seguir las indicaciones que dan las pantallas mencionadas en el mapa.</span>
+                        <span class="icon-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                            </svg>
+                        </span>
+                    </li>
+                    <li>
+                        <span>A medida que recorras los cinco puntos, deberás ir tachando las diferentes misiones.</span>
+                        <span class="icon-wrapper check-circle">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                               <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                            </svg>
+                        </span>
+                    </li>
+                    <li>
+                        <span>¿Terminaste? Visitanos en R. Sáenz Peña e Hipólito Yrigoyen que te esperan muchas sorpresas.</span>
+                        <span class="icon-wrapper">
+                            <svg class="icon-regalo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5">
+                                <polyline points="20 12 20 22 4 22 4 12"></polyline>
+                                <rect x="2" y="7" width="20" height="5"></rect>
+                                <line x1="12" y1="22" x2="12" y2="7"></line>
+                                <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+                                <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+                            </svg>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            </div>
         
         <img src="logo-negro.png" alt="Naldo Logo" class="logo">
     </section>
