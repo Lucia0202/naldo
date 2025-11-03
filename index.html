@@ -494,15 +494,34 @@
                 overflow: hidden; /* Estático */
             }
             .step {
-                overflow-y: hidden; /* Estático */
-                justify-content: center; /* Centrado vertical */
+                overflow-y: hidden; /* Cada sección es estática */
+                justify-content: center; /* Cada sección está centrada verticalmente */
                 height: 100vh; 
                 min-height: 100vh;
                 padding: 1.5rem; 
             }
 
+            /* Los logos VUELVEN a ser absolutos en MOBILE (excepto Bienvenida) */
+            .logo {
+                position: absolute;
+                bottom: 30px; 
+                left: 50%;
+                transform: translateX(-50%);
+                width: 100px; 
+                margin-top: 0;    
+                margin-bottom: 0; 
+            }
+            
             /* 1. SECCIÓN BIENVENIDA (Centrada y Estática) */
-            /* (Esta sección ya estaba bien, no se toca) */
+            #step-welcome .logo {
+                position: relative; /* Sigue siendo 'relative' */
+                bottom: auto;       
+                left: auto;         
+                transform: none;    
+                margin-top: 2vh;    
+                margin-left: auto;  
+                margin-right: auto; 
+            }
             #step-welcome h1 {
                 font-size: 11vw;
                 margin-bottom: 2vh;
@@ -516,18 +535,8 @@
                 font-size: 15vw;
                 margin-bottom: 2vh;
             }
-            #step-welcome .logo {
-                position: relative; /* Sigue siendo 'relative' */
-                bottom: auto;       
-                left: auto;         
-                transform: none;    
-                margin-top: 2vh;
-                margin-bottom: 0;
-                width: 100px; 
-            }
 
-            /* 2. SECCIÓN INSTRUCCIONES (¡TU CAMBIO!) */
-            
+            /* 2. SECCIÓN INSTRUCCIONES (Centrada y Estática) */
             #step-instructions .content-instructions {
                 align-items: center; 
                 width: 100%; 
@@ -539,7 +548,7 @@
                 padding-top: 0;
             }
             #step-instructions h2 {
-                font-size: 8vw; /* ¡TU CAMBIO: Más chico! */
+                font-size: 8vw; 
                 margin-bottom: 3vh; 
                 margin-top: 0; 
             }
@@ -568,43 +577,49 @@
                 height: 20px;
                 padding: 3px;
             }
+            /* El logo de esta sección usa el .logo global (absolute) */
             
-            /* TU CAMBIO: El logo de instrucciones VUELVE a ser absoluto */
-            #step-instructions .logo {
-                position: absolute; /* ¡Vuelve a estar pegado abajo! */
-                bottom: 30px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 100px;
-                margin-bottom: 0; /* Anula el margen de 15vh */
-                margin-top: 0; /* Anula el margen superior */
-            }
 
-
-            /* 3. SECCIÓN ¿ESTÁS LISTO? */
+            /* 3. SECCIÓN ¿ESTÁS LISTO? (Centrada y Estática) */
             #step-ready h1 {
                 font-size: 15vw; 
                 margin-top: 0;
+                position: relative; /* ¡AÑADIDO! */
+                z-index: 5; /* ¡AÑADIDO! */
             }
             /* El logo de esta sección usa el .logo global (absolute) */
-            #step-ready .logo {
-                position: absolute;
-                bottom: 30px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 100px;
-                margin-bottom: 0;
-                margin-top: 0;
-            }
 
-            /* TU CAMBIO: Pin-5 movido para que no se superponga */
+            /* Pines dispersos */
+            .pin-1 {
+                width: 50px; height: 50px;
+                top: 10%; left: 10%; 
+                animation-delay: 0.1s;
+                opacity: 0;
+            }
+            .pin-2 {
+                width: 30px; height: 30px;
+                top: 20%; right: 15%; 
+                animation-delay: 0.3s;
+                opacity: 0;
+            }
+            .pin-3 {
+                width: 80px; height: 80px;
+                bottom: 5%; left: 15%; 
+                animation-delay: 0.2s;
+                opacity: 0;
+            }
+            .pin-4 {
+                width: 40px; height: 40px;
+                bottom: 15%; right: 10%; 
+                animation-delay: 0.5s;
+                opacity: 0;
+            }
             .pin-5 {
-                top: 70%; /* ¡Más abajo! (Antes 55%) */
+                width: 60px; height: 60px;
+                top: 75%; /* ¡TU CAMBIO: Más abajo! */
                 left: 45%; 
                 animation-delay: 0.4s;
                 opacity: 0;
-                width: 60px;
-                height: 60px;
             }
 
             /* 4. SECCIÓN PUNTOS DE AMISTAD */
@@ -626,9 +641,14 @@
                 padding: 0.8rem;
                 margin-bottom: 0.5rem;
             }
-            /* El logo de esta sección SÍ debe ser relative */
+            /* TU CAMBIO: El logo de esta sección SÍ debe ser relative Y CENTRADO */
             #step-checklist .logo {
                 position: relative;
+                bottom: auto;
+                left: auto;
+                transform: none;
+                margin-left: auto;
+                margin-right: auto;
                 margin-bottom: 15vh; /* Espacio Safari */
             }
 
@@ -648,9 +668,14 @@
             .prize-list {
                 font-size: 0.8rem;
             }
-            /* El logo de esta sección SÍ debe ser relative */
+            /* TU CAMBIO: El logo de esta sección SÍ debe ser relative Y CENTRADO */
             #step-form .logo {
                 position: relative;
+                bottom: auto;
+                left: auto;
+                transform: none;
+                margin-left: auto;
+                margin-right: auto;
                 margin-bottom: 15vh; /* Espacio Safari */
             }
             
@@ -668,9 +693,14 @@
                 width: 250px; 
                 height: 250px;
             }
-            /* El logo de esta sección SÍ debe ser relative */
+            /* TU CAMBIO: El logo de esta sección SÍ debe ser relative Y CENTRADO */
             #step-roulette .logo {
                 position: relative;
+                bottom: auto;
+                left: auto;
+                transform: none;
+                margin-left: auto;
+                margin-right: auto;
                 margin-bottom: 15vh; /* Espacio Safari */
             }
             
