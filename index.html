@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
     <title>Naldo - Puntos de Amistad</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,7 +36,7 @@
             font-family: var(--font-title);
             background-color: var(--naldo-red);
             color: var(--naldo-white);
-            overflow: hidden; /* Esto es CLAVE para que no se pueda scrollear */
+            overflow: hidden; /* Evita el scroll */
         }
 
         .logo {
@@ -141,20 +141,20 @@
 
         #step-welcome h1 {
             font-family: var(--font-display);
-            font-size: 140px; 
+            font-size: 140px; /* Tamaño PC */
             margin-bottom: 2rem;
         }
         
         #step-welcome h2 {
             font-weight: 700;
-            font-size: 1.5rem;
+            font-size: 1.5rem; /* 24px */
             text-transform: uppercase;
             margin-bottom: 0.5rem; 
         }
         
         .word-amistad {
             font-family: var(--font-script);
-            font-size: 120px; 
+            font-size: 120px; /* Tamaño PC */
             color: var(--naldo-white);
             white-space: nowrap;
             margin-bottom: 2rem;
@@ -175,7 +175,7 @@
         }
 
         /* ============================================= */
-        /* --- ESTILOS PASO 2: INSTRUCCIONES --- */
+        /* --- ESTILOS PASO 2: INSTRUCCIONES (DESKTOP) --- */
         /* ============================================= */
         
         #step-instructions .content-instructions {
@@ -194,7 +194,7 @@
         
         #step-instructions h2 {
             font-family: var(--font-display); 
-            font-size: 100px; 
+            font-size: 100px; /* Tamaño PC */
             color: var(--naldo-red); 
             text-decoration: none; 
             margin-bottom: 3rem;
@@ -207,7 +207,7 @@
             max-width: 1200px;
         }
         #instruction-list li {
-            font-size: 30px; 
+            font-size: 40px; /* Tamaño PC */
             font-weight: 700;
             color: var(--naldo-black);
             display: flex;
@@ -219,8 +219,8 @@
         #instruction-list li::before {
             content: '';
             display: block;
-            width: 20px; 
-            height: 20px; 
+            width: 20px; /* Tamaño PC */
+            height: 20px; /* Tamaño PC */
             background-color: var(--naldo-red);
             border-radius: 50%;
             margin-right: 2rem;
@@ -239,14 +239,14 @@
             line-height: 0; 
         }
         .icon-wrapper svg {
-            width: 30px; 
-            height: 30px; 
+            width: 30px; /* Tamaño PC */
+            height: 30px; /* Tamaño PC */
             fill: var(--naldo-red);
         }
         
         .icon-wrapper.check-circle {
-            width: 30px; 
-            height: 30px; 
+            width: 30px; /* Tamaño PC */
+            height: 30px; /* Tamaño PC */
             background-color: var(--naldo-red);
             border-radius: 50%;
             display: flex;
@@ -261,7 +261,7 @@
             fill: var(--naldo-white); 
         }
         
-        } /* Esta llave es la que estaba corregida */
+        } /* Llave de cierre corregida */
 
         /* Estilo específico para el ícono de regalo (contorno) */
         .icon-wrapper .icon-regalo {
@@ -271,11 +271,10 @@
         }
 
         /* ============================================= */
-        /* --- FIN DE ESTILOS PASO 2 --- */
+        /* --- ESTILOS PASO 3: ¿ESTÁS LISTO? (DESKTOP) --- */
         /* ============================================= */
 
 
-        /* Estilo para el título de ¿ESTÁS LISTO? */
         #step-ready h1 {
             font-family: var(--font-display); 
             font-size: 140px; 
@@ -283,7 +282,6 @@
             z-index: 5;
         }
         
-        /* Animación de "Pop" */
         @keyframes pop-in {
             0% {
                 transform: scale(0);
@@ -316,7 +314,7 @@
             z-index: 1; 
         }
         
-        /* Estilos individuales para dispersarlos (tamaño, posición, retraso) */
+        /* Estilos PC para dispersarlos */
         .pin-1 {
             width: 80px;
             height: 80px;
@@ -356,7 +354,7 @@
         /* --- Estilos Paso 4: Checklist --- */
         #step-checklist h2 {
             font-family: var(--font-display);
-            font-size: 100px;
+            font-size: 100px; /* Tamaño PC */
             color: var(--naldo-red);
             margin-bottom: 2rem;
         }
@@ -368,7 +366,7 @@
             max-width: 600px;
         }
         #task-list li {
-            font-size: 1rem; /* 16px. Este tamaño está bien para móvil */
+            font-size: 1rem; /* 16px */
             font-weight: 700;
             background: #f4f4f4;
             border: 1px solid #ddd;
@@ -484,69 +482,118 @@
         }
 
         /* ============================================= */
-        /* --- ¡NUEVO BLOQUE! ESTILOS PARA CELULARES --- */
-        /* =CAL============================================ */
+        /* --- ¡BLOQUE RESPONSIVE (CELULARES) REESCRITO! --- */
+        /* ============================================= */
         
-        /* Esto se aplica a cualquier pantalla de 768px o menos (tablets y celulares) */
+        /* Esto se aplica a cualquier pantalla de 768px (tablets) o menos */
         @media (max-width: 768px) {
 
-            /* Hacemos los títulos mucho más pequeños */
+            /* 1. SECCIÓN BIENVENIDA */
             #step-welcome h1 {
-                font-size: 60px; /* De 140px a 60px */
+                font-size: 18vw; /* Se escala con el ancho (18% del ancho) */
+                margin-bottom: 1rem;
             }
-            #step-ready h1 {
-                font-size: 60px; /* De 140px a 60px */
+            #step-welcome h2 {
+                font-size: 4.5vw; /* Se escala */
+                margin-bottom: 1rem;
+            }
+            .word-amistad {
+                font-size: 20vw; /* Se escala */
+                margin-bottom: 1rem;
+            }
+            #step-welcome .logo {
+                margin-top: 1rem;
+                width: 100px; /* Logo más chico */
+            }
+
+            /* 2. SECCIÓN INSTRUCCIONES */
+            
+            /* Fuerza el bloque a alinearse a la izquierda */
+            #step-instructions .content-instructions {
+                align-items: flex-start; /* Alinea el wrapper a la izquierda */
+                width: 100%; /* Ocupa todo el ancho (con padding del step) */
+            }
+            .instructions-wrapper {
+                text-align: left; /* Asegura que el H2 y la UL se alineen a la izquierda */
+                width: 100%;
             }
             #step-instructions h2 {
-                font-size: 50px; /* De 100px a 50px */
-                margin-bottom: 1.5rem;
-            }
-            #step-checklist h2 {
-                font-size: 50px; /* De 100px a 50px */
-                margin-bottom: 1.5rem;
+                font-size: 15vw; /* Se escala */
+                margin-bottom: 2rem;
             }
 
-            /* Hacemos la palabra "amistad" más pequeña */
-            .word-amistad {
-                font-size: 80px; /* De 120px a 80px */
+            #instruction-list {
+                width: 100%; /* Ocupa todo el ancho del wrapper */
             }
-
-            /* Hacemos el texto de bienvenida más pequeño */
-            #step-welcome h2 {
-                font-size: 1rem; /* 16px */
-            }
-
-            /* Achicamos la lista de instrucciones */
             #instruction-list li {
-                font-size: 18px; /* De 30px a 18px */
-                margin-bottom: 1.5rem;
+                font-size: 4.5vw; /* Se escala (aprox 18px en un celu normal) */
+                margin-bottom: 3vh; /* Espacio vertical (3% del ALTO) */
             }
             #instruction-list li::before {
-                width: 10px; /* De 20px a 10px */
-                height: 10px; /* De 20px a 10px */
+                width: 10px; /* 10px fijos */
+                height: 10px;
                 margin-right: 1rem;
             }
             .icon-wrapper {
                 margin-left: 1rem;
             }
             .icon-wrapper svg {
-                width: 20px; /* De 30px a 20px */
-                height: 20px; /* De 30px a 20px */
+                width: 20px; /* 20px fijos */
+                height: 20px;
             }
             .icon-wrapper.check-circle {
-                width: 20px; /* De 30px a 20px */
-                height: 20px; /* De 30px a 20px */
+                width: 20px;
+                height: 20px;
                 padding: 3px;
             }
+
+            /* 3. SECCIÓN ¿ESTÁS LISTO? */
+            #step-ready h1 {
+                font-size: 18vw; /* Se escala */
+            }
+
+            /* Dispersa los pines por TODA la pantalla del celu */
+            .pin-1 {
+                width: 50px; height: 50px;
+                top: 10%; left: 10%;
+                animation-delay: 0.1s;
+                opacity: 0;
+            }
+            .pin-2 {
+                width: 30px; height: 30px;
+                top: 20%; right: 15%;
+                animation-delay: 0.3s;
+                opacity: 0;
+            }
+            .pin-3 {
+                width: 80px; height: 80px;
+                bottom: 5%; left: 15%;
+                animation-delay: 0.2s;
+                opacity: 0;
+            }
+            .pin-4 {
+                width: 40px; height: 40px;
+                bottom: 15%; right: 10%;
+                animation-delay: 0.5s;
+                opacity: 0;
+            }
+            .pin-5 {
+                width: 60px; height: 60px;
+                top: 50%; left: 45%;
+                animation-delay: 0.4s;
+                opacity: 0;
+            }
+
+            /* 4. SECCIÓN PUNTOS DE AMISTAD */
+            #step-checklist h2 {
+                font-size: 12vw; /* Se escala */
+                margin-bottom: 1.5rem;
+            }
+            #task-list {
+                width: 90%; /* Más angosto */
+            }
             
-            /* Achicamos los pines flotantes */
-            .pin-1 { width: 40px; height: 40px; }
-            .pin-2 { width: 25px; height: 25px; }
-            .pin-3 { width: 60px; height: 60px; }
-            .pin-4 { width: 30px; height: 30px; }
-            .pin-5 { width: 45px; height: 45px; }
-            
-            /* Achicamos los campos del formulario para que quepan */
+            /* 5. SECCIÓN FORMULARIO */
             #prize-form {
                 width: 90%;
             }
