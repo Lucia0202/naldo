@@ -506,12 +506,12 @@
         }
 
         /* Colores y rotación de los 6 slices (60deg cada uno) */
-        .prize-slice:nth-child(1) { transform: rotate(30deg); } /* 20% OFF (Rojo Oscuro) */
-        .prize-slice:nth-child(2) { transform: rotate(90deg); } /* Botella (Negro) */
-        .prize-slice:nth-child(3) { transform: rotate(150deg); } /* Pelota (Blanco) */
-        .prize-slice:nth-child(4) { transform: rotate(210deg); } /* Stickers (Rojo Oscuro) */
-        .prize-slice:nth-child(5) { transform: rotate(270deg); } /* Lona (Negro) */
-        .prize-slice:nth-child(6) { transform: rotate(330deg); } /* 40% OFF (Blanco) */
+        .prize-slice:nth-child(1) { transform: rotate(30deg); } /* Premio 1 */
+        .prize-slice:nth-child(2) { transform: rotate(90deg); } /* Premio 2 */
+        .prize-slice:nth-child(3) { transform: rotate(150deg); } /* Premio 3 */
+        .prize-slice:nth-child(4) { transform: rotate(210deg); } /* Premio 4 */
+        .prize-slice:nth-child(5) { transform: rotate(270deg); } /* Premio 5 */
+        .prize-slice:nth-child(6) { transform: rotate(330deg); } /* Premio 6 */
         
         /* TU CAMBIO: Colores del texto según la nueva paleta */
         .prize-slice:nth-child(1) .text-wrapper, /* Sobre Rojo Oscuro */
@@ -765,7 +765,7 @@
             #step-roulette {
                 overflow-y: auto; 
                 justify-content: flex-start; 
-                padding-top: 20vh;
+                padding-top: 10vh; /* ¡BAJADO! (antes 20vh) */
             }
             #step-roulette h2 {
                 font-size: 8vw; 
@@ -780,7 +780,7 @@
             }
             /* Estilo para el texto de los premios en móvil */
             .prize-slice .text-wrapper {
-                font-size: 3vw; /* Fuente que escala con la ruleta */
+                font-size: 3.2vw; /* Fuente que escala con la ruleta */
                 width: 25vw; /* Ancho del texto */
                 transform: translateY(-22vw) rotate(90deg); /* Posición que escala */
             }
@@ -946,12 +946,12 @@
         <div id="roulette-container">
             <div id="roulette-wheel">
                 <ul class="prize-list-wheel">
-                    <li class="prize-slice"><div class="text-wrapper">20% OFF en cámaras</div></li>
-                    <li class="prize-slice"><div class="text-wrapper">50% OFF beauty</div></li>
-                    <li class="prize-slice"><div class="text-wrapper">botella térmica</div></li>
-                    <li class="prize-slice"><div class="text-wrapper">pelota naldo</div></li>
-                    <li class="prize-slice"><div class="text-wrapper">lona playa</div></li>
-                    <li class="prize-slice"><div class="text-wrapper">stickers</div></li>
+                    <li class="prize-slice"><div class="text-wrapper">Stickers</div></li>
+                    <li class="prize-slice"><div class="text-wrapper">20%OFF en cámaras</div></li>
+                    <li class="prize-slice"><div class="text-wrapper">50% Beauty</div></li>
+                    <li class="prize-slice"><div class="text-wrapper">Botella térmica</div></li>
+                    <li class="prize-slice"><div class="text-wrapper">Pelota Naldo</div></li>
+                    <li class="prize-slice"><div class="text-wrapper">Lona playa</div></li>
                 </ul>
             </div>
             <div id="roulette-pointer"></div>
@@ -1078,14 +1078,14 @@
             const resultDisplay = document.getElementById('roulette-result');
             const prizeSlices = document.querySelectorAll('.prize-slice');
 
-            // ¡ACTUALIZADO! Array de JS 100% SINCRONIZADO con el HTML y la imagen
+            // ¡ACTUALIZADO! Array de JS 100% SINCRONIZADO con el HTML
             const prizes = [
-                "20% OFF en cámaras",
-                "50% OFF beauty",
-                "botella térmica",
-                "pelota naldo",
-                "lona playa",
-                "stickers"
+                "Stickers",
+                "20%OFF en cámaras",
+                "50% Beauty",
+                "Botella térmica",
+                "Pelota Naldo",
+                "Lona playa"
             ];
             const numPrizes = prizes.length;
             const sliceAngle = 360 / numPrizes; // 60 grados
@@ -1094,16 +1094,24 @@
             function positionPrizeTexts() {
                 const container = document.getElementById('roulette-container');
                 const radius = container.offsetWidth / 2;
-                const textDistance = radius * 0.55; // ¡Centrado! (55% del radio)
+                
+                // Distancia desde el centro (55% del radio para PC, 60% para móvil)
+                const isMobile = window.innerWidth <= 768;
+                const textDistance = isMobile ? (radius * 0.6) : (radius * 0.55); 
 
                 prizeSlices.forEach((slice, index) => {
                     const textWrapper = slice.querySelector('.text-wrapper');
-                    const angle = (index * sliceAngle) + (sliceAngle / 2); // Centro del slice
                     
-                    // 1. Girar el slice a su posición en la rueda
+                    // 1. Calcular el ángulo del centro de este slice
+                    // (0 * 60) + 30 = 30deg
+                    // (1 * 60) + 30 = 90deg
+                    // ...
+                    const angle = (index * sliceAngle) + (sliceAngle / 2);
+                    
+                    // 2. Girar el slice a su posición en la rueda
                     slice.style.transform = `rotate(${angle}deg)`;
 
-                    // 2. Posicionar y rotar el texto dentro de cada slice
+                    // 3. Posicionar y rotar el texto dentro de cada slice
                     textWrapper.style.transform = `
                         translateY(-${textDistance}px) 
                         rotate(-${angle}deg)
