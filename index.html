@@ -36,7 +36,7 @@
             font-family: var(--font-title);
             background-color: var(--naldo-red);
             color: var(--naldo-white);
-            overflow: hidden; /* Evita el scroll */
+            overflow: hidden; /* Evita el scroll EN PC */
         }
 
         .logo {
@@ -76,6 +76,7 @@
             opacity: 0;
             visibility: hidden;
             transition: opacity 1s ease-in-out, visibility 1s;
+            overflow: hidden; /* Evita scroll en PC */
         }
 
         .step.active {
@@ -207,7 +208,7 @@
             max-width: 1200px;
         }
         #instruction-list li {
-            font-size: 40px; /* Tamaño PC */
+            font-size: 30px; /* Tamaño PC */
             font-weight: 700;
             color: var(--naldo-black);
             display: flex;
@@ -481,56 +482,63 @@
             display: none;
         }
 
-        /* ============================================= */
-        /* --- ¡BLOQUE RESPONSIVE (CELULARES) REESCRITO! --- */
-        /* ============================================= */
+        /* ================================================================== */
+        /* --- ¡NUEVO BLOQUE RESPONSIVE PARA CELULARES! (REESCRITO) --- */
+        /* ================================================================== */
         
         /* Esto se aplica a cualquier pantalla de 768px (tablets) o menos */
         @media (max-width: 768px) {
 
+            /* 0. CAMBIO GLOBAL: PERMITIR SCROLL */
+            .step {
+                overflow-y: auto; /* Permite scroll vertical si el contenido es muy alto */
+                justify-content: flex-start; /* Alinea el contenido arriba, no al centro */
+                padding: 1.5rem; /* Un poco menos de padding */
+            }
+
             /* 1. SECCIÓN BIENVENIDA */
             #step-welcome h1 {
-                font-size: 18vw; /* Se escala con el ancho (18% del ancho) */
+                font-size: 15vw; /* TU CAMBIO: Achicado (antes 18vw) */
                 margin-bottom: 1rem;
+                margin-top: 5vh; /* Empuja el contenido un poco hacia abajo */
             }
             #step-welcome h2 {
-                font-size: 4.5vw; /* Se escala */
+                font-size: 4.5vw; 
                 margin-bottom: 1rem;
             }
             .word-amistad {
-                font-size: 20vw; /* Se escala */
+                font-size: 20vw; 
                 margin-bottom: 1rem;
             }
             #step-welcome .logo {
                 margin-top: 1rem;
-                width: 100px; /* Logo más chico */
+                width: 100px; 
             }
 
             /* 2. SECCIÓN INSTRUCCIONES */
-            
-            /* Fuerza el bloque a alinearse a la izquierda */
             #step-instructions .content-instructions {
                 align-items: flex-start; /* Alinea el wrapper a la izquierda */
-                width: 100%; /* Ocupa todo el ancho (con padding del step) */
+                width: 100%; 
             }
             .instructions-wrapper {
-                text-align: left; /* Asegura que el H2 y la UL se alineen a la izquierda */
+                text-align: left; 
                 width: 100%;
             }
             #step-instructions h2 {
-                font-size: 15vw; /* Se escala */
-                margin-bottom: 2rem;
+                font-size: 13vw; /* TU CAMBIO: Achicado (antes 15vw) */
+                margin-bottom: 3vh; /* Más espacio */
+                margin-top: 5vh; /* Espacio arriba */
             }
 
             #instruction-list {
-                width: 100%; /* Ocupa todo el ancho del wrapper */
+                width: 100%; 
             }
             #instruction-list li {
-                font-size: 4.5vw; /* Se escala (aprox 18px en un celu normal) */
-                margin-bottom: 3vh; /* Espacio vertical (3% del ALTO) */
+                font-size: 4.5vw; 
+                margin-bottom: 4vh; /* TU CAMBIO: Más distancia entre instrucciones */
             }
             #instruction-list li::before {
-                width: 10px; /* 10px fijos */
+                width: 10px; 
                 height: 10px;
                 margin-right: 1rem;
             }
@@ -538,7 +546,7 @@
                 margin-left: 1rem;
             }
             .icon-wrapper svg {
-                width: 20px; /* 20px fijos */
+                width: 20px; 
                 height: 20px;
             }
             .icon-wrapper.check-circle {
@@ -546,61 +554,131 @@
                 height: 20px;
                 padding: 3px;
             }
+            
+            /* TU CAMBIO: Mover el logo de instrucciones para que sea parte del scroll */
+            #step-instructions .logo {
+                position: relative; /* ¡LIBERADO! */
+                bottom: auto;
+                left: auto;
+                transform: none;
+                margin-top: 5vh; /* Espacio después de la lista */
+                margin-bottom: 15vh; /* ESPACIO PARA LA BARRA DE SAFARI */
+                margin-left: auto;
+                margin-right: auto;
+                width: 100px; /* Más chico */
+            }
+
 
             /* 3. SECCIÓN ¿ESTÁS LISTO? */
             #step-ready h1 {
-                font-size: 18vw; /* Se escala */
+                font-size: 15vw; /* Achicado (antes 18vw) */
+                margin-top: 10vh; /* TU CAMBIO: Más centrado verticalmente */
             }
 
-            /* Dispersa los pines por TODA la pantalla del celu */
+            /* TU CAMBIO: Pines más dispersos por TODA la pantalla */
             .pin-1 {
                 width: 50px; height: 50px;
-                top: 10%; left: 10%;
+                top: 10%; left: 10%; /* Esquina sup-izq */
                 animation-delay: 0.1s;
                 opacity: 0;
             }
             .pin-2 {
                 width: 30px; height: 30px;
-                top: 20%; right: 15%;
+                top: 20%; right: 15%; /* Cerca esquina sup-der */
                 animation-delay: 0.3s;
                 opacity: 0;
             }
             .pin-3 {
                 width: 80px; height: 80px;
-                bottom: 5%; left: 15%;
+                bottom: 5%; left: 15%; /* Esquina inf-izq */
                 animation-delay: 0.2s;
                 opacity: 0;
             }
             .pin-4 {
                 width: 40px; height: 40px;
-                bottom: 15%; right: 10%;
+                bottom: 15%; right: 10%; /* Esquina inf-der */
                 animation-delay: 0.5s;
                 opacity: 0;
             }
             .pin-5 {
                 width: 60px; height: 60px;
-                top: 50%; left: 45%;
+                top: 55%; left: 45%; /* Cerca del centro */
                 animation-delay: 0.4s;
                 opacity: 0;
             }
 
             /* 4. SECCIÓN PUNTOS DE AMISTAD */
             #step-checklist h2 {
-                font-size: 12vw; /* Se escala */
+                font-size: 10vw; /* TU CAMBIO: Achicado (antes 12vw) */
                 margin-bottom: 1.5rem;
+                margin-top: 5vh;
             }
             #task-list {
-                width: 90%; /* Más angosto */
+                width: 90%; 
+            }
+            /* TU CAMBIO: Cajas un poco más chicas */
+            #task-list li {
+                font-size: 0.9rem; /* 14.4px */
+                padding: 0.8rem;
+                margin-bottom: 0.5rem;
             }
             
+            /* TU CAMBIO: Mover el logo de checklist para que sea parte del scroll */
+            #step-checklist .logo {
+                position: relative; /* ¡LIBERADO! */
+                bottom: auto;
+                left: auto;
+                transform: none;
+                margin-top: 5vh; /* Espacio después de la lista */
+                margin-bottom: 15vh; /* ESPACIO PARA LA BARRA DE SAFARI */
+                margin-left: auto;
+                margin-right: auto;
+                width: 100px; /* TU CAMBIO: Más chico */
+            }
+
             /* 5. SECCIÓN FORMULARIO */
+            #step-form h2 {
+                font-size: 10vw; /* Título más chico */
+            }
             #prize-form {
                 width: 90%;
             }
             .prize-list {
                 font-size: 0.8rem;
             }
-        }
+            #step-form .logo {
+                position: relative; /* ¡LIBERADO! */
+                bottom: auto;
+                left: auto;
+                transform: none;
+                margin-top: 5vh;
+                margin-bottom: 15vh; /* ESPACIO PARA LA BARRA DE SAFARI */
+                margin-left: auto;
+                margin-right: auto;
+                width: 100px;
+            }
+            
+            /* 6. SECCIÓN RULETA */
+            #step-roulette h2 {
+                font-size: 8vw; /* Título más chico */
+            }
+            #roulette-container {
+                width: 250px; /* Ruleta más chica */
+                height: 250px;
+            }
+            #step-roulette .logo {
+                position: relative; /* ¡LIBERADO! */
+                bottom: auto;
+                left: auto;
+                transform: none;
+                margin-top: 5vh;
+                margin-bottom: 15vh; /* ESPACIO PARA LA BARRA DE SAFARI */
+                margin-left: auto;
+                margin-right: auto;
+                width: 100px;
+            }
+            
+        } /* --- FIN DEL BLOQUE @MEDIA (CELULARES) --- */
 
     </style>
 </head>
@@ -931,4 +1009,3 @@
 
 </body>
 </html>
-
