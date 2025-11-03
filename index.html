@@ -117,7 +117,6 @@
 
         /* --- Estilos Paso 1: Bienvenida --- */
         #step-welcome {
-            /* CORRECCIÓN: Nombre de archivo estandarizado */
             background-image: url('mapa-fondo.png');
             background-size: cover;
             background-position: center;
@@ -175,15 +174,17 @@
             100% { opacity: 1; transform: scale(1); }
         }
 
-        /* --- Estilos Paso 2: Instrucciones --- */
+        /* ============================================= */
+        /* --- ESTILOS PASO 2: INSTRUCCIONES (¡AQUÍ ESTÁN TUS CAMBIOS!) --- */
+        /* ============================================= */
         
         #step-instructions .content-instructions {
             width: 90%;
             max-width: 1600px; 
-            /* MODIFICACIÓN: Centramos el contenedor de la lista */
+            /* Centramos el contenedor de la lista */
             display: flex;
             flex-direction: column;
-            align-items: center; 
+            align-items: center; /* Alinea la lista al centro */
             margin: 0 auto;
         }
         
@@ -226,7 +227,7 @@
         }
         
         #instruction-list li span:not(.icon-wrapper) {
-            flex-grow: 1; 
+            flex-grow: 1; /* Esto empuja el ícono a la derecha */
         }
 
         .icon-wrapper {
@@ -259,7 +260,7 @@
             fill: var(--naldo-white); 
         }
         
-        /* CORRECCIÓN DE SINTAXIS: Faltaba esta llave de cierre '}' en tu código */
+        /* Esta llave '}' era la que faltaba y rompía todo */
         } 
 
         /* Estilo específico para el ícono de regalo (contorno) */
@@ -268,6 +269,11 @@
             stroke: var(--naldo-red); 
             stroke-width: 1.5; /* Grosor de línea */
         }
+
+        /* ============================================= */
+        /* --- FIN DE ESTILOS PASO 2 --- */
+        /* ============================================= */
+
 
         /* Estilo para el título de ¿ESTÁS LISTO? */
         #step-ready h1 {
