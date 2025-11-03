@@ -183,18 +183,18 @@
             max-width: 1600px; 
             display: flex;
             flex-direction: column;
-            align-items: center; /* Centra el wrapper */
+            align-items: center; 
             margin: 0 auto;
         }
 
         .instructions-wrapper {
-            display: inline-block; /* Permite que el bloque se centre */
-            text-align: left; /* Alinea el contenido (H2 y UL) a la izquierda */
+            display: inline-block; 
+            text-align: left; 
         }
         
         #step-instructions h2 {
             font-family: var(--font-display); 
-            font-size: 100px;
+            font-size: 100px; 
             color: var(--naldo-red); 
             text-decoration: none; 
             margin-bottom: 3rem;
@@ -207,7 +207,7 @@
             max-width: 1200px;
         }
         #instruction-list li {
-            font-size: 30px; /* Tamaño 30px */
+            font-size: 30px; /* TU ÚLTIMO CAMBIO: 30px */
             font-weight: 700;
             color: var(--naldo-black);
             display: flex;
@@ -261,7 +261,8 @@
             fill: var(--naldo-white); 
         }
         
-        } /* Llave de cierre corregida */
+        /* CORRECCIÓN DE SINTAXIS: La llave '}' extra ha sido ELIMINADA. */
+        
 
         /* Estilo específico para el ícono de regalo (contorno) */
         .icon-wrapper .icon-regalo {
@@ -271,9 +272,11 @@
         }
 
         /* ============================================= */
-        /* --- ESTILOS PASO 3: ¿ESTÁS LISTO? --- */
+        /* --- FIN DE ESTILOS PASO 2 --- */
         /* ============================================= */
 
+
+        /* Estilo para el título de ¿ESTÁS LISTO? */
         #step-ready h1 {
             font-family: var(--font-display); 
             font-size: 140px; 
@@ -281,6 +284,7 @@
             z-index: 5;
         }
         
+        /* Animación de "Pop" */
         @keyframes pop-in {
             0% {
                 transform: scale(0);
@@ -313,18 +317,18 @@
             z-index: 1; 
         }
         
-        /* Estilos individuales para dispersarlos */
+        /* Estilos individuales para dispersarlos (tamaño, posición, retraso) */
         .pin-1 {
             width: 80px;
             height: 80px;
-            top: 25%; /* TU CAMBIO: Más abajo (antes 15%) */
+            top: 25%;
             left: 10%;
             animation-delay: 0.2s; 
         }
         .pin-2 {
             width: 50px;
             height: 50px;
-            top: 40%; /* TU CAMBIO: Más abajo (antes 30%) */
+            top: 40%;
             right: 15%;
             animation-delay: 0.4s;
         }
@@ -345,23 +349,19 @@
         .pin-5 {
             width: 90px;
             height: 90px;
-            top: 60%; /* Un poco más abajo (antes 55%) */
+            top: 60%;
             left: 45%;
             animation-delay: 0.3s;
         }
 
-        /* ============================================= */
-        /* --- ESTILOS PASO 4: PUNTOS DE AMISTAD --- */
-        /* ============================================= */
-        
-        /* TU CAMBIO: Estilos para el título "PUNTOS DE AMISTAD" */
+        /* --- Estilos Paso 4: Checklist --- */
         #step-checklist h2 {
             font-family: var(--font-display);
             font-size: 100px;
             color: var(--naldo-red);
             margin-bottom: 2rem;
         }
-        
+
         #task-list {
             list-style: none;
             padding: 0;
@@ -708,20 +708,23 @@
             }
 
 
-            /* ============================================= */
-            /* --- LÓGICA DE VERIFICACIÓN DE QR (¡MODIFICADA!) --- */
-            /* ============================================= */
+            // --- Lógica de Verificación de QR (URL Params) ---
             function checkUrlForVisit() {
-                const urlParams = new URLSearchParams(window.location.search);
-                const visitId = urlParams.get('visita');
+                try {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const visitId = urlParams.get('visita');
 
-                if (visitId) {
-                    const taskId = parseInt(visitId, 10);
-                    saveProgress(taskId);
-                    window.history.replaceState({}, document.title, window.location.pathname);
-                    return true; // TU CAMBIO: Avisa que SÍ se escaneó un QR
+                    if (visitId) {
+                        const taskId = parseInt(visitId, 10);
+                        saveProgress(taskId);
+                        window.history.replaceState({}, document.title, window.location.pathname);
+                        return true; // Avisa que SÍ se escaneó un QR
+                    }
+                    return false; // Avisa que NO se escaneó un QR
+                } catch (e) {
+                    console.error("Error reading URL params (likely running locally):", e);
+                    return false; // Si hay un error (ej: al correr en file://), no es un escaneo.
                 }
-                return false; // TU CAMBIO: Avisa que NO se escaneó un QR
             }
 
 
@@ -780,32 +783,21 @@
             });
 
 
-            /* ============================================= */
-            /* --- CONTROLADOR PRINCIPAL (¡MODIFICADO!) --- */
-            /* ============================================= */
+            // --- CONTROLADOR PRINCIPAL (El flujo de la App) ---
             function mainFlow() {
-                // Primero, revisamos si se escaneó un QR y guardamos el resultado
                 const justScanned = checkUrlForVisit();
-                
-                // Segundo, cargamos el progreso (para tachar las cajas)
                 loadProgress();
 
-                // Tercero, revisamos si ya completó TODO
                 if (checkAllCompleted()) {
-                    // Si completó todo, va directo al formulario (incluso si acaba de escanear)
                     goToStep('step-form');
                     return;
                 }
                 
-                // TU CAMBIO: Si acabamos de escanear un QR (y no fue el último)...
                 if (justScanned) {
-                    // ...vamos directo a la lista, saltando la bienvenida.
                     goToStep('step-checklist');
                     return;
                 }
-
-                // Si no se cumplió nada de lo anterior, es un usuario nuevo
-                // o que vuelve sin escanear, así que mostramos la bienvenida.
+                
                 setupWelcomeAnimation();
 
                 // Fases de transición (Instrucciones duran 15 seg)
