@@ -464,30 +464,32 @@
             position: relative;
         }
         
+        /* TU CAMBIO: Contenedor del texto (el slice) */
         .prize-slice {
             position: absolute;
-            width: 50%; /* 150px */
-            height: 50%; /* 150px */
+            width: 50%; 
+            height: 50%; 
             top: 0;
             left: 0;
-            transform-origin: 100% 100%; /* Pivote en el centro (esquina inf-der) */
-            /* Crea el triángulo (wedge) */
+            transform-origin: 100% 100%; 
             clip-path: polygon(0 0, 100% 100%, 0 100%); 
             display: flex;
             justify-content: center;
             align-items: center;
-            padding-right: 50px; /* Empuja el texto hacia el borde */
+            padding-right: 40px; /* Empuja el texto hacia el borde */
             box-sizing: border-box;
         }
         
-        .prize-slice span {
+        /* TU CAMBIO: Estilo del texto del premio */
+        .prize-slice .text-wrapper {
             display: block;
             transform: rotate(45deg); /* Gira el texto para que quede derecho */
-            font-weight: 700;
-            font-size: 10px;
-            word-break: break-word;
+            font-family: var(--font-title); /* Fuente legible */
+            font-weight: 900; /* Negrita */
+            font-size: 14px; /* TU CAMBIO: Mucho más grande */
             text-align: center;
-            max-width: 70%;
+            max-width: 85%; /* Más ancho para texto largo */
+            line-height: 1.1;
         }
 
         /* Colores y rotación de los 6 slices (60deg cada uno) */
@@ -517,14 +519,14 @@
         }
         
         /* Colores del texto */
-        .prize-slice:nth-child(1) span,
-        .prize-slice:nth-child(3) span,
-        .prize-slice:nth-child(4) span,
-        .prize-slice:nth-child(6) span {
+        .prize-slice:nth-child(1) .text-wrapper,
+        .prize-slice:nth-child(3) .text-wrapper,
+        .prize-slice:nth-child(4) .text-wrapper,
+        .prize-slice:nth-child(6) .text-wrapper {
             color: var(--naldo-white);
         }
-        .prize-slice:nth-child(2) span,
-        .prize-slice:nth-child(5) span {
+        .prize-slice:nth-child(2) .text-wrapper,
+        .prize-slice:nth-child(5) .text-wrapper {
             color: var(--naldo-black);
         }
 
@@ -537,6 +539,7 @@
             height: 0;
             border-left: 20px solid transparent;
             border-right: 20px solid transparent;
+            /* TU CAMBIO: Color del puntero */
             border-top: 30px solid #80060d; 
             z-index: 10;
         }
@@ -579,7 +582,7 @@
                 padding: 1.5rem; 
             }
 
-            /* Los logos VUELVEN a ser absolutos en MOBILE (excepto Bienvenida) */
+            /* Los logos VUELVEN a ser absolutos en MOBILE (excepto Bienvenida y secciones con scroll) */
             .logo {
                 position: absolute;
                 bottom: 30px; 
@@ -719,7 +722,7 @@
                 padding: 0.8rem;
                 margin-bottom: 0.5rem;
             }
-            /* El logo de esta sección SÍ debe ser relative Y CENTRADO */
+            /* TU CAMBIO: El logo de esta sección SÍ debe ser relative Y CENTRADO */
             #step-checklist .logo {
                 position: relative;
                 bottom: auto;
@@ -737,11 +740,12 @@
                 overflow-y: auto; 
                 justify-content: flex-start; 
                 /* TU CAMBIO: Añadido padding-top para centrar el contenido */
-                padding-top: 20vh; /* ¡MÁS ABAJO! */
+                padding-top: 20vh;
             }
             #step-form h2 {
                 font-size: 10vw; 
                 margin-top: 0; /* Reseteado */
+                /* TU CAMBIO: Aplicar fuente y color */
                 font-family: var(--font-display);
                 color: var(--naldo-red);
             }
@@ -751,7 +755,7 @@
             .prize-list {
                 font-size: 0.8rem;
             }
-            /* El logo de esta sección SÍ debe ser relative Y CENTRADO */
+            /* TU CAMBIO: El logo de esta sección SÍ debe ser relative Y CENTRADO */
             #step-form .logo {
                 position: relative;
                 bottom: auto;
@@ -768,22 +772,24 @@
             #step-roulette {
                 overflow-y: auto; 
                 justify-content: flex-start; 
-                padding-top: 20vh; /* TU CAMBIO: ¡MÁS ABAJO! */
+                padding-top: 20vh;
             }
             #step-roulette h2 {
                 font-size: 8vw; 
-                margin-top: 0; /* Reseteado */
+                margin-top: 0; 
+                /* TU CAMBIO: Aplicar fuente */
                 font-family: var(--font-display);
             }
             #roulette-container {
                 width: 250px; 
                 height: 250px;
             }
-            /* Estilo para el texto de los premios en móvil */
-            .prize-slice span {
-                font-size: 8px;
+            /* TU CAMBIO: Estilo para el texto de los premios en móvil */
+            .prize-slice .text-wrapper {
+                font-size: 12px;
+                max-width: 90%;
             }
-            /* El logo de esta sección SÍ debe ser relative Y CENTRADO */
+            /* TU CAMBIO: El logo de esta sección SÍ debe ser relative Y CENTRADO */
             #step-roulette .logo {
                 position: relative;
                 bottom: auto;
@@ -945,12 +951,12 @@
         <div id="roulette-container">
             <div id="roulette-wheel">
                 <ul class="prize-list-wheel">
-                    <li class="prize-slice"><span>20% OFF</span></li>
-                    <li class="prize-slice"><span>Botella Térmica</span></li>
-                    <li class="prize-slice"><span>Una Pelota</span></li>
-                    <li class="prize-slice"><span>Stickers</span></li>
-                    <li class="prize-slice"><span>Lona Playa</span></li>
-                    <li class="prize-slice"><span>40% OFF Cuidado</span></li>
+                    <li class="prize-slice"><div class="text-wrapper">20% off en cámaras de fotos</div></li>
+                    <li class="prize-slice"><div class="text-wrapper">Botella térmica</div></li>
+                    <li class="prize-slice"><div class="text-wrapper">Pelota Naldo</div></li>
+                    <li class="prize-slice"><div class="text-wrapper">Stickers</div></li>
+                    <li class="prize-slice"><div class="text-wrapper">lona playa</div></li>
+                    <li class="prize-slice"><div class="text-wrapper">40% off cuidado personal</div></li>
                 </ul>
             </div>
             <div id="roulette-pointer"></div>
@@ -1076,13 +1082,14 @@
             const wheel = document.getElementById('roulette-wheel');
             const resultDisplay = document.getElementById('roulette-result');
             
+            // TU CAMBIO: Nombres de premios actualizados
             const prizes = [
-                "20% OFF",
-                "Botella Térmica",
-                "Una Pelota",
+                "20% off en cámaras de fotos",
+                "Botella térmica",
+                "Pelota Naldo",
                 "Stickers",
-                "Lona Playa",
-                "40% OFF Cuidado"
+                "lona playa",
+                "40% off cuidado personal"
             ];
             const sliceAngle = 360 / prizes.length;
 
