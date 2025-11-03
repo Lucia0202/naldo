@@ -502,16 +502,11 @@
             line-height: 1.2;
             width: 90px; /* Ancho fijo para el texto */
             transform-origin: center center;
-            transform: translateY(-90px) rotate(90deg); 
+            /* La posición exacta la calcula el JavaScript */
         }
 
         /* Colores y rotación de los 6 slices (60deg cada uno) */
-        .prize-slice:nth-child(1) { transform: rotate(30deg); } /* Premio 1 */
-        .prize-slice:nth-child(2) { transform: rotate(90deg); } /* Premio 2 */
-        .prize-slice:nth-child(3) { transform: rotate(150deg); } /* Premio 3 */
-        .prize-slice:nth-child(4) { transform: rotate(210deg); } /* Premio 4 */
-        .prize-slice:nth-child(5) { transform: rotate(270deg); } /* Premio 5 */
-        .prize-slice:nth-child(6) { transform: rotate(330deg); } /* Premio 6 */
+        /* La rotación la calcula el JavaScript */
         
         /* TU CAMBIO: Colores del texto según la nueva paleta */
         .prize-slice:nth-child(1) .text-wrapper, /* Sobre Rojo Oscuro */
@@ -782,7 +777,7 @@
             .prize-slice .text-wrapper {
                 font-size: 3.2vw; /* Fuente que escala con la ruleta */
                 width: 25vw; /* Ancho del texto */
-                transform: translateY(-22vw) rotate(90deg); /* Posición que escala */
+                /* La posición la calcula el JS */
             }
             /* El logo de esta sección SÍ debe ser relative Y CENTRADO */
             #step-roulette .logo {
@@ -1095,17 +1090,14 @@
                 const container = document.getElementById('roulette-container');
                 const radius = container.offsetWidth / 2;
                 
-                // Distancia desde el centro (55% del radio para PC, 60% para móvil)
+                // TU CAMBIO: Texto más cerca del centro (45%) para que no se corte
                 const isMobile = window.innerWidth <= 768;
-                const textDistance = isMobile ? (radius * 0.6) : (radius * 0.55); 
+                const textDistance = isMobile ? (radius * 0.45) : (radius * 0.45); 
 
                 prizeSlices.forEach((slice, index) => {
                     const textWrapper = slice.querySelector('.text-wrapper');
                     
                     // 1. Calcular el ángulo del centro de este slice
-                    // (0 * 60) + 30 = 30deg
-                    // (1 * 60) + 30 = 90deg
-                    // ...
                     const angle = (index * sliceAngle) + (sliceAngle / 2);
                     
                     // 2. Girar el slice a su posición en la rueda
