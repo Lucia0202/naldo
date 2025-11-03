@@ -28,6 +28,11 @@
             --font-title: 'Poppins', sans-serif;
             --font-script: 'Hurricane', cursive;
             --font-display: 'TTNorms', sans-serif; 
+            
+            /* Colores de la ruleta */
+            --ruleta-color-1: #b7141e;
+            --ruleta-color-2: #ffffff;
+            --ruleta-color-3: #000000;
         }
 
         /* --- Estructura Base --- */
@@ -431,7 +436,9 @@
             color: #444;
         }
 
-        /* --- Estilos Paso 7: Ruleta --- */
+        /* ============================================= */
+        /* --- ESTILOS PASO 7: RULETA (¡RECONSTRUIDA!) --- */
+        /* ============================================= */
         #roulette-container {
             position: relative;
             width: 300px;
@@ -443,16 +450,84 @@
             height: 100%;
             border-radius: 50%;
             border: 10px solid var(--naldo-white);
-            background: conic-gradient(
-                #FFD700 0% 16.66%,
-                #C0C0C0 16.66% 33.33%,
-                #CD7F32 33.33% 50%,
-                #FFD700 50% 66.66%,
-                #C0C0C0 66.66% 83.33%,
-                #CD7F32 83.33% 100%
-            );
+            overflow: hidden; /* Clave para los slices */
+            position: relative;
             transition: transform 4s cubic-bezier(0.25, 1, 0.5, 1);
         }
+        
+        .prize-list-wheel {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        .prize-slice {
+            position: absolute;
+            width: 50%; /* 150px */
+            height: 50%; /* 150px */
+            top: 0;
+            left: 0;
+            transform-origin: 100% 100%; /* Pivote en el centro (esquina inf-der) */
+            /* Crea el triángulo (wedge) */
+            clip-path: polygon(0 0, 100% 100%, 0 100%); 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-right: 50px; /* Empuja el texto hacia el borde */
+            box-sizing: border-box;
+        }
+        
+        .prize-slice span {
+            display: block;
+            transform: rotate(45deg); /* Gira el texto para que quede derecho */
+            font-weight: 700;
+            font-size: 10px;
+            word-break: break-word;
+            text-align: center;
+            max-width: 70%;
+        }
+
+        /* Colores y rotación de los 6 slices (60deg cada uno) */
+        .prize-slice:nth-child(1) {
+            background: var(--ruleta-color-1); /* Rojo */
+            transform: rotate(0deg);
+        }
+        .prize-slice:nth-child(2) {
+            background: var(--ruleta-color-2); /* Blanco */
+            transform: rotate(60deg);
+        }
+        .prize-slice:nth-child(3) {
+            background: var(--ruleta-color-3); /* Negro */
+            transform: rotate(120deg);
+        }
+        .prize-slice:nth-child(4) {
+            background: var(--ruleta-color-1); /* Rojo */
+            transform: rotate(180deg);
+        }
+        .prize-slice:nth-child(5) {
+            background: var(--ruleta-color-2); /* Blanco */
+            transform: rotate(240deg);
+        }
+        .prize-slice:nth-child(6) {
+            background: var(--ruleta-color-3); /* Negro */
+            transform: rotate(300deg);
+        }
+        
+        /* Colores del texto */
+        .prize-slice:nth-child(1) span,
+        .prize-slice:nth-child(3) span,
+        .prize-slice:nth-child(4) span,
+        .prize-slice:nth-child(6) span {
+            color: var(--naldo-white);
+        }
+        .prize-slice:nth-child(2) span,
+        .prize-slice:nth-child(5) span {
+            color: var(--naldo-black);
+        }
+
         #roulette-pointer {
             position: absolute;
             top: -20px;
@@ -462,7 +537,9 @@
             height: 0;
             border-left: 20px solid transparent;
             border-right: 20px solid transparent;
-            border-top: 30px solid var(--naldo-white);
+            /* TU CAMBIO: Color del puntero */
+            border-top: 30px solid #80060d; 
+            z-index: 10;
         }
         #spin-button {
             font-family: var(--font-title);
@@ -475,12 +552,14 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            z-index: 5;
         }
         #roulette-result {
             margin-top: 2rem;
             font-size: 1.5rem;
             font-weight: 700;
             display: none;
+            z-index: 5;
         }
 
         /* ================================================================== */
@@ -489,7 +568,7 @@
         
         @media (max-width: 768px) {
 
-            /* 0. CAMBIO GLOBAL: Volvemos a NO-SCROLL */
+            /* 0. CAMBIO GLOBAL: Volvemos a NO-SCROLL (excepto donde sea necesario) */
             body {
                 overflow: hidden; /* Estático */
             }
@@ -584,8 +663,8 @@
             #step-ready h1 {
                 font-size: 15vw; 
                 margin-top: 0;
-                position: relative; /* ¡AÑADIDO! */
-                z-index: 5; /* ¡AÑADIDO! */
+                position: relative; 
+                z-index: 5; /* Asegura que el texto esté SOBRE los pines */
             }
             /* El logo de esta sección usa el .logo global (absolute) */
 
@@ -614,9 +693,10 @@
                 animation-delay: 0.5s;
                 opacity: 0;
             }
+            /* TU CAMBIO: Pin-5 movido para que no se superponga */
             .pin-5 {
                 width: 60px; height: 60px;
-                top: 75%; /* ¡TU CAMBIO: Más abajo! */
+                top: 75%; /* ¡Más abajo! (Antes 55%) */
                 left: 45%; 
                 animation-delay: 0.4s;
                 opacity: 0;
@@ -647,8 +727,8 @@
                 bottom: auto;
                 left: auto;
                 transform: none;
-                margin-left: auto;
-                margin-right: auto;
+                margin-left: auto; /* Centrado */
+                margin-right: auto; /* Centrado */
                 margin-bottom: 15vh; /* Espacio Safari */
             }
 
@@ -661,6 +741,9 @@
             #step-form h2 {
                 font-size: 10vw; 
                 margin-top: 5vh;
+                /* TU CAMBIO: Aplicar fuente y color */
+                font-family: var(--font-display);
+                color: var(--naldo-red);
             }
             #prize-form {
                 width: 90%;
@@ -688,10 +771,16 @@
             #step-roulette h2 {
                 font-size: 8vw; 
                 margin-top: 5vh;
+                /* TU CAMBIO: Aplicar fuente */
+                font-family: var(--font-display);
             }
             #roulette-container {
                 width: 250px; 
                 height: 250px;
+            }
+            /* Estilo para el texto de los premios en móvil */
+            .prize-slice span {
+                font-size: 8px;
             }
             /* TU CAMBIO: El logo de esta sección SÍ debe ser relative Y CENTRADO */
             #step-roulette .logo {
@@ -852,7 +941,16 @@
         <p>Gira la ruleta para ganar un premio instantáneo</p>
         
         <div id="roulette-container">
-            <div id="roulette-wheel"></div>
+            <div id="roulette-wheel">
+                <ul class="prize-list-wheel">
+                    <li class="prize-slice"><span>20% OFF</span></li>
+                    <li class="prize-slice"><span>Botella Térmica</span></li>
+                    <li class="prize-slice"><span>Una Pelota</span></li>
+                    <li class="prize-slice"><span>Stickers</span></li>
+                    <li class="prize-slice"><span>Lona Playa</span></li>
+                    <li class="prize-slice"><span>40% OFF Cuidado</span></li>
+                </ul>
+            </div>
             <div id="roulette-pointer"></div>
         </div>
 
