@@ -484,44 +484,25 @@
         }
 
         /* ================================================================== */
-        /* --- BLOQUE RESPONSIVE PARA CELULARES --- */
+        /* --- ¡NUEVO BLOQUE RESPONSIVE PARA CELULARES! --- */
         /* ================================================================== */
         
         @media (max-width: 768px) {
 
+            /* 0. CAMBIO GLOBAL: Volvemos a NO-SCROLL */
             body {
-                overflow: hidden; /* ¡Volvemos a no-scroll global! */
+                overflow: hidden; /* Estático */
             }
             .step {
-                overflow-y: hidden; /* Cada sección es estática */
-                justify-content: center; /* Cada sección está centrada verticalmente */
-                height: 100vh; /* Ocupa el 100% de la altura de la vista */
-                min-height: 100vh; /* Aseguramos que siempre ocupe toda la pantalla */
-                padding: 1.5rem; /* Padding general */
+                overflow-y: hidden; /* Estático */
+                justify-content: center; /* Centrado vertical */
+                height: 100vh; 
+                min-height: 100vh;
+                padding: 1.5rem; 
             }
 
-            /* Los logos VUELVEN a ser absolutos en MOBILE para no romper el centrado */
-            .logo {
-                position: absolute;
-                bottom: 30px; /* Margen desde abajo */
-                left: 50%;
-                transform: translateX(-50%);
-                width: 100px; /* Más chico */
-                margin-top: 0;    /* Reseteamos márgenes anteriores */
-                margin-bottom: 0; /* Reseteamos márgenes anteriores */
-            }
-            /* El logo de bienvenida NO DEBE ser absoluto porque es parte del contenido centrado */
-            #step-welcome .logo {
-                position: relative; 
-                bottom: auto;       
-                left: auto;         
-                transform: none;    
-                margin-top: 2vh;    /* Pequeño margen superior */
-                margin-left: auto;  
-                margin-right: auto; 
-            }
-
-            /* 1. SECCIÓN BIENVENIDA */
+            /* 1. SECCIÓN BIENVENIDA (Centrada y Estática) */
+            /* (Esta sección ya estaba bien, no se toca) */
             #step-welcome h1 {
                 font-size: 11vw;
                 margin-bottom: 2vh;
@@ -535,8 +516,18 @@
                 font-size: 15vw;
                 margin-bottom: 2vh;
             }
+            #step-welcome .logo {
+                position: relative; /* Sigue siendo 'relative' */
+                bottom: auto;       
+                left: auto;         
+                transform: none;    
+                margin-top: 2vh;
+                margin-bottom: 0;
+                width: 100px; 
+            }
 
-            /* 2. SECCIÓN INSTRUCCIONES */
+            /* 2. SECCIÓN INSTRUCCIONES (¡TU CAMBIO!) */
+            
             #step-instructions .content-instructions {
                 align-items: center; 
                 width: 100%; 
@@ -548,7 +539,7 @@
                 padding-top: 0;
             }
             #step-instructions h2 {
-                font-size: 8vw; /* ¡TU CAMBIO: Achicado! */
+                font-size: 8vw; /* ¡TU CAMBIO: Más chico! */
                 margin-bottom: 3vh; 
                 margin-top: 0; 
             }
@@ -577,7 +568,17 @@
                 height: 20px;
                 padding: 3px;
             }
-            /* El logo de esta sección usa el .logo global (absolute) */
+            
+            /* TU CAMBIO: El logo de instrucciones VUELVE a ser absoluto */
+            #step-instructions .logo {
+                position: absolute; /* ¡Vuelve a estar pegado abajo! */
+                bottom: 30px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 100px;
+                margin-bottom: 0; /* Anula el margen de 15vh */
+                margin-top: 0; /* Anula el margen superior */
+            }
 
 
             /* 3. SECCIÓN ¿ESTÁS LISTO? */
@@ -586,16 +587,28 @@
                 margin-top: 0;
             }
             /* El logo de esta sección usa el .logo global (absolute) */
+            #step-ready .logo {
+                position: absolute;
+                bottom: 30px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 100px;
+                margin-bottom: 0;
+                margin-top: 0;
+            }
 
-            /* TU CAMBIO: Ajuste de posición del pin-5 */
+            /* TU CAMBIO: Pin-5 movido para que no se superponga */
             .pin-5 {
-                top: 60%; /* Original */
-                left: 45%; /* Original */
-                margin-top: 5vh; /* ¡AHORA BAJA UN POCO MÁS! */
+                top: 70%; /* ¡Más abajo! (Antes 55%) */
+                left: 45%; 
+                animation-delay: 0.4s;
+                opacity: 0;
+                width: 60px;
+                height: 60px;
             }
 
             /* 4. SECCIÓN PUNTOS DE AMISTAD */
-            /* Esta sección SÍ necesita scroll por su naturaleza */
+            /* Esta sección SÍ necesita scroll */
             #step-checklist {
                 overflow-y: auto; 
                 justify-content: flex-start; /* Alineado arriba para permitir scroll */
@@ -603,7 +616,7 @@
             #step-checklist h2 {
                 font-size: 10vw; 
                 margin-bottom: 1.5rem;
-                margin-top: 5vh; /* Empuja el contenido hacia abajo desde el top */
+                margin-top: 5vh;
             }
             #task-list {
                 width: 90%; 
@@ -613,17 +626,17 @@
                 padding: 0.8rem;
                 margin-bottom: 0.5rem;
             }
-            /* El logo de esta sección usa el .logo global (relative) */
+            /* El logo de esta sección SÍ debe ser relative */
             #step-checklist .logo {
                 position: relative;
                 margin-bottom: 15vh; /* Espacio Safari */
             }
 
             /* 5. SECCIÓN FORMULARIO */
-            /* Esta sección SÍ necesita scroll por su naturaleza */
+            /* Esta sección SÍ necesita scroll */
             #step-form {
                 overflow-y: auto; 
-                justify-content: flex-start; /* Alineado arriba para permitir scroll */
+                justify-content: flex-start; 
             }
             #step-form h2 {
                 font-size: 10vw; 
@@ -635,17 +648,17 @@
             .prize-list {
                 font-size: 0.8rem;
             }
-            /* El logo de esta sección usa el .logo global (relative) */
+            /* El logo de esta sección SÍ debe ser relative */
             #step-form .logo {
                 position: relative;
                 margin-bottom: 15vh; /* Espacio Safari */
             }
             
             /* 6. SECCIÓN RULETA */
-            /* Esta sección SÍ necesita scroll (o al menos, no pasa nada si lo tiene) */
+            /* Esta sección SÍ necesita scroll */
             #step-roulette {
                 overflow-y: auto; 
-                justify-content: flex-start; /* Alineado arriba para permitir scroll */
+                justify-content: flex-start; 
             }
             #step-roulette h2 {
                 font-size: 8vw; 
@@ -655,7 +668,7 @@
                 width: 250px; 
                 height: 250px;
             }
-            /* El logo de esta sección usa el .logo global (relative) */
+            /* El logo de esta sección SÍ debe ser relative */
             #step-roulette .logo {
                 position: relative;
                 margin-bottom: 15vh; /* Espacio Safari */
