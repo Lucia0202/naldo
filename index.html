@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naldo - Puntos de Amistad</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Climate+Crisis&family=Hurricane&family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+/* --- INICIO: Agrega este bloque --- */
+        @font-face {
+            font-family: 'TTNormsPro-ExtraBold.woff2'; /* <-- Este es el nombre que TÚ le pones */
+            src: url('TTNormsPro-ExtraBold.woff2') format('woff2'); /* <-- Este es el nombre del ARCHIVO */
+            font-weight: normal;
+            font-style: normal;
+        }
+        /* --- FIN: Agrega este bloque --- */
+        /* --- Definiciones de Diseño (Colores y Fuentes) --- */
+        :root {
+            --naldo-red: #f1000f;
+            --naldo-white: #ffffff;
+            --naldo-black: #000000;
+            --font-title: 'Poppins', sans-serif;
+            --font-script: 'Hurricane', cursive;
+            --font-display: 'TTNormsPro-ExtraBold.woff2', sans-serif; /* Nueva fuente */
+        }
+
+        /* --- Estructura Base --- */
+        body {
+            margin: 0;
+            font-family: var(--font-title);
+            background-color: var(--naldo-red);
+            color: var(--naldo-white);
+            overflow: hidden;
+        }
+
+        .logo {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: auto;
+            z-index: 10;
+        }
+/* --- PEGA ESTE BLOQUE NUEVO AQUÍ --- */
+        #step-welcome .logo {
+            position: relative; /* Anula el 'position: absolute' */
+            bottom: auto;       /* Anula el 'bottom: 30px' */
+            left: auto;         /* Anula el 'left: 50%' */
+            transform: none;    /* Anula el 'transform: translateX(-50%)' */
+            
+            /* Estilos para centrarlo y darle espacio */
+            margin-top: 3rem;   /* Espacio entre "amistad" y el logo */
+            margin-left: auto;  /* Centrado */
+            margin-right: auto; /* Centrado */
+        }
+        /* --- FIN DEL BLOQUE NUEVO --- */
+        /* --- Estructura de Pasos (Stages) --- */
+        .step {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 100vw;
+            height: 100vh;
+            padding: 2rem;
+            box-sizing: border-box;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s ease-in-out, visibility 1s;
+        }
+
+        .step.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .step h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin: 0.5rem 0 1rem 0;
+        }
+        .step h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0.5rem 0 1.5rem 0;
+        }
+        .step h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 1rem 0;
+        }
+        .step p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            max-width: 600px;
+        }
+
+        /* --- Fondos y Logos Específicos por Paso --- */
+        #step-welcome, #step-ready, #step-congrats, #step-roulette {
+            background-color: var(--naldo-red);
+            color: var(--naldo-white);
+        }
+        #step-instructions, #step-checklist, #step-form {
+            background-color: var(--naldo-white);
+            color: var(--naldo-black);
+        }
+
+        /* --- Estilos Paso 1: Bienvenida --- */
+        #step-welcome {
+            background-image: url('background-map-junin.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+        #step-welcome::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--naldo-red);
+            opacity: 0.83;
+            z-index: 1;
+        }
+        #step-welcome > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* CAMBIOS: Tipografía y tamaño de BIENVENIDOS */
+        #step-welcome h1 {
+            font-family: var(--font-display);
+            font-size: 140px;
+            margin-bottom: 2rem;
+        }
+        
+        /* CAMBIOS: H2 ahora incluye el '?' final */
+        #step-welcome h2 {
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem; /* Menos espacio antes de 'amistad' */
+        }
+        
+        /* CAMBIOS: 'amistad' en minúscula y 100px */
+        .word-amistad {
+            font-family: var(--font-script);
+            font-size: 120px; /* Tamaño 100 puntos */
+            color: var(--naldo-white);
+            white-space: nowrap;
+            margin-bottom: 2rem;
+            text-transform: lowercase; /* Todo en minúscula */
+            line-height: 1; /* Ajuste para la fuente grande */
+        }
+        .coordenadas-black {
+            color: var(--naldo-black);
+        }
+        .explode-char {
+            display: inline-block;
+            animation: explode 0.8s forwards;
+            opacity: 0;
+        }
+        @keyframes explode {
+            0% { opacity: 0; transform: scale(3); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* --- Estilos Paso 2: Instrucciones --- */
+        
+        /* CAMBIO: Contenedor más ancho y alineado a la izquierda */
+        #step-instructions .content-instructions {
+            width: 90%;
+            max-width: 1600px; /* Más ancho para fuente de 70px */
+            text-align: left;
+            margin: 0 auto;
+        }
+        
+        /* CAMBIOS: Título de Instrucciones */
+        #step-instructions h2 {
+            font-family: var(--font-display);
+            font-size: 130px;
+            color: var(--naldo-red); /* Color rojo */
+            text-decoration: none; /* Sin subrayado */
+            margin-bottom: 3rem;
+            text-align: left;
+        }
+
+        /* CAMBIO: Removido el recuadro negro */
+        #step-instructions .content {
+            border: none;
+            padding: 0;
+        }
+        
+        /* CAMBIOS: Lista de instrucciones */
+        #instruction-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        #instruction-list li {
+            font-size: 30px; /* Tamaño 70 puntos */
+            font-weight: 700;
+            color: var(--naldo-black);
+            display: flex;
+            align-items: center;
+            margin-bottom: 2.5rem;
+            line-height: 1.2;
+        }
+        
+        /* CAMBIO: Punto rojo de 60px */
+        #instruction-list li::before {
+            content: '';
+            display: block;
+            width: 15px;
+            height: 15px;
+            background-color: var(--naldo-red);
+            border-radius: 50%;
+            margin-right: 2rem;
+            flex-shrink: 0;
+        }
+        
+        /* CAMBIO: Contenedor para los íconos */
+        .icon-wrapper {
+            margin-left: 2rem; /* <-- CAMBIADO de right a left */
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            line-height: 0; /* Arregla alineación vertical de SVGs */
+        }
+        .icon-wrapper svg {
+            width: 70px; /* Tamaño base del ícono */
+            height: 70px;
+            fill: var(--naldo-red);
+        }
+        /* --- AÑADE ESTE BLOQUE NUEVO --- */
+        #instruction-list li span:not(.icon-wrapper) {
+            flex-grow: 1; /* Hace que el span del texto crezca */
+            /* Esta línea es opcional, por si el texto queda pegado al ícono */
+            /* padding-right: 1rem; */
+}
+        /* CAMBIO: Círculo rojo con tilde blanca */
+        .icon-wrapper.check-circle {
+            width: 70px;
+            height: 70px;
+            background-color: var(--naldo-red);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px; /* Espacio para el tilde */
+            box-sizing: border-box;
+        }
+        .icon-wrapper.check-circle svg {
+            width: 100%;
+            height: 100%;
+            fill: var(--naldo-white); /* Tilde blanca */
+        }
+
+
+        /* --- Estilos Paso 4: Checklist --- */
+        #task-list {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+            max-width: 600px;
+        }
+        #task-list li {
+            font-size: 1rem;
+            font-weight: 700;
+            background: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+        #task-list li.completed {
+            opacity: 1;
+            background-color: #e6f7ff;
+            border-color: #007bff;
+            text-decoration: line-through;
+            color: #555;
+        }
+        #task-list input[type="checkbox"] {
+            margin-right: 1rem;
+            width: 20px;
+            height: 20px;
+            pointer-events: none;
+        }
+
+        /* --- Estilos Paso 6: Formulario --- */
+        #prize-form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 500px;
+        }
+        #prize-form input {
+            font-family: var(--font-title);
+            font-size: 1rem;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 2px solid var(--naldo-black);
+            border-radius: 5px;
+        }
+        #prize-form button {
+            font-family: var(--font-title);
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 1rem;
+            background-color: var(--naldo-red);
+            color: var(--naldo-white);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        #prize-form button:hover {
+            background-color: #c0000d;
+        }
+        .prize-list {
+            list-style: none;
+            padding: 0;
+            font-size: 0.9rem;
+            color: #444;
+        }
+
+        /* --- Estilos Paso 7: Ruleta --- */
+        #roulette-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin-top: 2rem;
+        }
+        #roulette-wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 10px solid var(--naldo-white);
+            background: conic-gradient(
+                #FFD700 0% 16.66%,
+                #C0C0C0 16.66% 33.33%,
+                #CD7F32 33.33% 50%,
+                #FFD700 50% 66.66%,
+                #C0C0C0 66.66% 83.33%,
+                #CD7F32 83.33% 100%
+            );
+            transition: transform 4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        #roulette-pointer {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 30px solid var(--naldo-white);
+        }
+        #spin-button {
+            font-family: var(--font-title);
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 0.8rem 1.5rem;
+            margin-top: 2rem;
+            background-color: var(--naldo-white);
+            color: var(--naldo-red);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #roulette-result {
+            margin-top: 2rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <section id="step-welcome" class="step active">
+        <h1>BIENVENIDOS</h1>
+        <h2>¿ESTÁS LISTO PARA DESCUBRIR LAS <span class="coordenadas-black">COORDENADAS</span> DE TU?</h2>
+        <div class="word-amistad"></div>
+        
+        <img src="Logo 2.png" alt="Naldo Logo" class="logo">
+    </section>
+
+    <section id="step-instructions" class="step">
+        <div class="content-instructions">
+            <h2>INSTRUCCIONES</h2>
+            
+            <ul id="instruction-list">
+                <li>
+                    <span>El circuito consiste en seguir las indicaciones que dan las pantallas mencionadas en el mapa.</span>
+                    <span class="icon-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                            <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                        </svg>
+                    </span>
+                </li>
+                <li>
+                    <span>A medida que recorras los cinco puntos, deberás ir tachando las diferentes misiones.</span>
+                    <span class="icon-wrapper check-circle">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                           <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                        </svg>
+                    </span>
+                </li>
+                <li>
+                    <span>¿Terminaste? Visitanos en R. Sáenz Peña e Hipólito Yrigoyen que te esperan muchas sorpresas.</span>
+                    <span class="icon-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                           <path d="M3 2.5a2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1 5 0v.006c.092.023.18.049.26.077L13.5 2a.5.5 0 0 1 .5.5v1.5c0 .034-.002.067-.006.1a.5.5 0 0 1-.494.4a2.5 2.5 0 0 1-1.994.493l-.339-.028A2.5 2.5 0 0 1 8 5.993A2.5 2.5 0 0 1 5.339 4.9l-.339.028a2.5 2.5 0 0 1-1.994-.493a.5.5 0 0 1-.494-.4a.5.5 0 0 1-.006-.1V2.5a.5.5 0 0 1 .5-.5l.74.006c.08-.028.168-.054.26-.077V2.5zM1 6v8.5A1.5 1.5 0 0 0 2.5 16h11a1.5 1.5 0 0 0 1.5-1.5V6H1zm14 0H1v-1a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v1zM8 7.5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5z"/>
+                        </svg>
+                    </span>
+                </li>
+            </ul>
+        </div>
+        
+        <img src="Naldo logo.png" alt="Naldo Logo" class="logo">
+    </section>
+
+    <section id="step-ready" class="step">
+        <h1>¿ESTÁS LISTO?</h1>
+        <img src="Logo 2.png" alt="Naldo Logo" class="logo">
+    </section>
+
+    <section id="step-checklist" class="step">
+        <h2>PUNTOS DE AMISTAD</h2>
+        <p>Escanea los QR en cada ubicación para completar la lista.</p>
+        <ul id="task-list">
+            <li data-id="1">
+                <input type="checkbox" disabled>
+                Roque Sáens Peña e Hipólito Yrigoyen
+            </li>
+            <li data-id="2">
+                <input type="checkbox" disabled>
+                Javier Muñíz y Almirante Brown
+            </li>
+            <li data-id="3">
+                <input type="checkbox" disabled>
+                Avenida Rivadavia e Ituzaingó
+            </li>
+            <li data-id="4">
+                <input type="checkbox" disabled>
+                Avenida República y Jorge Newbery
+            </li>
+            <li data-id="5">
+                <input type="checkbox" disabled>
+                Avenida Arias y Primera Junta
+            </li>
+        </ul>
+        <img src="Naldo logo.png" alt="Naldo Logo" class="logo">
+    </section>
+
+    <section id="step-congrats" class="step">
+        <h1>FELICITACIONES</h1>
+        <h2>HAS COMPLETADO TODOS LOS PUNTOS</h2>
+        <img src="Logo 2.png" alt="Naldo Logo" class="logo">
+    </section>
+
+    <section id="step-form" class="step">
+        <h2>DEJANOS TUS DATOS</h2>
+        <p>Y participás por los siguientes premios para disfrutar con ese amigo que te banca en todas:</p>
+        
+        <form id="prize-form">
+            <label for="email" style="display:none;">Email</label>
+            <input type="email" id="email" name="entry.12345678" placeholder="Tu Correo Electrónico" required>
+            
+            <label for="phone" style="display:none;">Teléfono</label>
+            <input type="tel" id="phone" name="entry.87654321" placeholder="Tu Número de Teléfono" required>
+            
+            <button type="submit">Enviar y girar la ruleta</button>
+        </form>
+
+        <ul class="prize-list">
+            <li>• Un viaje para dos personas</li>
+            <li>• Dos entradas para ver el Turismo Carretera</li>
+            <li>• Dos entradas para ver a Sarmiento</li>
+        </ul>
+        <img src="Naldo logo.png" alt="Naldo Logo" class="logo">
+    </section>
+
+    <section id="step-roulette" class="step">
+        <h2>¡GRACIAS POR PARTICIPAR!</h2>
+        <p>Gira la ruleta para ganar un premio instantáneo</p>
+        
+        <div id="roulette-container">
+            <div id="roulette-wheel"></div>
+            <div id="roulette-pointer"></div>
+        </div>
+
+        <button id="spin-button">¡GIRAR!</button>
+        <div id="roulette-result"></div>
+
+        <img src="Logo 2.png" alt="Naldo Logo" class="logo">
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const steps = document.querySelectorAll('.step');
+            const storageKey = 'naldoPuntosAmistad';
+            const totalTasks = 5;
+
+            // --- Lógica de Navegación ---
+            function goToStep(stepId) {
+                steps.forEach(step => {
+                    step.classList.remove('active');
+                });
+                document.getElementById(stepId).classList.add('active');
+            }
+
+            // --- Lógica de la Bienvenida (Paso 1) ---
+            function setupWelcomeAnimation() {
+                const word = "amistad";
+                const container = document.querySelector('.word-amistad');
+                container.innerHTML = ''; 
+                word.split('').forEach((char, index) => {
+                    const span = document.createElement('span');
+                    span.className = 'explode-char';
+                    span.textContent = char;
+                    span.style.animationDelay = `${index * 0.1}s`;
+                    container.appendChild(span);
+                });
+            }
+
+            // --- Lógica de Guardado y Carga (LocalStorage) ---
+            
+            function loadProgress() {
+                const progress = getProgress();
+                let completedCount = 0;
+                
+                progress.forEach((isCompleted, index) => {
+                    const taskId = index + 1;
+                    const taskItem = document.querySelector(`#task-list li[data-id="${taskId}"]`);
+                    if (taskItem && isCompleted) {
+                        taskItem.classList.add('completed');
+                        taskItem.querySelector('input[type="checkbox"]').checked = true;
+                        completedCount++;
+                    }
+                });
+                return completedCount;
+            }
+
+            function getProgress() {
+                const saved = localStorage.getItem(storageKey);
+                if (saved) {
+                    return JSON.parse(saved);
+                }
+                return Array(totalTasks).fill(false);
+            }
+
+            function saveProgress(taskId) {
+                const progress = getProgress();
+                if (taskId >= 1 && taskId <= totalTasks) {
+                    progress[taskId - 1] = true;
+                }
+                localStorage.setItem(storageKey, JSON.stringify(progress));
+            }
+
+            function checkAllCompleted() {
+                const progress = getProgress();
+                return progress.every(task => task === true);
+            }
+
+
+            // --- Lógica de Verificación de QR (URL Params) ---
+            function checkUrlForVisit() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const visitId = urlParams.get('visita');
+
+                if (visitId) {
+                    const taskId = parseInt(visitId, 10);
+                    saveProgress(taskId);
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                }
+            }
+
+
+            // --- Lógica del Formulario (Paso 6) ---
+            const form = document.getElementById('prize-form');
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault(); 
+                
+                // *** ¡¡RECUERDA PEGAR TUS ENLACES DE GOOGLE FORM AQUÍ!! ***
+                const GOOGLE_FORM_URL = "TU_URL_DE_GOOGLE_FORM_AQUI"; 
+                // Y no olvides poner los "name" correctos en los inputs del formulario
+                
+                try {
+                    const formData = new FormData(form);
+                    await fetch(GOOGLE_FORM_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: formData
+                    });
+                } catch (error) {
+                    console.error('Error al enviar el formulario:', error);
+                }
+                goToStep('step-roulette');
+            });
+
+
+            // --- Lógica de la Ruleta (Paso 7) ---
+            const spinButton = document.getElementById('spin-button');
+            const wheel = document.getElementById('roulette-wheel');
+            const resultDisplay = document.getElementById('roulette-result');
+            
+            const prizes = [
+                "20% de descuento en tu próxima compra",
+                "Una botella térmica",
+                "Una pelota",
+                "Stickers",
+                "Lona de playa",
+                "40% de descuento en cuidado personal"
+            ];
+            const sliceAngle = 360 / prizes.length;
+
+            spinButton.addEventListener('click', () => {
+                spinButton.disabled = true;
+                spinButton.style.opacity = '0.5';
+
+                const prizeIndex = Math.floor(Math.random() * prizes.length);
+                const prize = prizes[prizeIndex];
+                const extraSpins = 360 * (Math.floor(Math.random() * 3) + 3);
+                const targetAngle = (prizeIndex * sliceAngle) + (sliceAngle / 2);
+                const totalRotation = -(extraSpins + targetAngle);
+
+                wheel.style.transform = `rotate(${totalRotation}deg)`;
+
+                setTimeout(() => {
+                    resultDisplay.textContent = `¡Ganaste: ${prize}!`;
+                    resultDisplay.style.display = 'block';
+                }, 4100);
+            });
+
+
+            // --- CONTROLADOR PRINCIPAL (El flujo de la App) ---
+            function mainFlow() {
+                checkUrlForVisit();
+                loadProgress();
+
+                if (checkAllCompleted()) {
+                    goToStep('step-form');
+                    return;
+                }
+                
+                setupWelcomeAnimation();
+
+                // Fases de transición
+                // CAMBIO: Se ajustaron los tiempos a 15 segundos para instrucciones
+                setTimeout(() => { goToStep('step-instructions'); }, 5000); // 5 seg (Bienvenida)
+                setTimeout(() => { goToStep('step-ready'); }, 20000);       // 5 seg (Bienvenida) + 15 seg (Instrucciones)
+                setTimeout(() => { goToStep('step-checklist'); }, 23000);   // 20 seg (Anteriores) + 3 seg (¿Listo?)
+            }
+
+            // Iniciar la aplicación
+            mainFlow();
+        });
+    </script>
+
+</body>
+</html>
