@@ -490,24 +490,29 @@
         @media (max-width: 768px) {
 
             /* 0. CAMBIO GLOBAL: PERMITIR SCROLL */
+            body {
+                overflow: auto; /* PERMITE SCROLL */
+            }
             .step {
                 overflow-y: auto; /* Permite scroll vertical si el contenido es muy alto */
                 justify-content: flex-start; /* Alinea el contenido arriba, no al centro */
                 padding: 1.5rem; /* Un poco menos de padding */
+                height: auto; /* La altura se adapta al contenido */
+                min-height: 100vh; /* Pero como mínimo, ocupa toda la pantalla */
             }
 
             /* 1. SECCIÓN BIENVENIDA */
             #step-welcome h1 {
-                font-size: 15vw; /* TU CAMBIO: Achicado (antes 18vw) */
+                font-size: 13vw; /* TU CAMBIO: Achicado (antes 15vw) */
                 margin-bottom: 1rem;
                 margin-top: 5vh; /* Empuja el contenido un poco hacia abajo */
             }
             #step-welcome h2 {
-                font-size: 4.5vw; 
+                font-size: 4vw; /* TU CAMBIO: Achicado (antes 4.5vw) */
                 margin-bottom: 1rem;
             }
             .word-amistad {
-                font-size: 20vw; 
+                font-size: 18vw; /* TU CAMBIO: Achicado (antes 20vw) */
                 margin-bottom: 1rem;
             }
             #step-welcome .logo {
@@ -516,26 +521,31 @@
             }
 
             /* 2. SECCIÓN INSTRUCCIONES */
+            
+            /* TU CAMBIO: Contenedor centrado */
             #step-instructions .content-instructions {
-                align-items: flex-start; /* Alinea el wrapper a la izquierda */
+                align-items: center; /* Centra el wrapper */
                 width: 100%; 
             }
+            /* TU CAMBIO: Wrapper centrado */
             .instructions-wrapper {
-                text-align: left; 
+                text-align: center; /* Centra el H2 */
                 width: 100%;
+                display: block;
             }
             #step-instructions h2 {
-                font-size: 13vw; /* TU CAMBIO: Achicado (antes 15vw) */
-                margin-bottom: 3vh; /* Más espacio */
-                margin-top: 5vh; /* Espacio arriba */
+                font-size: 12vw; /* TU CAMBIO: Achicado (antes 13vw) */
+                margin-bottom: 3vh; 
+                margin-top: 5vh; 
             }
 
             #instruction-list {
                 width: 100%; 
             }
             #instruction-list li {
-                font-size: 4.5vw; 
-                margin-bottom: 4vh; /* TU CAMBIO: Más distancia entre instrucciones */
+                font-size: 4vw; /* TU CAMBIO: Achicado (antes 4.5vw) */
+                margin-bottom: 3vh; /* TU CAMBIO: Más distancia */
+                text-align: left; /* El texto de la instrucción sí a la izquierda */
             }
             #instruction-list li::before {
                 width: 10px; 
@@ -571,7 +581,7 @@
 
             /* 3. SECCIÓN ¿ESTÁS LISTO? */
             #step-ready h1 {
-                font-size: 15vw; /* Achicado (antes 18vw) */
+                font-size: 15vw; 
                 margin-top: 10vh; /* TU CAMBIO: Más centrado verticalmente */
             }
 
@@ -609,7 +619,7 @@
 
             /* 4. SECCIÓN PUNTOS DE AMISTAD */
             #step-checklist h2 {
-                font-size: 10vw; /* TU CAMBIO: Achicado (antes 12vw) */
+                font-size: 10vw; 
                 margin-bottom: 1.5rem;
                 margin-top: 5vh;
             }
