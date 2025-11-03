@@ -30,12 +30,12 @@
             --font-display: 'TTNorms', sans-serif; 
             
             /* Colores de la ruleta (ACTUALIZADOS SEGÚN TU IMAGEN) */
-            --ruleta-color-amarillo: #F2DA00; /* Nuevo color */
-            --ruleta-color-blanco: #ffffff;  /* Nuevo color */
-            --ruleta-color-rojo: #E6202A;    /* Nuevo color */
-            --ruleta-color-naranja: #F48220; /* Nuevo color */
-            --ruleta-color-verde: #4CAF50;   /* Nuevo color */
-            --ruleta-color-morado: #5D408B;  /* Nuevo color */
+            --ruleta-color-amarillo: #F2DA00; 
+            --ruleta-color-blanco: #ffffff;
+            --ruleta-color-rojo: #E6202A;
+            --ruleta-color-naranja: #F48220;
+            --ruleta-color-verde: #4CAF50;
+            --ruleta-color-morado: #5D408B;
         }
 
         /* --- Estructura Base --- */
@@ -447,32 +447,38 @@
             width: 300px; /* Tamaño PC */
             height: 300px; /* Tamaño PC */
             margin-top: 2rem;
-            display: flex; /* Para centrar el círculo interior */
-            justify-content: center;
-            align-items: center;
-            border-radius: 50%; /* Asegura que el contenedor sea redondo */
-            overflow: hidden; /* Oculta cualquier desborde */
-            background-color: var(--naldo-white); /* Color del borde exterior blanco */
             border: 10px solid var(--naldo-white); /* Borde blanco exterior */
+            border-radius: 50%; /* Asegura que el contenedor sea redondo */
+            box-sizing: border-box; /* Borde no suma al tamaño */
         }
 
         #roulette-wheel {
-            width: calc(100% - 20px); /* Resta el doble del borde para el círculo interior */
-            height: calc(100% - 20px);
+            width: 100%; 
+            height: 100%;
             border-radius: 50%;
             overflow: hidden; 
             position: relative;
-            transition: transform 4s cubic-bezier(0.25, 1, 0.5, 1);
-            box-sizing: border-box; /* Asegura que padding/border no cambien el tamaño */
+            transition: transform 5s cubic-bezier(0.25, 1, 0.5, 1);
+            /* Conic gradient para los colores de fondo */
+            background: conic-gradient(
+                var(--ruleta-color-amarillo) 0deg 60deg,
+                var(--ruleta-color-blanco) 60deg 120deg,
+                var(--ruleta-color-rojo) 120deg 180deg,
+                var(--ruleta-color-naranja) 180deg 240deg,
+                var(--ruleta-color-verde) 240deg 300deg,
+                var(--ruleta-color-morado) 300deg 360deg
+            );
         }
-
+        
         .prize-list-wheel {
             list-style: none;
             padding: 0;
             margin: 0;
             width: 100%;
             height: 100%;
-            position: relative;
+            position: absolute; /* Se superpone a la rueda de color */
+            top: 0; left: 0;
+            border-radius: 50%;
         }
         
         .prize-slice {
@@ -481,71 +487,66 @@
             left: 0;
             width: 100%;
             height: 100%;
-            clip-path: polygon(50% 50%, 100% 0, 100% 100%); /* Forma de triángulo (slice de pizza) */
-            transform-origin: center center; /* Rota desde el centro */
+            /* Esto es un "slice" de 60 grados */
+            clip-path: polygon(50% 50%, 50% 0, 84.6% 25%); 
+            transform-origin: center center;
             display: flex;
             justify-content: center;
             align-items: center;
             box-sizing: border-box;
         }
-
+        
         .prize-slice .text-wrapper {
-            position: absolute; /* Posición absoluta dentro del slice */
+            position: absolute; 
             font-family: var(--font-title); 
             font-weight: 900; 
             font-size: 14px; 
             text-align: center;
             line-height: 1.2;
-            width: 80%; /* Ancho para el texto */
-            /* Ajusta la posición del texto. Un poco más afuera y centrado. */
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(0deg); /* Se ajusta con JS */
-            transform-origin: center center; /* Rotar desde el centro del texto */
+            width: 90px; /* Ancho fijo para el texto */
+            /* Posicionamiento mágico */
+            transform-origin: center center;
+            /* Rota el texto 90 grados y lo empuja hacia afuera */
+            transform: translateY(-90px) rotate(90deg); 
         }
-
 
         /* Colores y rotación de los 6 slices (60deg cada uno) - ¡ACTUALIZADOS! */
+        /* Slice 1: 20% OFF (Amarillo) */
         .prize-slice:nth-child(1) {
-            background: var(--ruleta-color-amarillo); /* 20% OFF en cámaras */
-            transform: rotate(0deg);
+            transform: rotate(30deg); /* Centrado en 30deg */
         }
+        .prize-slice:nth-child(1) .text-wrapper { color: var(--naldo-black); }
+
+        /* Slice 2: 50% OFF (Blanco) */
         .prize-slice:nth-child(2) {
-            background: var(--ruleta-color-blanco);  /* 50% OFF beauty */
-            transform: rotate(60deg);
+            transform: rotate(90deg); /* Centrado en 90deg */
         }
+        .prize-slice:nth-child(2) .text-wrapper { color: var(--naldo-black); }
+
+        /* Slice 3: Botella (Rojo) */
         .prize-slice:nth-child(3) {
-            background: var(--ruleta-color-rojo);    /* botella térmica */
-            transform: rotate(120deg);
+            transform: rotate(150deg); /* Centrado en 150deg */
         }
-        .prize-slice:nth-child(4) {
-            background: var(--ruleta-color-naranja); /* pelota naldo */
-            transform: rotate(180deg);
-        }
-        .prize-slice:nth-child(5) {
-            background: var(--ruleta-color-verde);   /* lona playa */
-            transform: rotate(240deg);
-        }
-        .prize-slice:nth-child(6) {
-            background: var(--ruleta-color-morado);  /* stickers */
-            transform: rotate(300deg);
-        }
+        .prize-slice:nth-child(3) .text-wrapper { color: var(--naldo-white); }
         
-        /* Colores del texto (para que contraste con el fondo del slice) */
-        .prize-slice:nth-child(1) .text-wrapper, /* Amarillo */
-        .prize-slice:nth-child(5) .text-wrapper  /* Verde */
-        {
-            color: var(--naldo-black); 
+        /* Slice 4: Pelota (Naranja) */
+        .prize-slice:nth-child(4) {
+            transform: rotate(210deg); /* Centrado en 210deg */
         }
-        .prize-slice:nth-child(2) .text-wrapper { /* Blanco */
-            color: var(--naldo-black); 
+        .prize-slice:nth-child(4) .text-wrapper { color: var(--naldo-white); }
+        
+        /* Slice 5: Lona (Verde) */
+        .prize-slice:nth-child(5) {
+            transform: rotate(270deg); /* Centrado en 270deg */
         }
-        .prize-slice:nth-child(3) .text-wrapper, /* Rojo */
-        .prize-slice:nth-child(4) .text-wrapper, /* Naranja */
-        .prize-slice:nth-child(6) .text-wrapper  /* Morado */
-        {
-            color: var(--naldo-white);
+        .prize-slice:nth-child(5) .text-wrapper { color: var(--naldo-black); }
+
+        /* Slice 6: Stickers (Morado) */
+        .prize-slice:nth-child(6) {
+            transform: rotate(330deg); /* Centrado en 330deg */
         }
+        .prize-slice:nth-child(6) .text-wrapper { color: var(--naldo-white); }
+        
 
         #roulette-pointer {
             position: absolute;
@@ -793,18 +794,17 @@
                 margin-top: 0; 
                 font-family: var(--font-display);
             }
+            /* TU CAMBIO: Ruleta REDONDA y flexible */
             #roulette-container {
-                width: 250px; /* Tamaño móvil */
-                height: 250px; /* Tamaño móvil */
-                border: 8px solid var(--naldo-white); /* Borde blanco exterior en móvil */
+                width: 80vw; /* 80% del ancho de pantalla */
+                height: 80vw; /* 80% del ancho de pantalla (garantiza un círculo) */
+                border: 8px solid var(--naldo-white);
             }
-            /* Estilo para el texto de los premios en móvil */
+            /* TU CAMBIO: Estilo para el texto de los premios en móvil */
             .prize-slice .text-wrapper {
-                font-size: 11px; /* Ajuste de tamaño para móvil */
-                width: 90%; /* Ajuste de ancho para móvil */
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%) rotate(0deg); /* Se ajusta con JS */
+                font-size: 2.8vw; /* Fuente que escala con la ruleta */
+                width: 30vw; /* Ancho del texto */
+                transform: translateY(-28vw) rotate(90deg); /* Posición que escala */
             }
             /* El logo de esta sección SÍ debe ser relative Y CENTRADO */
             #step-roulette .logo {
@@ -1110,35 +1110,43 @@
                 "stickers"
             ];
             const numPrizes = prizes.length;
-            const sliceAngle = 360 / numPrizes;
+            const sliceAngle = 360 / numPrizes; // 60 grados
 
             // Función para posicionar los textos
             function positionPrizeTexts() {
-                const radius = wheel.offsetWidth / 2; // Radio de la ruleta
-                const textDistance = radius * 0.65; // Ajusta este valor para mover el texto más adentro o afuera
-                                                    // 0.65 significa el 65% del radio desde el centro
+                // radius es la mitad del tamaño del *contenedor* de la ruleta
+                const container = document.getElementById('roulette-container');
+                const radius = container.offsetWidth / 2;
+                
+                // Distancia desde el centro (60% del radio)
+                const textDistance = radius * 0.6; 
 
                 prizeSlices.forEach((slice, index) => {
                     const textWrapper = slice.querySelector('.text-wrapper');
-                    const rotationAngle = (index * sliceAngle) + (sliceAngle / 2); // Centro del slice
                     
-                    // Rotar el slice completo
-                    slice.style.transform = `rotate(${index * sliceAngle}deg)`;
+                    // 1. Calcular el ángulo del centro de este slice
+                    // (0 * 60) + 30 = 30deg
+                    // (1 * 60) + 30 = 90deg
+                    // (2 * 60) + 30 = 150deg
+                    // ...
+                    const angle = (index * sliceAngle) + (sliceAngle / 2);
+                    
+                    // 2. Girar el slice a su posición en la rueda
+                    slice.style.transform = `rotate(${angle}deg)`;
 
-                    // Posicionar y rotar el texto dentro de cada slice
-                    // Primero, rotamos el texto para que apunte hacia el exterior
-                    // Luego, lo movemos hacia el borde
+                    // 3. Posicionar y rotar el texto dentro de cada slice
+                    // Lo movemos verticalmente (translateY) y luego lo "des-rotamos"
+                    // para que quede horizontal.
                     textWrapper.style.transform = `
-                        translate(-50%, -50%) /* Centra el texto en su propio punto */
-                        rotate(${rotationAngle + 90}deg) /* Rota para que el texto esté horizontal en su sector */
-                        translateY(-${textDistance}px) /* Empuja el texto desde el centro */
+                        translateY(-${textDistance}px) 
+                        rotate(-${angle}deg)
                     `;
-                    // Esto hará que el texto esté rotado y empujado desde el centro, quedando recto dentro de su porción.
                 });
             }
 
-            // Llamar a la función al cargar la página y al redimensionar
+            // Llamar a la función al cargar la página
             positionPrizeTexts();
+            // Y si la ventana cambia de tamaño (para responsive)
             window.addEventListener('resize', positionPrizeTexts);
 
 
@@ -1147,22 +1155,24 @@
                 spinButton.style.opacity = '0.5';
                 resultDisplay.style.display = 'none'; // Oculta el resultado anterior
 
-                // Para que el puntero (en la parte superior) caiga en el centro de una porción.
-                // Ajustamos el objetivo para que la ruleta rote hasta que el centro de la porción
-                // ganadora esté justo debajo del puntero.
-                
                 const prizeIndex = Math.floor(Math.random() * numPrizes);
                 const prize = prizes[prizeIndex];
                 
-                // Calculamos el ángulo para que el *centro* de la porción quede alineado con el puntero.
-                // El puntero está en la parte superior (0 grados), y queremos que el centro de la porción
-                // ganadora gire hasta ese punto.
+                // Calculamos el ángulo del centro de la porción ganadora
                 const targetSliceCenterAngle = (prizeIndex * sliceAngle) + (sliceAngle / 2);
                 
-                // Rotación total: Varias vueltas completas + el ángulo hasta el centro de la porción.
-                // El "+ 360 * 5" asegura que siempre gire varias veces para un efecto visual.
-                // El signo negativo es porque la rueda gira en sentido horario para que el puntero apunte.
-                const totalRotation = -(targetSliceCenterAngle + 360 * 5 + (Math.random() * 30 - 15)); // Agregamos un pequeño random para que no siempre caiga en el mismo pixel.
+                // El puntero está en la parte superior (0 grados). 
+                // Queremos que la ruleta gire hasta que el ángulo objetivo esté en 0.
+                // Pero como el puntero está arriba, 0 grados es "arriba". 
+                // El ángulo 0 de la rueda está a la derecha. 
+                // Necesitamos girar 90 grados a la izquierda (-90) para que el puntero apunte al primer premio.
+                const pointerOffset = 90; 
+                
+                // Rotación total: 
+                // 1. Vueltas extra (5 * 360)
+                // 2. El ángulo del premio (targetSliceCenterAngle)
+                // 3. El offset del puntero (-90)
+                const totalRotation = (360 * 5) - targetSliceCenterAngle + pointerOffset;
 
                 wheel.style.transition = 'transform 5s cubic-bezier(0.25, 1, 0.5, 1)'; // Asegura la transición
                 wheel.style.transform = `rotate(${totalRotation}deg)`;
@@ -1171,7 +1181,6 @@
                     // Deshabilitamos la transición para que el reset no sea visible.
                     wheel.style.transition = 'none';
                     // Calculamos el ángulo actual de la rueda después de girar
-                    // Para que la rueda siempre termine en un ángulo "limpio" y pueda volver a girar correctamente
                     const normalizedRotation = totalRotation % 360;
                     wheel.style.transform = `rotate(${normalizedRotation}deg)`;
 
