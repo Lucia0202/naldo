@@ -84,6 +84,7 @@
             visibility: visible;
         }
 
+        /* --- Estilos Generales de Texto (PC) --- */
         .step h1 {
             font-size: 3rem;
             font-weight: 900;
@@ -116,7 +117,7 @@
             color: var(--naldo-black);
         }
 
-        /* --- Estilos Paso 1: Bienvenida --- */
+        /* --- Estilos Paso 1: Bienvenida (PC) --- */
         #step-welcome {
             background-image: url('mapa-fondo.png');
             background-size: cover;
@@ -489,7 +490,7 @@
         /* Esto se aplica a cualquier pantalla de 768px (tablets) o menos */
         @media (max-width: 768px) {
 
-            /* 0. CAMBIO GLOBAL: PERMITIR SCROLL */
+            /* 0. CAMBIO GLOBAL: PERMITIR SCROLL (SOLO DONDE SEA NECESARIO) */
             body {
                 overflow: auto; /* PERMITE SCROLL */
             }
@@ -502,6 +503,7 @@
             }
 
             /* TU CAMBIO: LIBERAR LOGOS (para que no se oculten detrás de la barra de Safari) */
+            /* Esta regla APLICA A TODOS LOS LOGOS EN MÓVIL */
             .logo {
                 position: relative; /* ¡LIBERADO! */
                 bottom: auto;
@@ -518,41 +520,46 @@
             /* TU CAMBIO: Centrar verticalmente SOLO esta sección */
             #step-welcome {
                 justify-content: center; /* ¡CENTRADO VERTICAL! */
+                overflow: hidden; /* ESTÁTICO */
             }
             #step-welcome h1 {
-                font-size: 12vw; /* TU CAMBIO: Achicado (antes 13vw) */
+                font-size: 11vw; /* TU CAMBIO: Achicado (antes 13vw) */
                 margin-bottom: 2vh;
                 margin-top: 0; /* Lo reseteamos porque justify-content lo centra */
             }
             #step-welcome h2 {
-                font-size: 4.5vw; 
+                font-size: 4vw; 
                 margin-bottom: 2vh;
             }
             .word-amistad {
-                font-size: 16vw; /* TU CAMBIO: Achicado (antes 18vw) */
+                font-size: 15vw; /* TU CAMBIO: Achicado (antes 16vw) */
                 margin-bottom: 2vh;
             }
             #step-welcome .logo {
                 margin-top: 2vh;
-                margin-bottom: 0; /* No necesita margen extra abajo */
+                margin-bottom: 0; /* No necesita margen extra abajo porque está centrado */
             }
 
             /* 2. SECCIÓN INSTRUCCIONES */
             
-            /* TU CAMBIO: Contenido centrado */
+            /* TU CAMBIO: Centrado vertical y estático */
+            #step-instructions {
+                justify-content: center; /* ¡CENTRADO VERTICAL! */
+                overflow: hidden; /* ¡ESTÁTICO! */
+            }
             #step-instructions .content-instructions {
                 align-items: center; 
                 width: 100%; 
             }
             .instructions-wrapper {
-                text-align: center; /* TU CAMBIO: Título centrado */
-                width: 90%; /* Un poco más angosto que la pantalla */
+                text-align: center; /* Título centrado */
+                width: 90%; 
                 display: block;
-                padding-top: 8vh; /* TU CAMBIO: Empuja el contenido hacia abajo */
+                padding-top: 0; /* Ya no necesita el padding */
             }
             #step-instructions h2 {
-                font-size: 11vw; /* TU CAMBIO: Achicado (antes 12vw) */
-                margin-bottom: 4vh; 
+                font-size: 8vw; /* TU CAMBIO: Achicado (antes 11vw) */
+                margin-bottom: 3vh; 
                 margin-top: 0; 
             }
 
@@ -561,7 +568,7 @@
             }
             #instruction-list li {
                 font-size: 4vw; 
-                margin-bottom: 3vh; 
+                margin-bottom: 2.5vh; /* Menos espacio para que quepa todo */
                 text-align: left; /* El texto de la instrucción sí a la izquierda */
             }
             #instruction-list li::before {
@@ -581,15 +588,36 @@
                 height: 20px;
                 padding: 3px;
             }
+            
+            /* TU CAMBIO: El logo de instrucciones VUELVE a ser absoluto */
+            #step-instructions .logo {
+                position: absolute;
+                bottom: 30px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 100px;
+                margin-bottom: 0; /* Anula el margen de 15vh */
+            }
+
 
             /* 3. SECCIÓN ¿ESTÁS LISTO? */
             /* TU CAMBIO: Centrar esta sección */
             #step-ready {
                 justify-content: center;
+                overflow: hidden; /* Estático */
             }
             #step-ready h1 {
                 font-size: 15vw; 
                 margin-top: 0; /* Reseteamos porque justify-content lo centra */
+            }
+            /* El logo de esta sección usa el .logo global (absolute) */
+            #step-ready .logo {
+                position: absolute;
+                bottom: 30px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 100px;
+                margin-bottom: 0;
             }
 
             /* TU CAMBIO: Pines más dispersos por TODA la pantalla */
@@ -625,6 +653,7 @@
             }
 
             /* 4. SECCIÓN PUNTOS DE AMISTAD */
+            /* Esta sección SÍ necesita scroll */
             #step-checklist h2 {
                 font-size: 10vw; 
                 margin-bottom: 1.5rem;
@@ -638,8 +667,14 @@
                 padding: 0.8rem;
                 margin-bottom: 0.5rem;
             }
+            /* El logo de esta sección usa el .logo global (relative) */
+            #step-checklist .logo {
+                position: relative;
+                margin-bottom: 15vh; /* Espacio Safari */
+            }
 
             /* 5. SECCIÓN FORMULARIO */
+            /* Esta sección SÍ necesita scroll */
             #step-form h2 {
                 font-size: 10vw; 
                 margin-top: 5vh;
@@ -650,18 +685,26 @@
             .prize-list {
                 font-size: 0.8rem;
             }
+            /* El logo de esta sección usa el .logo global (relative) */
+            #step-form .logo {
+                position: relative;
+                margin-bottom: 15vh; /* Espacio Safari */
+            }
             
             /* 6. SECCIÓN RULETA */
-            #step-roulette {
-                justify-content: center; /* Centramos esta sección */
-            }
+            /* Esta sección SÍ necesita scroll (o al menos, no pasa nada si lo tiene) */
             #step-roulette h2 {
                 font-size: 8vw; 
-                margin-top: 0;
+                margin-top: 5vh;
             }
             #roulette-container {
                 width: 250px; 
                 height: 250px;
+            }
+            /* El logo de esta sección usa el .logo global (relative) */
+            #step-roulette .logo {
+                position: relative;
+                margin-bottom: 15vh; /* Espacio Safari */
             }
             
         } /* --- FIN DEL BLOQUE @MEDIA (CELULARES) --- */
@@ -743,7 +786,7 @@
             </div>
             
             <div class="floating-pin pin-5">
-                <svg xmlns="http://wwwV.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>
             </div>
             
         </div>
