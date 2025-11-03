@@ -449,11 +449,12 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            /* TU CAMBIO: Borde blanco eliminado */
-            /* border: 10px solid var(--naldo-white); */
+            /* TU CAMBIO: Borde blanco restaurado */
+            border: 10px solid var(--naldo-white); 
             overflow: hidden; 
             position: relative;
             transition: transform 4s cubic-bezier(0.25, 1, 0.5, 1);
+            box-sizing: border-box; /* Para que el borde no sume tamaño */
         }
         
         .prize-list-wheel {
@@ -476,17 +477,16 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* TU CAMBIO: padding-right eliminado */
             box-sizing: border-box;
         }
         
         .prize-slice .text-wrapper {
             display: block;
-            /* TU CAMBIO: Centrado con transform/translate */
-            transform: rotate(45deg) translate(0, 35%);
+            /* TU CAMBIO: Centrado con translate */
+            transform: rotate(45deg) translate(0, 60px); 
             font-family: var(--font-title); 
             font-weight: 900; 
-            font-size: 14px; /* TU CAMBIO: Tamaño legible */
+            font-size: 14px; 
             text-align: center;
             max-width: 85%; 
             line-height: 1.2;
@@ -780,11 +780,12 @@
                 width: 250px; 
                 height: 250px;
             }
-            /* TU CAMBIO: Estilo para el texto de los premios en móvil */
+            /* Estilo para el texto de los premios en móvil */
             .prize-slice .text-wrapper {
                 font-size: 12px;
                 max-width: 90%;
-                transform: rotate(45deg) translate(0, 35%); /* Centrado */
+                /* TU CAMBIO: Centrado con translate para móvil */
+                transform: rotate(45deg) translate(0, 45px);
             }
             /* El logo de esta sección SÍ debe ser relative Y CENTRADO */
             #step-roulette .logo {
@@ -1079,7 +1080,7 @@
             const wheel = document.getElementById('roulette-wheel');
             const resultDisplay = document.getElementById('roulette-result');
             
-            // TU CAMBIO: Array de JS sincronizado con el HTML
+            // TU CAMBIO: Array de JS 100% SINCRONIZADO con el HTML
             const prizes = [
                 "20% off en cámaras de fotos",
                 "Botella térmica",
@@ -1097,7 +1098,14 @@
                 const prizeIndex = Math.floor(Math.random() * prizes.length);
                 const prize = prizes[prizeIndex];
                 const extraSpins = 360 * (Math.floor(Math.random() * 3) + 3);
+                
+                // Esta es la matemática corregida que asegura que el puntero (en 0 grados)
+                // apunte al *medio* de la porción del premio.
                 const targetAngle = (prizeIndex * sliceAngle) + (sliceAngle / 2);
+                
+                // Sumamos 360 grados (un giro completo) y luego le restamos el ángulo
+                // para asegurarnos de que el giro siempre sea en la misma dirección (negativa)
+                // y que el puntero de 12 en punto sea el "cero".
                 const totalRotation = -(extraSpins + targetAngle);
 
                 wheel.style.transform = `rotate(${totalRotation}deg)`;
