@@ -537,7 +537,6 @@
             height: 0;
             border-left: 20px solid transparent;
             border-right: 20px solid transparent;
-            /* TU CAMBIO: Color del puntero */
             border-top: 30px solid #80060d; 
             z-index: 10;
         }
@@ -696,7 +695,7 @@
             /* TU CAMBIO: Pin-5 movido para que no se superponga */
             .pin-5 {
                 width: 60px; height: 60px;
-                top: 75%; /* ¡Más abajo! (Antes 55%) */
+                top: 75%; /* ¡Más abajo! */
                 left: 45%; 
                 animation-delay: 0.4s;
                 opacity: 0;
@@ -729,6 +728,7 @@
                 transform: none;
                 margin-left: auto; /* Centrado */
                 margin-right: auto; /* Centrado */
+                margin-top: 5vh; /* Espacio superior */
                 margin-bottom: 15vh; /* Espacio Safari */
             }
 
@@ -737,11 +737,12 @@
             #step-form {
                 overflow-y: auto; 
                 justify-content: flex-start; 
+                /* TU CAMBIO: Añadido padding-top para centrar el contenido */
+                padding-top: 10vh;
             }
             #step-form h2 {
                 font-size: 10vw; 
-                margin-top: 5vh;
-                /* TU CAMBIO: Aplicar fuente y color */
+                margin-top: 0; /* Reseteado */
                 font-family: var(--font-display);
                 color: var(--naldo-red);
             }
@@ -759,6 +760,7 @@
                 transform: none;
                 margin-left: auto;
                 margin-right: auto;
+                margin-top: 5vh; /* Espacio superior */
                 margin-bottom: 15vh; /* Espacio Safari */
             }
             
@@ -767,11 +769,11 @@
             #step-roulette {
                 overflow-y: auto; 
                 justify-content: flex-start; 
+                padding-top: 10vh; /* TU CAMBIO: Añadido padding-top */
             }
             #step-roulette h2 {
                 font-size: 8vw; 
-                margin-top: 5vh;
-                /* TU CAMBIO: Aplicar fuente */
+                margin-top: 0; /* Reseteado */
                 font-family: var(--font-display);
             }
             #roulette-container {
@@ -790,6 +792,7 @@
                 transform: none;
                 margin-left: auto;
                 margin-right: auto;
+                margin-top: 5vh; /* Espacio superior */
                 margin-bottom: 15vh; /* Espacio Safari */
             }
             
@@ -1075,12 +1078,12 @@
             const resultDisplay = document.getElementById('roulette-result');
             
             const prizes = [
-                "20% de descuento en tu próxima compra",
-                "Una botella térmica",
-                "Una pelota",
+                "20% OFF",
+                "Botella Térmica",
+                "Una Pelota",
                 "Stickers",
-                "Lona de playa",
-                "40% de descuento en cuidado personal"
+                "Lona Playa",
+                "40% OFF Cuidado"
             ];
             const sliceAngle = 360 / prizes.length;
 
