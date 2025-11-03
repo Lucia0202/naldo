@@ -175,7 +175,7 @@
         }
 
         /* ============================================= */
-        /* --- ESTILOS PASO 2: INSTRUCCIONES (¡CON TU ÚLTIMO CAMBIO!) --- */
+        /* --- ESTILOS PASO 2: INSTRUCCIONES --- */
         /* ============================================= */
         
         #step-instructions .content-instructions {
@@ -187,7 +187,6 @@
             margin: 0 auto;
         }
 
-        /* TU CAMBIO AQUÍ: Este nuevo contenedor centrará el bloque (título + lista) */
         .instructions-wrapper {
             display: inline-block; /* Permite que el bloque se centre */
             text-align: left; /* Alinea el contenido (H2 y UL) a la izquierda */
@@ -199,18 +198,16 @@
             color: var(--naldo-red); 
             text-decoration: none; 
             margin-bottom: 3rem;
-            /* text-align: center; */ /* TU CAMBIO AQUÍ: Quitamos esto */
         }
 
         #instruction-list {
             list-style: none;
             padding: 0;
             margin: 0;
-            /* width: 80%; */ /* TU CAMBIO AQUÍ: Quitamos esto para que se alinee solo */
             max-width: 1200px;
         }
         #instruction-list li {
-            font-size: 40px; 
+            font-size: 30px; /* TU NUEVO CAMBIO: Tamaño 30px */
             font-weight: 700;
             color: var(--naldo-black);
             display: flex;
@@ -264,7 +261,7 @@
             fill: var(--naldo-white); 
         }
         
-        } 
+        } /* Esta llave es la que estaba corregida */
 
         /* Estilo específico para el ícono de regalo (contorno) */
         .icon-wrapper .icon-regalo {
@@ -528,7 +525,8 @@
                     </li>
                 </ul>
             </div>
-            </div>
+
+        </div>
         
         <img src="logo-negro.png" alt="Naldo Logo" class="logo">
     </section>
