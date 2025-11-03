@@ -29,13 +29,10 @@
             --font-script: 'Hurricane', cursive;
             --font-display: 'TTNorms', sans-serif; 
             
-            /* Colores de la ruleta (ACTUALIZADOS SEGÚN TU IMAGEN) */
-            --ruleta-color-amarillo: #F2DA00; 
-            --ruleta-color-blanco: #ffffff;
-            --ruleta-color-rojo: #E6202A;
-            --ruleta-color-naranja: #F48220;
-            --ruleta-color-verde: #4CAF50;
-            --ruleta-color-morado: #5D408B;
+            /* Colores de la ruleta (ACTUALIZADOS A TUS 3 COLORES) */
+            --ruleta-color-1: #b2000b; /* Rojo Oscuro */
+            --ruleta-color-2: #000000; /* Negro */
+            --ruleta-color-3: #ffffff; /* Blanco */
         }
 
         /* --- Estructura Base --- */
@@ -459,14 +456,14 @@
             overflow: hidden; 
             position: relative;
             transition: transform 5s cubic-bezier(0.25, 1, 0.5, 1);
-            /* Conic gradient para los colores de fondo */
+            /* TU CAMBIO: Conic gradient con los 3 nuevos colores */
             background: conic-gradient(
-                var(--ruleta-color-amarillo) 0deg 60deg,
-                var(--ruleta-color-blanco) 60deg 120deg,
-                var(--ruleta-color-rojo) 120deg 180deg,
-                var(--ruleta-color-naranja) 180deg 240deg,
-                var(--ruleta-color-verde) 240deg 300deg,
-                var(--ruleta-color-morado) 300deg 360deg
+                var(--ruleta-color-1) 0deg 60deg,  /* Rojo Oscuro */
+                var(--ruleta-color-2) 60deg 120deg, /* Negro */
+                var(--ruleta-color-3) 120deg 180deg, /* Blanco */
+                var(--ruleta-color-1) 180deg 240deg, /* Rojo Oscuro */
+                var(--ruleta-color-2) 240deg 300deg, /* Negro */
+                var(--ruleta-color-3) 300deg 360deg /* Blanco */
             );
         }
         
@@ -476,7 +473,7 @@
             margin: 0;
             width: 100%;
             height: 100%;
-            position: absolute; /* Se superpone a la rueda de color */
+            position: absolute; 
             top: 0; left: 0;
             border-radius: 50%;
         }
@@ -504,48 +501,29 @@
             text-align: center;
             line-height: 1.2;
             width: 90px; /* Ancho fijo para el texto */
-            /* Posicionamiento mágico */
             transform-origin: center center;
-            /* Rota el texto 90 grados y lo empuja hacia afuera */
             transform: translateY(-90px) rotate(90deg); 
         }
 
-        /* Colores y rotación de los 6 slices (60deg cada uno) - ¡ACTUALIZADOS! */
-        /* Slice 1: 20% OFF (Amarillo) */
-        .prize-slice:nth-child(1) {
-            transform: rotate(30deg); /* Centrado en 30deg */
-        }
-        .prize-slice:nth-child(1) .text-wrapper { color: var(--naldo-black); }
-
-        /* Slice 2: 50% OFF (Blanco) */
-        .prize-slice:nth-child(2) {
-            transform: rotate(90deg); /* Centrado en 90deg */
-        }
-        .prize-slice:nth-child(2) .text-wrapper { color: var(--naldo-black); }
-
-        /* Slice 3: Botella (Rojo) */
-        .prize-slice:nth-child(3) {
-            transform: rotate(150deg); /* Centrado en 150deg */
-        }
-        .prize-slice:nth-child(3) .text-wrapper { color: var(--naldo-white); }
+        /* Colores y rotación de los 6 slices (60deg cada uno) */
+        .prize-slice:nth-child(1) { transform: rotate(30deg); } /* 20% OFF (Rojo Oscuro) */
+        .prize-slice:nth-child(2) { transform: rotate(90deg); } /* Botella (Negro) */
+        .prize-slice:nth-child(3) { transform: rotate(150deg); } /* Pelota (Blanco) */
+        .prize-slice:nth-child(4) { transform: rotate(210deg); } /* Stickers (Rojo Oscuro) */
+        .prize-slice:nth-child(5) { transform: rotate(270deg); } /* Lona (Negro) */
+        .prize-slice:nth-child(6) { transform: rotate(330deg); } /* 40% OFF (Blanco) */
         
-        /* Slice 4: Pelota (Naranja) */
-        .prize-slice:nth-child(4) {
-            transform: rotate(210deg); /* Centrado en 210deg */
+        /* TU CAMBIO: Colores del texto según la nueva paleta */
+        .prize-slice:nth-child(1) .text-wrapper, /* Sobre Rojo Oscuro */
+        .prize-slice:nth-child(2) .text-wrapper, /* Sobre Negro */
+        .prize-slice:nth-child(4) .text-wrapper, /* Sobre Rojo Oscuro */
+        .prize-slice:nth-child(5) .text-wrapper { /* Sobre Negro */
+            color: var(--naldo-white);
         }
-        .prize-slice:nth-child(4) .text-wrapper { color: var(--naldo-white); }
-        
-        /* Slice 5: Lona (Verde) */
-        .prize-slice:nth-child(5) {
-            transform: rotate(270deg); /* Centrado en 270deg */
+        .prize-slice:nth-child(3) .text-wrapper, /* Sobre Blanco */
+        .prize-slice:nth-child(6) .text-wrapper { /* Sobre Blanco */
+            color: var(--naldo-black);
         }
-        .prize-slice:nth-child(5) .text-wrapper { color: var(--naldo-black); }
-
-        /* Slice 6: Stickers (Morado) */
-        .prize-slice:nth-child(6) {
-            transform: rotate(330deg); /* Centrado en 330deg */
-        }
-        .prize-slice:nth-child(6) .text-wrapper { color: var(--naldo-white); }
         
 
         #roulette-pointer {
@@ -794,17 +772,17 @@
                 margin-top: 0; 
                 font-family: var(--font-display);
             }
-            /* TU CAMBIO: Ruleta REDONDA y flexible */
+            /* Ruleta REDONDA y flexible */
             #roulette-container {
                 width: 80vw; /* 80% del ancho de pantalla */
                 height: 80vw; /* 80% del ancho de pantalla (garantiza un círculo) */
                 border: 8px solid var(--naldo-white);
             }
-            /* TU CAMBIO: Estilo para el texto de los premios en móvil */
+            /* Estilo para el texto de los premios en móvil */
             .prize-slice .text-wrapper {
-                font-size: 2.8vw; /* Fuente que escala con la ruleta */
-                width: 30vw; /* Ancho del texto */
-                transform: translateY(-28vw) rotate(90deg); /* Posición que escala */
+                font-size: 3vw; /* Fuente que escala con la ruleta */
+                width: 25vw; /* Ancho del texto */
+                transform: translateY(-22vw) rotate(90deg); /* Posición que escala */
             }
             /* El logo de esta sección SÍ debe ser relative Y CENTRADO */
             #step-roulette .logo {
@@ -1114,29 +1092,18 @@
 
             // Función para posicionar los textos
             function positionPrizeTexts() {
-                // radius es la mitad del tamaño del *contenedor* de la ruleta
                 const container = document.getElementById('roulette-container');
                 const radius = container.offsetWidth / 2;
-                
-                // Distancia desde el centro (60% del radio)
-                const textDistance = radius * 0.6; 
+                const textDistance = radius * 0.55; // ¡Centrado! (55% del radio)
 
                 prizeSlices.forEach((slice, index) => {
                     const textWrapper = slice.querySelector('.text-wrapper');
+                    const angle = (index * sliceAngle) + (sliceAngle / 2); // Centro del slice
                     
-                    // 1. Calcular el ángulo del centro de este slice
-                    // (0 * 60) + 30 = 30deg
-                    // (1 * 60) + 30 = 90deg
-                    // (2 * 60) + 30 = 150deg
-                    // ...
-                    const angle = (index * sliceAngle) + (sliceAngle / 2);
-                    
-                    // 2. Girar el slice a su posición en la rueda
+                    // 1. Girar el slice a su posición en la rueda
                     slice.style.transform = `rotate(${angle}deg)`;
 
-                    // 3. Posicionar y rotar el texto dentro de cada slice
-                    // Lo movemos verticalmente (translateY) y luego lo "des-rotamos"
-                    // para que quede horizontal.
+                    // 2. Posicionar y rotar el texto dentro de cada slice
                     textWrapper.style.transform = `
                         translateY(-${textDistance}px) 
                         rotate(-${angle}deg)
@@ -1144,43 +1111,31 @@
                 });
             }
 
-            // Llamar a la función al cargar la página
             positionPrizeTexts();
-            // Y si la ventana cambia de tamaño (para responsive)
             window.addEventListener('resize', positionPrizeTexts);
 
 
             spinButton.addEventListener('click', () => {
                 spinButton.disabled = true;
                 spinButton.style.opacity = '0.5';
-                resultDisplay.style.display = 'none'; // Oculta el resultado anterior
+                resultDisplay.style.display = 'none'; 
 
                 const prizeIndex = Math.floor(Math.random() * numPrizes);
                 const prize = prizes[prizeIndex];
                 
-                // Calculamos el ángulo del centro de la porción ganadora
+                // Ángulo del centro de la porción ganadora
                 const targetSliceCenterAngle = (prizeIndex * sliceAngle) + (sliceAngle / 2);
                 
-                // El puntero está en la parte superior (0 grados). 
-                // Queremos que la ruleta gire hasta que el ángulo objetivo esté en 0.
-                // Pero como el puntero está arriba, 0 grados es "arriba". 
-                // El ángulo 0 de la rueda está a la derecha. 
-                // Necesitamos girar 90 grados a la izquierda (-90) para que el puntero apunte al primer premio.
+                // Offset para que el puntero (arriba) sea el "cero"
                 const pointerOffset = 90; 
                 
-                // Rotación total: 
-                // 1. Vueltas extra (5 * 360)
-                // 2. El ángulo del premio (targetSliceCenterAngle)
-                // 3. El offset del puntero (-90)
                 const totalRotation = (360 * 5) - targetSliceCenterAngle + pointerOffset;
 
-                wheel.style.transition = 'transform 5s cubic-bezier(0.25, 1, 0.5, 1)'; // Asegura la transición
+                wheel.style.transition = 'transform 5s cubic-bezier(0.25, 1, 0.5, 1)';
                 wheel.style.transform = `rotate(${totalRotation}deg)`;
 
                 setTimeout(() => {
-                    // Deshabilitamos la transición para que el reset no sea visible.
                     wheel.style.transition = 'none';
-                    // Calculamos el ángulo actual de la rueda después de girar
                     const normalizedRotation = totalRotation % 360;
                     wheel.style.transform = `rotate(${normalizedRotation}deg)`;
 
@@ -1188,7 +1143,7 @@
                     resultDisplay.style.display = 'block';
                     spinButton.disabled = false;
                     spinButton.style.opacity = '1';
-                }, 5100); // Un poco más que la duración de la transición
+                }, 5100); 
             });
 
 
