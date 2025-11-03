@@ -8,17 +8,19 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
-    <link href="https://fonts.googleapis.com/css2?family=Climate+Crisis&family=Hurricane&family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hurricane&family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
 
     <style>
-/* --- INICIO: Agrega este bloque --- */
+        /* --- INICIO: Definición de tu fuente TT Norms --- */
         @font-face {
-            font-family: 'TTNormsPro-ExtraBold.woff2'; /* <-- Este es el nombre que TÚ le pones */
-            src: url('TTNormsPro-ExtraBold.woff2') format('woff2'); /* <-- Este es el nombre del ARCHIVO */
+            /* CORRECCIÓN: El nombre de la fuente debe ser simple. */
+            font-family: 'TTNorms'; 
+            src: url('TTNormsPro-ExtraBold.woff2') format('woff2'); /* Este es el nombre del ARCHIVO */
             font-weight: normal;
             font-style: normal;
         }
-        /* --- FIN: Agrega este bloque --- */
+        /* --- FIN: Definición de tu fuente --- */
+
         /* --- Definiciones de Diseño (Colores y Fuentes) --- */
         :root {
             --naldo-red: #f1000f;
@@ -26,7 +28,8 @@
             --naldo-black: #000000;
             --font-title: 'Poppins', sans-serif;
             --font-script: 'Hurricane', cursive;
-            --font-display: 'TTNormsPro-ExtraBold.woff2', sans-serif; /* Nueva fuente */
+            /* CORRECCIÓN: Usamos el nombre 'TTNorms' que definimos arriba */
+            --font-display: 'TTNorms', sans-serif; 
         }
 
         /* --- Estructura Base --- */
@@ -47,19 +50,17 @@
             height: auto;
             z-index: 10;
         }
-/* --- PEGA ESTE BLOQUE NUEVO AQUÍ --- */
+        
         #step-welcome .logo {
-            position: relative; /* Anula el 'position: absolute' */
-            bottom: auto;       /* Anula el 'bottom: 30px' */
-            left: auto;         /* Anula el 'left: 50%' */
-            transform: none;    /* Anula el 'transform: translateX(-50%)' */
-            
-            /* Estilos para centrarlo y darle espacio */
-            margin-top: 3rem;   /* Espacio entre "amistad" y el logo */
-            margin-left: auto;  /* Centrado */
-            margin-right: auto; /* Centrado */
+            position: relative; 
+            bottom: auto;       
+            left: auto;         
+            transform: none;    
+            margin-top: 3rem;   
+            margin-left: auto;  
+            margin-right: auto; 
         }
-        /* --- FIN DEL BLOQUE NUEVO --- */
+
         /* --- Estructura de Pasos (Stages) --- */
         .step {
             display: flex;
@@ -118,7 +119,8 @@
 
         /* --- Estilos Paso 1: Bienvenida --- */
         #step-welcome {
-            background-image: url('background-map-junin.png');
+            /* CORRECCIÓN: Nombre de archivo simple */
+            background-image: url('mapa-fondo.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -140,30 +142,27 @@
             z-index: 2;
         }
 
-        /* CAMBIOS: Tipografía y tamaño de BIENVENIDOS */
         #step-welcome h1 {
             font-family: var(--font-display);
-            font-size: 140px;
+            font-size: 140px; /* Tamaño 140px como pediste */
             margin-bottom: 2rem;
         }
         
-        /* CAMBIOS: H2 ahora incluye el '?' final */
         #step-welcome h2 {
             font-weight: 700;
             font-size: 1.5rem;
             text-transform: uppercase;
-            margin-bottom: 0.5rem; /* Menos espacio antes de 'amistad' */
+            margin-bottom: 0.5rem; 
         }
         
-        /* CAMBIOS: 'amistad' en minúscula y 100px */
         .word-amistad {
             font-family: var(--font-script);
-            font-size: 120px; /* Tamaño 100 puntos */
+            font-size: 120px; 
             color: var(--naldo-white);
             white-space: nowrap;
             margin-bottom: 2rem;
-            text-transform: lowercase; /* Todo en minúscula */
-            line-height: 1; /* Ajuste para la fuente grande */
+            text-transform: lowercase; 
+            line-height: 1; 
         }
         .coordenadas-black {
             color: var(--naldo-black);
@@ -180,38 +179,29 @@
 
         /* --- Estilos Paso 2: Instrucciones --- */
         
-        /* CAMBIO: Contenedor más ancho y alineado a la izquierda */
         #step-instructions .content-instructions {
             width: 90%;
-            max-width: 1600px; /* Más ancho para fuente de 70px */
+            max-width: 1600px; 
             text-align: left;
             margin: 0 auto;
         }
         
-        /* CAMBIOS: Título de Instrucciones */
         #step-instructions h2 {
             font-family: var(--font-display);
-            font-size: 130px;
-            color: var(--naldo-red); /* Color rojo */
-            text-decoration: none; /* Sin subrayado */
+            font-size: 140px; /* CORRECCIÓN: 140px para que coincida con BIENVENIDOS */
+            color: var(--naldo-red); 
+            text-decoration: none; 
             margin-bottom: 3rem;
             text-align: left;
         }
 
-        /* CAMBIO: Removido el recuadro negro */
-        #step-instructions .content {
-            border: none;
-            padding: 0;
-        }
-        
-        /* CAMBIOS: Lista de instrucciones */
         #instruction-list {
             list-style: none;
             padding: 0;
             margin: 0;
         }
         #instruction-list li {
-            font-size: 30px; /* Tamaño 70 puntos */
+            font-size: 60px; /* Tamaño 60px que pediste */
             font-weight: 700;
             color: var(--naldo-black);
             display: flex;
@@ -220,38 +210,34 @@
             line-height: 1.2;
         }
         
-        /* CAMBIO: Punto rojo de 60px */
         #instruction-list li::before {
             content: '';
             display: block;
-            width: 15px;
-            height: 15px;
+            width: 15px; /* Tamaño 15px que pediste */
+            height: 15px; /* Tamaño 15px que pediste */
             background-color: var(--naldo-red);
             border-radius: 50%;
             margin-right: 2rem;
             flex-shrink: 0;
         }
         
-        /* CAMBIO: Contenedor para los íconos */
+        #instruction-list li span:not(.icon-wrapper) {
+            flex-grow: 1; 
+        }
+
         .icon-wrapper {
-            margin-left: 2rem; /* <-- CAMBIADO de right a left */
+            margin-left: 2rem; 
             flex-shrink: 0;
             display: flex;
             align-items: center;
-            line-height: 0; /* Arregla alineación vertical de SVGs */
+            line-height: 0; 
         }
         .icon-wrapper svg {
-            width: 70px; /* Tamaño base del ícono */
+            width: 70px; 
             height: 70px;
             fill: var(--naldo-red);
         }
-        /* --- AÑADE ESTE BLOQUE NUEVO --- */
-        #instruction-list li span:not(.icon-wrapper) {
-            flex-grow: 1; /* Hace que el span del texto crezca */
-            /* Esta línea es opcional, por si el texto queda pegado al ícono */
-            /* padding-right: 1rem; */
-}
-        /* CAMBIO: Círculo rojo con tilde blanca */
+        
         .icon-wrapper.check-circle {
             width: 70px;
             height: 70px;
@@ -260,29 +246,33 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 10px; /* Espacio para el tilde */
+            padding: 10px; 
             box-sizing: border-box;
         }
         .icon-wrapper.check-circle svg {
             width: 100%;
             height: 100%;
-            fill: var(--naldo-white); /* Tilde blanca */
-/* --- AÑADE ESTE NUEVO BLOQUE --- */
+            fill: var(--naldo-white); 
+        }
+
+        /* CORRECCIÓN: Faltaba esta llave de cierre '}' */
+        } 
+
         /* Estilo específico para el ícono de regalo (contorno) */
         .icon-wrapper .icon-regalo {
             fill: none; /* Quitamos el relleno */
             stroke: var(--naldo-red); /* Le damos color al contorno */
-            /* stroke-width: 1.5px; */ /* Grosor de la línea (opcional, ya lo tiene el SVG) */        
-}
-/* --- AÑADE ESTE NUEVO BLOQUE --- */
+            stroke-width: 1.5;
+        }
+
         /* Estilo para el título de ¿ESTÁS LISTO? */
         #step-ready h1 {
             font-family: var(--font-display); /* Misma fuente que BIENVENIDOS */
-            font-size: 120px; /* Mismo tamaño */
+            font-size: 140px; /* CORRECCIÓN: 140px como pediste */
             position: relative; /* Para que esté sobre los pines */
             z-index: 5;
         }
-/* --- AÑADE ESTE NUEVO BLOQUE --- */
+        
         /* Animación de "Pop" */
         @keyframes pop-in {
             0% {
@@ -298,23 +288,22 @@
                 opacity: 1;
             }
         }
-        /* --- FIN DEL NUEVO BLOQUE --- */
-/* --- AÑADE ESTE NUEVO BLOQUE --- */
+        
         .pin-container {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden; /* Para que no se vean si se salen */
+            overflow: hidden; 
         }
 
         .floating-pin {
             position: absolute;
-            fill: var(--naldo-white); /* Color blanco sobre fondo rojo */
-            opacity: 0; /* Empiezan invisibles */
-            animation: pop-in 0.5s ease-out forwards; /* Aplicamos la animación */
-            z-index: 1; /* Detrás del texto */
+            fill: var(--naldo-white); 
+            opacity: 0; 
+            animation: pop-in 0.5s ease-out forwards; 
+            z-index: 1; 
         }
         
         /* Estilos individuales para dispersarlos (tamaño, posición, retraso) */
@@ -323,7 +312,7 @@
             height: 80px;
             top: 15%;
             left: 10%;
-            animation-delay: 0.2s; /* Retraso para que no salgan todos juntos */
+            animation-delay: 0.2s; 
         }
         .pin-2 {
             width: 50px;
@@ -353,12 +342,7 @@
             left: 45%;
             animation-delay: 0.3s;
         }
-        /* --- FIN DEL NUEVO BLOQUE --- */
 
-
-        /* --- Estilos Paso 4: Checklist --- */
-        #task-list {
-        /* ... (el resto de tu código sigue) ... */
         /* --- Estilos Paso 4: Checklist --- */
         #task-list {
             list-style: none;
@@ -491,7 +475,7 @@
         <h2>¿ESTÁS LISTO PARA DESCUBRIR LAS <span class="coordenadas-black">COORDENADAS</span> DE TU?</h2>
         <div class="word-amistad"></div>
         
-        <img src="Logo 2.png" alt="Naldo Logo" class="logo">
+        <img src="logo-blanco.png" alt="Naldo Logo" class="logo">
     </section>
 
     <section id="step-instructions" class="step">
@@ -502,12 +486,8 @@
                 <li>
                     <span>El circuito consiste en seguir las indicaciones que dan las pantallas mencionadas en el mapa.</span>
                     <span class="icon-wrapper">
-                        <svg class="icon-regalo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5">
-                            <polyline points="20 12 20 22 4 22 4 12"></polyline>
-                            <rect x="2" y="7" width="20" height="5"></rect>
-                            <line x1="12" y1="22" x2="12" y2="7"></line>
-                            <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
-                            <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                            <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
                         </svg>
                     </span>
                 </li>
@@ -522,15 +502,19 @@
                 <li>
                     <span>¿Terminaste? Visitanos en R. Sáenz Peña e Hipólito Yrigoyen que te esperan muchas sorpresas.</span>
                     <span class="icon-wrapper">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-                           <path d="M3 2.5a2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1 5 0v.006c.092.023.18.049.26.077L13.5 2a.5.5 0 0 1 .5.5v1.5c0 .034-.002.067-.006.1a.5.5 0 0 1-.494.4a2.5 2.5 0 0 1-1.994.493l-.339-.028A2.5 2.5 0 0 1 8 5.993A2.5 2.5 0 0 1 5.339 4.9l-.339.028a2.5 2.5 0 0 1-1.994-.493a.5.5 0 0 1-.494-.4a.5.5 0 0 1-.006-.1V2.5a.5.5 0 0 1 .5-.5l.74.006c.08-.028.168-.054.26-.077V2.5zM1 6v8.5A1.5 1.5 0 0 0 2.5 16h11a1.5 1.5 0 0 0 1.5-1.5V6H1zm14 0H1v-1a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v1zM8 7.5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5z"/>
+                        <svg class="icon-regalo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5">
+                            <polyline points="20 12 20 22 4 22 4 12"></polyline>
+                            <rect x="2" y="7" width="20" height="5"></rect>
+                            <line x1="12" y1="22" x2="12" y2="7"></line>
+                            <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+                            <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
                         </svg>
                     </span>
                 </li>
             </ul>
         </div>
         
-        <img src="Naldo logo.png" alt="Naldo Logo" class="logo">
+        <img src="logo-negro.png" alt="Naldo Logo" class="logo">
     </section>
 
     <section id="step-ready" class="step">
@@ -559,6 +543,7 @@
             </div>
             
         </div>
+        
         <img src="logo-blanco.png" alt="Naldo Logo" class="logo">
     </section>
 
@@ -587,13 +572,13 @@
                 Avenida Arias y Primera Junta
             </li>
         </ul>
-        <img src="Naldo logo.png" alt="Naldo Logo" class="logo">
+        <img src="logo-negro.png" alt="Naldo Logo" class="logo">
     </section>
 
     <section id="step-congrats" class="step">
         <h1>FELICITACIONES</h1>
         <h2>HAS COMPLETADO TODOS LOS PUNTOS</h2>
-        <img src="Logo 2.png" alt="Naldo Logo" class="logo">
+        <img src="logo-blanco.png" alt="Naldo Logo" class="logo">
     </section>
 
     <section id="step-form" class="step">
@@ -615,7 +600,7 @@
             <li>• Dos entradas para ver el Turismo Carretera</li>
             <li>• Dos entradas para ver a Sarmiento</li>
         </ul>
-        <img src="Naldo logo.png" alt="Naldo Logo" class="logo">
+        <img src="logo-negro.png" alt="Naldo Logo" class="logo">
     </section>
 
     <section id="step-roulette" class="step">
@@ -630,7 +615,7 @@
         <button id="spin-button">¡GIRAR!</button>
         <div id="roulette-result"></div>
 
-        <img src="Logo 2.png" alt="Naldo Logo" class="logo">
+        <img src="logo-blanco.png" alt="Naldo Logo" class="logo">
     </section>
 
     <script>
@@ -783,8 +768,7 @@
                 
                 setupWelcomeAnimation();
 
-                // Fases de transición
-                // CAMBIO: Se ajustaron los tiempos a 15 segundos para instrucciones
+                // Fases de transición (Instrucciones duran 15 seg)
                 setTimeout(() => { goToStep('step-instructions'); }, 5000); // 5 seg (Bienvenida)
                 setTimeout(() => { goToStep('step-ready'); }, 20000);       // 5 seg (Bienvenida) + 15 seg (Instrucciones)
                 setTimeout(() => { goToStep('step-checklist'); }, 23000);   // 20 seg (Anteriores) + 3 seg (¿Listo?)
