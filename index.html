@@ -455,8 +455,7 @@
             overflow: hidden; 
             position: relative;
             /* LA TRANSICIÓN SE APLICA DESDE JAVASCRIPT */
-            /* transition: transform 5s cubic-bezier(0.25, 1, 0.5, 1); */
-            /* Conic gradient con los 3 nuevos colores */
+            /* conic-gradient (0deg = Derecha) */
             background: conic-gradient(
                 var(--ruleta-color-1) 0deg 60deg,  /* Rojo Oscuro */
                 var(--ruleta-color-2) 60deg 120deg, /* Negro */
@@ -476,6 +475,9 @@
             position: absolute; 
             top: 0; left: 0;
             border-radius: 50%;
+            /* El JS rota la rueda (con el gradiente), */
+            /* así que el contenedor de texto debe girar con ella */
+            /* ¡NO, EL SCRIPT ROTA LOS 'li' INDIVIDUALMENTE! */
         }
         
         .prize-slice {
@@ -484,8 +486,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* Esto es un "slice" de 60 grados */
+            /* Clip-path (0deg = Arriba) */
             clip-path: polygon(50% 50%, 50% 0, 84.6% 25%); 
+            /* transform-origin (0deg = Arriba) */
             transform-origin: center center;
             display: flex;
             justify-content: center;
@@ -505,24 +508,22 @@
             /* La posición exacta la calcula el JavaScript */
         }
 
-        /* Colores y rotación de los 6 slices (60deg cada uno) */
-        /* La rotación la calcula el JavaScript */
-        
         /* Colores del texto según la nueva paleta */
-        .prize-slice:nth-child(1) .text-wrapper, /* Sobre Rojo Oscuro */
-        .prize-slice:nth-child(2) .text-wrapper, /* Sobre Negro */
-        .prize-slice:nth-child(4) .text-wrapper, /* Sobre Rojo Oscuro */
-        .prize-slice:nth-child(5) .text-wrapper { /* Sobre Negro */
+        .prize-slice:nth-child(1) .text-wrapper, /* Sobre Rojo Oscuro (Gradiente 0-60)*/
+        .prize-slice:nth-child(2) .text-wrapper, /* Sobre Negro (Gradiente 60-120) */
+        .prize-slice:nth-child(4) .text-wrapper, /* Sobre Rojo Oscuro (Gradiente 180-240) */
+        .prize-slice:nth-child(5) .text-wrapper { /* Sobre Negro (Gradiente 240-300) */
             color: var(--naldo-white);
         }
-        .prize-slice:nth-child(3) .text-wrapper, /* Sobre Blanco */
-        .prize-slice:nth-child(6) .text-wrapper { /* Sobre Blanco */
+        .prize-slice:nth-child(3) .text-wrapper, /* Sobre Blanco (Gradiente 120-180) */
+        .prize-slice:nth-child(6) .text-wrapper { /* Sobre Blanco (Gradiente 300-360) */
             color: var(--naldo-black);
         }
         
 
         #roulette-pointer {
             position: absolute;
+            /* Puntero está ARRIBA (en 0deg del eje 'transform') */
             top: -20px;
             left: 50%;
             transform: translateX(-50%);
@@ -1069,15 +1070,14 @@
 
 
             // =================================================================
-            // --- INICIO: LÓGICA DE RULETA (PASO 7) - CORREGIDA AL CENTRO ---
+            // --- INICIO: LÓGICA DE RULETA (PASO 7) - CORREGIDA CON DESFASE ---
             // =================================================================
             const spinButton = document.getElementById('spin-button');
             const wheel = document.getElementById('roulette-wheel');
             const resultDisplay = document.getElementById('roulette-result');
             const prizeSlices = document.querySelectorAll('.prize-slice');
-            const ruletaSound = document.getElementById('ruleta-sound'); // Variable para el sonido
+            const ruletaSound = document.getElementById('ruleta-sound'); 
 
-            // ¡Array de JS 100% SINCRONIZADO con el HTML!
             const prizes = [
                 "Stickers",
                 "20%OFF en cámaras",
@@ -1089,7 +1089,9 @@
             const numPrizes = prizes.length;
             const sliceAngle = 360 / numPrizes; // 60 grados
 
-            // Función para posicionar los textos (ESTO ES DE TU DISEÑO Y SE MANTIENE)
+            // --- ¡CORRECCIÓN 1! ---
+            // Esta función ahora alinea el TEXTO con el GRADIENTE,
+            // compensando el desfase de 90 grados.
             function positionPrizeTexts() {
                 const container = document.getElementById('roulette-container');
                 const radius = container.offsetWidth / 2;
@@ -1100,13 +1102,20 @@
                 prizeSlices.forEach((slice, index) => {
                     const textWrapper = slice.querySelector('.text-wrapper');
                     
-                    const angle = (index * sliceAngle) + (sliceAngle / 2);
+                    // 1. Centro del gradiente (0deg = Derecha)
+                    const gradientCenterAngle = (index * sliceAngle) + (sliceAngle / 2); // ej: 30, 90, 150...
                     
-                    slice.style.transform = `rotate(${angle}deg)`;
+                    // 2. Convertir a ángulo de 'transform' (0deg = Arriba)
+                    // (90 - 30 = 60), (90 - 90 = 0), (90 - 150 = -60)
+                    const transformAngle = 90 - gradientCenterAngle; 
 
+                    // 3. Girar el 'slice' (que es solo el contenedor del texto)
+                    slice.style.transform = `rotate(${transformAngle}deg)`;
+
+                    // 4. Posicionar y rotar el texto para que quede derecho
                     textWrapper.style.transform = `
                         translateY(-${textDistance}px) 
-                        rotate(-${angle}deg)
+                        rotate(${-transformAngle}deg)
                     `;
                 });
             }
@@ -1114,48 +1123,52 @@
             positionPrizeTexts();
             window.addEventListener('resize', positionPrizeTexts);
             
-            // --- ¡LÓGICA DE GIRO (VUELTA A TU ORIGINAL) + SONIDO! ---
+            // --- ¡CORRECCIÓN 2! ---
+            // Esta función ahora gira la RUEDA para que aterrice
+            // en el ángulo 'transform' correcto.
             spinButton.addEventListener('click', () => {
                 spinButton.disabled = true;
                 spinButton.style.opacity = '0.5';
                 resultDisplay.style.display = 'none'; 
 
-                // --- AÑADIDO (del video) ---
                 // 1. Reproducir el sonido
                 if(ruletaSound) {
-                    ruletaSound.currentTime = 0; // Reinicia el sonido
+                    ruletaSound.currentTime = 0; 
                     ruletaSound.play();
                 }
-                // --- FIN AÑADIDO ---
 
-                // --- LÓGICA ORIGINAL (para aterrizar en el centro) ---
                 // 2. Elegir el premio PRIMERO
                 const prizeIndex = Math.floor(Math.random() * numPrizes);
                 const prize = prizes[prizeIndex];
                 
-                // 3. Calcular el ángulo del CENTRO de esa porción
-                const targetSliceCenterAngle = (prizeIndex * sliceAngle) + (sliceAngle / 2);
+                // 3. Calcular el centro del GRADIENTE (0deg = Derecha)
+                const gradientCenterAngle = (prizeIndex * sliceAngle) + (sliceAngle / 2); // ej: 30deg (Stickers)
                 
-                // 4. Calcular la rotación total para aterrizar EXACTAMENTE allí
-                const pointerOffset = 270; // Tu offset original para el puntero de ARRIBA
-                const minSpins = 5; // 5 vueltas mínimas
-                const totalRotation = (360 * minSpins) - targetSliceCenterAngle + pointerOffset;
+                // 4. Convertir al ángulo de TRANSFORM (0deg = Arriba)
+                // El puntero está en 0deg, así que este es nuestro objetivo
+                const transformTargetAngle = (90 - gradientCenterAngle + 360) % 360; // ej: 90 - 30 = 60deg
+
+                // 5. Calcular la rotación total
+                // (Usamos + transformTargetAngle para que la rotación % 360 sea el ángulo deseado)
+                const minSpins = 5; 
+                const totalRotation = (360 * minSpins) + transformTargetAngle;
                 
-                // 5. Aplicar la rotación precisa
+                // 6. Aplicar la rotación precisa
                 const spinDuration = 5000; // 5 segundos
                 wheel.style.transition = `transform ${spinDuration / 1000}s cubic-bezier(0.25, 1, 0.5, 1)`;
                 wheel.style.transform = `rotate(${totalRotation}deg)`;
 
-                // 6. Al terminar, mostrar el resultado y resetear
+                // 7. Al terminar, mostrar el resultado y resetear
                 setTimeout(() => {
                     wheel.style.transition = 'none';
-                    const normalizedRotation = totalRotation % 360;
+                    // Reseteamos al ángulo final (normalizado)
+                    const normalizedRotation = totalRotation % 360; 
                     wheel.style.transform = `rotate(${normalizedRotation}deg)`;
 
                     resultDisplay.textContent = `¡Ganaste: ${prize}!`;
                     resultDisplay.style.display = 'block';
                     
-                    // 7. Reactivar el botón
+                    // 8. Reactivar el botón
                     spinButton.disabled = false;
                     spinButton.style.opacity = '1';
 
