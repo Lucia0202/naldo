@@ -1073,7 +1073,7 @@
             const resultDisplay = document.getElementById('roulette-result');
             const prizeSlices = document.querySelectorAll('.prize-slice');
             
-            // TU CAMBIO: Nueva clave para guardar el giro
+            // Llave para guardar el giro
             const ruletaStorageKey = 'naldoRuletaGirada';
 
             // ¡ACTUALIZADO! Array de JS 100% SINCRONIZADO con el HTML
@@ -1093,7 +1093,7 @@
                 const container = document.getElementById('roulette-container');
                 const radius = container.offsetWidth / 2;
                 
-                // TU CAMBIO: Texto más cerca del centro (40%) para que no se corte
+                // Texto más cerca del centro (40%) para que no se corte
                 const isMobile = window.innerWidth <= 768;
                 const textDistance = isMobile ? (radius * 0.40) : (radius * 0.40); 
 
@@ -1117,7 +1117,7 @@
             positionPrizeTexts();
             window.addEventListener('resize', positionPrizeTexts);
 
-            // TU CAMBIO: Nueva función para deshabilitar el botón si ya giró
+            // Nueva función para deshabilitar el botón si ya giró
             function verificarEstadoRuleta() {
                 const yaGiro = localStorage.getItem(ruletaStorageKey);
                 if (yaGiro === 'true') {
@@ -1133,7 +1133,7 @@
                 spinButton.style.opacity = '0.5';
                 resultDisplay.style.display = 'none'; 
 
-                // TU CAMBIO: Guardar en memoria que ya giró
+                // Guardar en memoria que ya giró
                 localStorage.setItem(ruletaStorageKey, 'true');
 
                 const prizeIndex = Math.floor(Math.random() * numPrizes);
@@ -1142,8 +1142,8 @@
                 // Ángulo del centro de la porción ganadora
                 const targetSliceCenterAngle = (prizeIndex * sliceAngle) + (sliceAngle / 2);
                 
-                // Offset para que el puntero (arriba) sea el "cero"
-                const pointerOffset = 90; 
+                // ¡¡TU CAMBIO!! El offset es 270 (ARRIBA), no 90 (DERECHA)
+                const pointerOffset = 270; 
                 
                 const totalRotation = (360 * 5) - targetSliceCenterAngle + pointerOffset;
 
@@ -1158,10 +1158,7 @@
                     resultDisplay.textContent = `¡Ganaste: ${prize}!`;
                     resultDisplay.style.display = 'block';
                     
-                    // TU CAMBIO: Estas líneas que activan el botón fueron ELIMINADAS
-                    // spinButton.disabled = false;
-                    // spinButton.style.opacity = '1';
-
+                    // Botón PERMANECE deshabilitado
                 }, 5100); 
             });
 
@@ -1170,7 +1167,7 @@
             function mainFlow() {
                 const justScanned = checkUrlForVisit();
                 loadProgress();
-                verificarEstadoRuleta(); // TU CAMBIO: Revisa la ruleta al cargar
+                verificarEstadoRuleta(); // Revisa la ruleta al cargar
 
                 if (checkAllCompleted()) {
                     goToStep('step-form');
