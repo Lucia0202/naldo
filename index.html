@@ -1072,6 +1072,9 @@
             const wheel = document.getElementById('roulette-wheel');
             const resultDisplay = document.getElementById('roulette-result');
             const prizeSlices = document.querySelectorAll('.prize-slice');
+            
+            // TU CAMBIO: Nueva clave para guardar el giro
+            const ruletaStorageKey = 'naldoRuletaGirada';
 
             // ¡ACTUALIZADO! Array de JS 100% SINCRONIZADO con el HTML
             const prizes = [
@@ -1114,11 +1117,24 @@
             positionPrizeTexts();
             window.addEventListener('resize', positionPrizeTexts);
 
+            // TU CAMBIO: Nueva función para deshabilitar el botón si ya giró
+            function verificarEstadoRuleta() {
+                const yaGiro = localStorage.getItem(ruletaStorageKey);
+                if (yaGiro === 'true') {
+                    spinButton.disabled = true;
+                    spinButton.style.opacity = '0.5';
+                    spinButton.textContent = "¡YA GIRASTE!";
+                }
+            }
+
 
             spinButton.addEventListener('click', () => {
                 spinButton.disabled = true;
                 spinButton.style.opacity = '0.5';
                 resultDisplay.style.display = 'none'; 
+
+                // TU CAMBIO: Guardar en memoria que ya giró
+                localStorage.setItem(ruletaStorageKey, 'true');
 
                 const prizeIndex = Math.floor(Math.random() * numPrizes);
                 const prize = prizes[prizeIndex];
@@ -1141,8 +1157,11 @@
 
                     resultDisplay.textContent = `¡Ganaste: ${prize}!`;
                     resultDisplay.style.display = 'block';
-                    spinButton.disabled = false;
-                    spinButton.style.opacity = '1';
+                    
+                    // TU CAMBIO: Estas líneas que activan el botón fueron ELIMINADAS
+                    // spinButton.disabled = false;
+                    // spinButton.style.opacity = '1';
+
                 }, 5100); 
             });
 
@@ -1151,6 +1170,7 @@
             function mainFlow() {
                 const justScanned = checkUrlForVisit();
                 loadProgress();
+                verificarEstadoRuleta(); // TU CAMBIO: Revisa la ruleta al cargar
 
                 if (checkAllCompleted()) {
                     goToStep('step-form');
