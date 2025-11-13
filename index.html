@@ -269,8 +269,6 @@
             fill: var(--naldo-white); 
         }
         
-        } /* Llave de cierre corregida */
-
         /* Estilo específico para el ícono de regalo (contorno) */
         .icon-wrapper .icon-regalo {
             fill: none; 
@@ -456,7 +454,8 @@
             border-radius: 50%;
             overflow: hidden; 
             position: relative;
-            transition: transform 5s cubic-bezier(0.25, 1, 0.5, 1);
+            /* LA TRANSICIÓN SE APLICA DESDE JAVASCRIPT */
+            /* transition: transform 5s cubic-bezier(0.25, 1, 0.5, 1); */
             /* Conic gradient con los 3 nuevos colores */
             background: conic-gradient(
                 var(--ruleta-color-1) 0deg 60deg,  /* Rojo Oscuro */
@@ -956,6 +955,7 @@
         <button id="spin-button">¡GIRAR!</button>
         <div id="roulette-result"></div>
 
+        <audio id="ruleta-sound" src="ruleta.mp3" style="display:none;"></audio>
         <img src="logo-blanco.png" alt="Naldo Logo" class="logo">
     </section>
 
@@ -1068,11 +1068,14 @@
             });
 
 
-            // --- Lógica de la Ruleta (Paso 7) ---
+            // =================================================================
+            // --- INICIO: LÓGICA DE RULETA (PASO 7) - ACTUALIZADA CON VIDEO ---
+            // =================================================================
             const spinButton = document.getElementById('spin-button');
             const wheel = document.getElementById('roulette-wheel');
             const resultDisplay = document.getElementById('roulette-result');
             const prizeSlices = document.querySelectorAll('.prize-slice');
+            const ruletaSound = document.getElementById('ruleta-sound'); // ÁVariable para el sonido
 
             // ¡Array de JS 100% SINCRONIZADO con el HTML!
             const prizes = [
@@ -1086,12 +1089,11 @@
             const numPrizes = prizes.length;
             const sliceAngle = 360 / numPrizes; // 60 grados
 
-            // Función para posicionar los textos
+            // Función para posicionar los textos (ESTO ES DE TU DISEÑO Y SE MANTIENE)
             function positionPrizeTexts() {
                 const container = document.getElementById('roulette-container');
                 const radius = container.offsetWidth / 2;
                 
-                // Texto más cerca del centro (40%) para que no se corte
                 const isMobile = window.innerWidth <= 768;
                 const textDistance = isMobile ? (radius * 0.40) : (radius * 0.40); 
 
@@ -1115,39 +1117,63 @@
             positionPrizeTexts();
             window.addEventListener('resize', positionPrizeTexts);
             
+            // --- ¡NUEVA LÓGICA DE GIRO (BASADA EN EL VIDEO)! ---
             spinButton.addEventListener('click', () => {
                 spinButton.disabled = true;
                 spinButton.style.opacity = '0.5';
                 resultDisplay.style.display = 'none'; 
 
-                const prizeIndex = Math.floor(Math.random() * numPrizes);
-                const prize = prizes[prizeIndex];
-                
-                // Ángulo del centro de la porción ganadora
-                const targetSliceCenterAngle = (prizeIndex * sliceAngle) + (sliceAngle / 2);
-                
-                // ¡¡¡LA CORRECCIÓN!!! El puntero está ARRIBA (270deg)
-                const pointerOffset = 270; 
-                
-                const totalRotation = (360 * 5) - targetSliceCenterAngle + pointerOffset;
+                // 1. Funcionalidad del video: Reproducir sonido
+                if(ruletaSound) {
+                    ruletaSound.currentTime = 0; // Reinicia el sonido
+                    ruletaSound.play();
+                }
 
-                wheel.style.transition = 'transform 5s cubic-bezier(0.25, 1, 0.5, 1)';
+                // 2. Funcionalidad del video: Girar una cantidad aleatoria
+                // (Mezclado con tu lógica de 5 giros mínimos para una mejor experiencia)
+                const minSpins = 5;
+                const randomExtraRotation = Math.random() * 3600; // Entre 0 y 10 giros extra
+                const totalRotation = (minSpins * 360) + randomExtraRotation;
+                const spinDuration = 5000; // 5 segundos
+
+                // 3. Funcionalidad del video: Aplicar la rotación y la transición
+                wheel.style.transition = `transform ${spinDuration / 1000}s cubic-bezier(0.25, 1, 0.5, 1)`;
                 wheel.style.transform = `rotate(${totalRotation}deg)`;
 
+                // 4. Funcionalidad del video: Calcular el ganador DESPUÉS del giro
                 setTimeout(() => {
+                    // 5. Calcular el ángulo final (lógica del video: módulo 360)
+                    const finalAngle = totalRotation % 360;
+
+                    // 6. Mantener tu "offset" del puntero. Tu JS original usaba 270.
+                    // Esto define la "línea" donde se lee el premio.
+                    const pointerOffset = 270; 
+                    
+                    // 7. Calcular el ángulo del premio que aterrizó en el puntero
+                    const winningAngle = (360 - finalAngle + pointerOffset) % 360;
+
+                    // 8. Calcular el índice del premio basado en tu diseño de 60 grados
+                    const prizeIndex = Math.floor(winningAngle / sliceAngle);
+                    const prize = prizes[prizeIndex];
+
+                    // 9. Resetear la rueda para el próximo giro (lógica del video)
                     wheel.style.transition = 'none';
-                    const normalizedRotation = totalRotation % 360;
+                    const normalizedRotation = finalAngle; // El nuevo "cero" es donde quedó
                     wheel.style.transform = `rotate(${normalizedRotation}deg)`;
 
+                    // 10. Mostrar resultado
                     resultDisplay.textContent = `¡Ganaste: ${prize}!`;
                     resultDisplay.style.display = 'block';
                     
-                    // ¡El botón se VUELVE a activar!
+                    // 11. Reactivar el botón
                     spinButton.disabled = false;
                     spinButton.style.opacity = '1';
 
-                }, 5100); 
+                }, spinDuration + 100); // 5100 (igual que tu código original)
             });
+            // =================================================================
+            // --- FIN: LÓGICA DE RULETA (PASO 7) ---
+            // =================================================================
 
 
             // --- CONTROLADOR PRINCIPAL (El flujo de la App) ---
