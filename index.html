@@ -14,8 +14,7 @@
         /* --- INICIO: Definición de tu fuente TT Norms --- */
         @font-face {
             font-family: 'TTNorms'; 
-            /* TU ÚNICO CAMBIO: El "?v=2" para forzar al navegador a recargar */
-            src: url('TTNormsPro-ExtraBold.woff2?v=2') format('woff2'); 
+            src: url('TTNormsPro-ExtraBold.woff2?v=2') format('woff2'); /* Cache Buster */
             font-weight: normal;
             font-style: normal;
         }
@@ -1073,10 +1072,8 @@
             const wheel = document.getElementById('roulette-wheel');
             const resultDisplay = document.getElementById('roulette-result');
             const prizeSlices = document.querySelectorAll('.prize-slice');
-            
-            // TU CAMBIO: ¡Eliminada la clave de "un solo giro"!
 
-            // ¡ACTUALIZADO! Array de JS 100% SINCRONIZADO con el HTML
+            // ¡Array de JS 100% SINCRONIZADO con el HTML!
             const prizes = [
                 "Stickers",
                 "20%OFF en cámaras",
@@ -1093,7 +1090,7 @@
                 const container = document.getElementById('roulette-container');
                 const radius = container.offsetWidth / 2;
                 
-                // TU CAMBIO: Texto más cerca del centro (40%) para que no se corte
+                // Texto más cerca del centro (40%) para que no se corte
                 const isMobile = window.innerWidth <= 768;
                 const textDistance = isMobile ? (radius * 0.40) : (radius * 0.40); 
 
@@ -1117,14 +1114,11 @@
             positionPrizeTexts();
             window.addEventListener('resize', positionPrizeTexts);
 
-            // TU CAMBIO: ¡Función de verificar giro ELIMINADA!
             
             spinButton.addEventListener('click', () => {
                 spinButton.disabled = true;
                 spinButton.style.opacity = '0.5';
                 resultDisplay.style.display = 'none'; 
-
-                // TU CAMBIO: ¡Línea de guardar giro ELIMINADA!
 
                 const prizeIndex = Math.floor(Math.random() * numPrizes);
                 const prize = prizes[prizeIndex];
@@ -1132,8 +1126,8 @@
                 // Ángulo del centro de la porción ganadora
                 const targetSliceCenterAngle = (prizeIndex * sliceAngle) + (sliceAngle / 2);
                 
-                // ¡¡TU CAMBIO!! El offset es 270 (ARRIBA), no 90 (DERECHA)
-                const pointerOffset = 270; 
+                // ¡¡¡LA CORRECCIÓN!!! El puntero está ARRIBA (90deg), NO ABAJO (270deg)
+                const pointerOffset = 90; 
                 
                 const totalRotation = (360 * 5) - targetSliceCenterAngle + pointerOffset;
 
@@ -1148,7 +1142,7 @@
                     resultDisplay.textContent = `¡Ganaste: ${prize}!`;
                     resultDisplay.style.display = 'block';
                     
-                    // TU CAMBIO: ¡El botón se VUELVE a activar!
+                    // ¡El botón se VUELVE a activar!
                     spinButton.disabled = false;
                     spinButton.style.opacity = '1';
 
@@ -1160,7 +1154,7 @@
             function mainFlow() {
                 const justScanned = checkUrlForVisit();
                 loadProgress();
-                // TU CAMBIO: ¡Llamada a verificar giro ELIMINADA!
+                // No hay que verificar el estado de la ruleta
 
                 if (checkAllCompleted()) {
                     goToStep('step-form');
