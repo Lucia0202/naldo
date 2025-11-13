@@ -14,7 +14,8 @@
         /* --- INICIO: Definición de tu fuente TT Norms --- */
         @font-face {
             font-family: 'TTNorms'; 
-            src: url('TTNormsPro-ExtraBold.woff2') format('woff2'); 
+            /* TU ÚNICO CAMBIO: El "?v=2" para forzar al navegador a recargar */
+            src: url('TTNormsPro-ExtraBold.woff2?v=2') format('woff2'); 
             font-weight: normal;
             font-style: normal;
         }
@@ -1074,7 +1075,6 @@
             const prizeSlices = document.querySelectorAll('.prize-slice');
             
             // TU CAMBIO: ¡Eliminada la clave de "un solo giro"!
-            // const ruletaStorageKey = 'naldoRuletaGirada'; 
 
             // ¡ACTUALIZADO! Array de JS 100% SINCRONIZADO con el HTML
             const prizes = [
@@ -1093,7 +1093,7 @@
                 const container = document.getElementById('roulette-container');
                 const radius = container.offsetWidth / 2;
                 
-                // Texto más cerca del centro (40%) para que no se corte
+                // TU CAMBIO: Texto más cerca del centro (40%) para que no se corte
                 const isMobile = window.innerWidth <= 768;
                 const textDistance = isMobile ? (radius * 0.40) : (radius * 0.40); 
 
@@ -1132,8 +1132,8 @@
                 // Ángulo del centro de la porción ganadora
                 const targetSliceCenterAngle = (prizeIndex * sliceAngle) + (sliceAngle / 2);
                 
-                // Offset para que el puntero (arriba) sea el "cero"
-                const pointerOffset = 270; // 270 grados es ARRIBA
+                // ¡¡TU CAMBIO!! El offset es 270 (ARRIBA), no 90 (DERECHA)
+                const pointerOffset = 270; 
                 
                 const totalRotation = (360 * 5) - targetSliceCenterAngle + pointerOffset;
 
