@@ -14,8 +14,8 @@
         /* --- INICIO: Definición de tu fuente TT Norms --- */
         @font-face {
             font-family: 'TTNorms'; 
-            /* Cache buster v5 para forzar la recarga del JS */
-            src: url('TTNormsPro-ExtraBold.woff2?v=5') format('woff2'); 
+            /* TU CAMBIO: Cache buster v3 para forzar la recarga del JS */
+            src: url('TTNormsPro-ExtraBold.woff2?v=3') format('woff2'); 
             font-weight: normal;
             font-style: normal;
         }
@@ -457,7 +457,15 @@
             overflow: hidden; 
             position: relative;
             transition: transform 5s cubic-bezier(0.25, 1, 0.5, 1);
-            /* ¡YA NO HAY CONIC-GRADIENT! */
+            /* Conic gradient con los 3 nuevos colores */
+            background: conic-gradient(
+                var(--ruleta-color-1) 0deg 60deg,  /* Rojo Oscuro */
+                var(--ruleta-color-2) 60deg 120deg, /* Negro */
+                var(--ruleta-color-3) 120deg 180deg, /* Blanco */
+                var(--ruleta-color-1) 180deg 240deg, /* Rojo Oscuro */
+                var(--ruleta-color-2) 240deg 300deg, /* Negro */
+                var(--ruleta-color-3) 300deg 360deg /* Blanco */
+            );
         }
         
         .prize-list-wheel {
@@ -471,14 +479,13 @@
             border-radius: 50%;
         }
         
-        /* TU CAMBIO: Cada slice AHORA tiene su propio color */
         .prize-slice {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            /* Slice de 60 grados (360 / 6) */
+            /* Esto es un "slice" de 60 grados */
             clip-path: polygon(50% 50%, 50% 0, 84.6% 25%); 
             transform-origin: center center;
             display: flex;
@@ -502,14 +509,6 @@
         /* Colores y rotación de los 6 slices (60deg cada uno) */
         /* La rotación la calcula el JavaScript */
         
-        /* TU CAMBIO: Colores de fondo aplicados a cada slice */
-        .prize-slice:nth-child(1) { background: var(--ruleta-color-1); } /* Rojo Oscuro */
-        .prize-slice:nth-child(2) { background: var(--ruleta-color-2); } /* Negro */
-        .prize-slice:nth-child(3) { background: var(--ruleta-color-3); } /* Blanco */
-        .prize-slice:nth-child(4) { background: var(--ruleta-color-1); } /* Rojo Oscuro */
-        .prize-slice:nth-child(5) { background: var(--ruleta-color-2); } /* Negro */
-        .prize-slice:nth-child(6) { background: var(--ruleta-color-3); } /* Blanco */
-
         /* Colores del texto según la nueva paleta */
         .prize-slice:nth-child(1) .text-wrapper, /* Sobre Rojo Oscuro */
         .prize-slice:nth-child(2) .text-wrapper, /* Sobre Negro */
