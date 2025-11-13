@@ -14,7 +14,8 @@
         /* --- INICIO: Definición de tu fuente TT Norms --- */
         @font-face {
             font-family: 'TTNorms'; 
-            src: url('TTNormsPro-ExtraBold.woff2?v=2') format('woff2'); /* Cache Buster */
+            /* TU CAMBIO: Cache buster v3 */
+            src: url('TTNormsPro-ExtraBold.woff2?v=3') format('woff2'); 
             font-weight: normal;
             font-style: normal;
         }
@@ -931,7 +932,7 @@
             <li>• Dos parrillas Tromen con tapa 95 cm.</li>
             <li>• Dos secadores de pelo Pearl multi styler.</li>
         </ul>
-        <img src="logo-negro.png" alt="Naldo Logo" class="logo">
+        <img src="logo-negro.png" alt="Naldo Logo" classs="logo">
     </section>
 
     <section id="step-roulette" class="step">
@@ -1072,7 +1073,7 @@
             const wheel = document.getElementById('roulette-wheel');
             const resultDisplay = document.getElementById('roulette-result');
             const prizeSlices = document.querySelectorAll('.prize-slice');
-            
+
             // ¡Array de JS 100% SINCRONIZADO con el HTML!
             const prizes = [
                 "Stickers",
@@ -1125,7 +1126,7 @@
                 // Ángulo del centro de la porción ganadora
                 const targetSliceCenterAngle = (prizeIndex * sliceAngle) + (sliceAngle / 2);
                 
-                // ¡¡¡LA CORRECCIÓN!!! El puntero está ARRIBA (270deg), NO ABAJO (90deg)
+                // ¡¡¡LA CORRECCIÓN!!! El puntero está ARRIBA (270deg)
                 const pointerOffset = 270; 
                 
                 const totalRotation = (360 * 5) - targetSliceCenterAngle + pointerOffset;
