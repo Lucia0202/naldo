@@ -14,8 +14,8 @@
         /* --- INICIO: Definición de tu fuente TT Norms --- */
         @font-face {
             font-family: 'TTNorms'; 
-            /* TU CAMBIO: Cache buster v3 */
-            src: url('TTNormsPro-ExtraBold.woff2?v=3') format('woff2'); 
+            /* TU CAMBIO: Cache buster v4 para forzar la recarga del JS */
+            src: url('TTNormsPro-ExtraBold.woff2?v=4') format('woff2'); 
             font-weight: normal;
             font-style: normal;
         }
@@ -723,6 +723,7 @@
                 margin-right: auto; /* Centrado */
                 margin-top: 5vh; /* Espacio superior */
                 margin-bottom: 15vh; /* Espacio Safari */
+                width: 100px; /* ¡TU CORRECCIÓN DE LOGO GRANDE! */
             }
 
             /* 5. SECCIÓN FORMULARIO */
@@ -754,6 +755,7 @@
                 margin-right: auto;
                 margin-top: 5vh; /* Espacio superior */
                 margin-bottom: 15vh; /* Espacio Safari */
+                width: 100px; /* ¡TU CORRECCIÓN DE LOGO GRANDE! */
             }
             
             /* 6. SECCIÓN RULETA */
@@ -790,6 +792,7 @@
                 margin-right: auto;
                 margin-top: 5vh; /* Espacio superior */
                 margin-bottom: 15vh; /* Espacio Safari */
+                width: 100px; /* ¡TU CORRECCIÓN DE LOGO GRANDE! */
             }
             
         } /* --- FIN DEL BLOQUE @MEDIA (CELULARES) --- */
@@ -932,7 +935,7 @@
             <li>• Dos parrillas Tromen con tapa 95 cm.</li>
             <li>• Dos secadores de pelo Pearl multi styler.</li>
         </ul>
-        <img src="logo-negro.png" alt="Naldo Logo" classs="logo">
+        <img src="logo-negro.png" alt="Naldo Logo" class="logo">
     </section>
 
     <section id="step-roulette" class="step">
