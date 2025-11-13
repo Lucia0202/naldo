@@ -1072,7 +1072,7 @@
             const wheel = document.getElementById('roulette-wheel');
             const resultDisplay = document.getElementById('roulette-result');
             const prizeSlices = document.querySelectorAll('.prize-slice');
-
+            
             // ¡Array de JS 100% SINCRONIZADO con el HTML!
             const prizes = [
                 "Stickers",
@@ -1113,7 +1113,6 @@
 
             positionPrizeTexts();
             window.addEventListener('resize', positionPrizeTexts);
-
             
             spinButton.addEventListener('click', () => {
                 spinButton.disabled = true;
@@ -1126,8 +1125,8 @@
                 // Ángulo del centro de la porción ganadora
                 const targetSliceCenterAngle = (prizeIndex * sliceAngle) + (sliceAngle / 2);
                 
-                // ¡¡¡LA CORRECCIÓN!!! El puntero está ARRIBA (90deg), NO ABAJO (270deg)
-                const pointerOffset = 90; 
+                // ¡¡¡LA CORRECCIÓN!!! El puntero está ARRIBA (270deg), NO ABAJO (90deg)
+                const pointerOffset = 270; 
                 
                 const totalRotation = (360 * 5) - targetSliceCenterAngle + pointerOffset;
 
