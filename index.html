@@ -1073,8 +1073,8 @@
             const resultDisplay = document.getElementById('roulette-result');
             const prizeSlices = document.querySelectorAll('.prize-slice');
             
-            // Llave para guardar el giro
-            const ruletaStorageKey = 'naldoRuletaGirada';
+            // TU CAMBIO: ¡Eliminada la clave de "un solo giro"!
+            // const ruletaStorageKey = 'naldoRuletaGirada'; 
 
             // ¡ACTUALIZADO! Array de JS 100% SINCRONIZADO con el HTML
             const prizes = [
@@ -1117,24 +1117,14 @@
             positionPrizeTexts();
             window.addEventListener('resize', positionPrizeTexts);
 
-            // Nueva función para deshabilitar el botón si ya giró
-            function verificarEstadoRuleta() {
-                const yaGiro = localStorage.getItem(ruletaStorageKey);
-                if (yaGiro === 'true') {
-                    spinButton.disabled = true;
-                    spinButton.style.opacity = '0.5';
-                    spinButton.textContent = "¡YA GIRASTE!";
-                }
-            }
-
-
+            // TU CAMBIO: ¡Función de verificar giro ELIMINADA!
+            
             spinButton.addEventListener('click', () => {
                 spinButton.disabled = true;
                 spinButton.style.opacity = '0.5';
                 resultDisplay.style.display = 'none'; 
 
-                // Guardar en memoria que ya giró
-                localStorage.setItem(ruletaStorageKey, 'true');
+                // TU CAMBIO: ¡Línea de guardar giro ELIMINADA!
 
                 const prizeIndex = Math.floor(Math.random() * numPrizes);
                 const prize = prizes[prizeIndex];
@@ -1142,8 +1132,8 @@
                 // Ángulo del centro de la porción ganadora
                 const targetSliceCenterAngle = (prizeIndex * sliceAngle) + (sliceAngle / 2);
                 
-                // ¡¡TU CAMBIO!! El offset es 270 (ARRIBA), no 90 (DERECHA)
-                const pointerOffset = 270; 
+                // Offset para que el puntero (arriba) sea el "cero"
+                const pointerOffset = 270; // 270 grados es ARRIBA
                 
                 const totalRotation = (360 * 5) - targetSliceCenterAngle + pointerOffset;
 
@@ -1158,7 +1148,10 @@
                     resultDisplay.textContent = `¡Ganaste: ${prize}!`;
                     resultDisplay.style.display = 'block';
                     
-                    // Botón PERMANECE deshabilitado
+                    // TU CAMBIO: ¡El botón se VUELVE a activar!
+                    spinButton.disabled = false;
+                    spinButton.style.opacity = '1';
+
                 }, 5100); 
             });
 
@@ -1167,7 +1160,7 @@
             function mainFlow() {
                 const justScanned = checkUrlForVisit();
                 loadProgress();
-                verificarEstadoRuleta(); // Revisa la ruleta al cargar
+                // TU CAMBIO: ¡Llamada a verificar giro ELIMINADA!
 
                 if (checkAllCompleted()) {
                     goToStep('step-form');
