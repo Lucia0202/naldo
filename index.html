@@ -14,8 +14,8 @@
         /* --- INICIO: Definición de tu fuente TT Norms --- */
         @font-face {
             font-family: 'TTNorms'; 
-            /* TU CAMBIO: Cache buster v3 para forzar la recarga del JS */
-            src: url('TTNormsPro-ExtraBold.woff2?v=3') format('woff2'); 
+            /* TU CAMBIO: Cache buster v4 para forzar la recarga del JS */
+            src: url('TTNormsPro-ExtraBold.woff2?v=4') format('woff2'); 
             font-weight: normal;
             font-style: normal;
         }
@@ -269,6 +269,8 @@
             fill: var(--naldo-white); 
         }
         
+        } /* Llave de cierre corregida */
+
         /* Estilo específico para el ícono de regalo (contorno) */
         .icon-wrapper .icon-regalo {
             fill: none; 
@@ -454,8 +456,8 @@
             border-radius: 50%;
             overflow: hidden; 
             position: relative;
-            /* LA TRANSICIÓN SE APLICA DESDE JAVASCRIPT */
-            /* conic-gradient (0deg = Derecha) */
+            transition: transform 5s cubic-bezier(0.25, 1, 0.5, 1);
+            /* Conic gradient con los 3 nuevos colores */
             background: conic-gradient(
                 var(--ruleta-color-1) 0deg 60deg,  /* Rojo Oscuro */
                 var(--ruleta-color-2) 60deg 120deg, /* Negro */
@@ -475,9 +477,6 @@
             position: absolute; 
             top: 0; left: 0;
             border-radius: 50%;
-            /* El JS rota la rueda (con el gradiente), */
-            /* así que el contenedor de texto debe girar con ella */
-            /* ¡NO, EL SCRIPT ROTA LOS 'li' INDIVIDUALMENTE! */
         }
         
         .prize-slice {
@@ -486,9 +485,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* Clip-path (0deg = Arriba) */
+            /* Esto es un "slice" de 60 grados */
             clip-path: polygon(50% 50%, 50% 0, 84.6% 25%); 
-            /* transform-origin (0deg = Arriba) */
             transform-origin: center center;
             display: flex;
             justify-content: center;
@@ -506,24 +504,27 @@
             width: 90px; /* Ancho fijo para el texto */
             transform-origin: center center;
             /* La posición exacta la calcula el JavaScript */
+            display: none; /* TU CAMBIO: Oculta el texto por defecto */
         }
 
+        /* Colores y rotación de los 6 slices (60deg cada uno) */
+        /* La rotación la calcula el JavaScript */
+        
         /* Colores del texto según la nueva paleta */
-        .prize-slice:nth-child(1) .text-wrapper, /* Sobre Rojo Oscuro (Gradiente 0-60)*/
-        .prize-slice:nth-child(2) .text-wrapper, /* Sobre Negro (Gradiente 60-120) */
-        .prize-slice:nth-child(4) .text-wrapper, /* Sobre Rojo Oscuro (Gradiente 180-240) */
-        .prize-slice:nth-child(5) .text-wrapper { /* Sobre Negro (Gradiente 240-300) */
+        .prize-slice:nth-child(1) .text-wrapper, /* Sobre Rojo Oscuro */
+        .prize-slice:nth-child(2) .text-wrapper, /* Sobre Negro */
+        .prize-slice:nth-child(4) .text-wrapper, /* Sobre Rojo Oscuro */
+        .prize-slice:nth-child(5) .text-wrapper { /* Sobre Negro */
             color: var(--naldo-white);
         }
-        .prize-slice:nth-child(3) .text-wrapper, /* Sobre Blanco (Gradiente 120-180) */
-        .prize-slice:nth-child(6) .text-wrapper { /* Sobre Blanco (Gradiente 300-360) */
+        .prize-slice:nth-child(3) .text-wrapper, /* Sobre Blanco */
+        .prize-slice:nth-child(6) .text-wrapper { /* Sobre Blanco */
             color: var(--naldo-black);
         }
         
 
         #roulette-pointer {
             position: absolute;
-            /* Puntero está ARRIBA (en 0deg del eje 'transform') */
             top: -20px;
             left: 50%;
             transform: translateX(-50%);
@@ -956,7 +957,6 @@
         <button id="spin-button">¡GIRAR!</button>
         <div id="roulette-result"></div>
 
-        <audio id="ruleta-sound" src="ruleta.mp3" style="display:none;"></audio>
         <img src="logo-blanco.png" alt="Naldo Logo" class="logo">
     </section>
 
@@ -1069,15 +1069,13 @@
             });
 
 
-            // =================================================================
-            // --- INICIO: LÓGICA DE RULETA (PASO 7) - CORREGIDA CON DESFASE ---
-            // =================================================================
+            // --- Lógica de la Ruleta (Paso 7) ---
             const spinButton = document.getElementById('spin-button');
             const wheel = document.getElementById('roulette-wheel');
             const resultDisplay = document.getElementById('roulette-result');
             const prizeSlices = document.querySelectorAll('.prize-slice');
-            const ruletaSound = document.getElementById('ruleta-sound'); 
 
+            // ¡Array de JS 100% SINCRONIZADO con el HTML!
             const prizes = [
                 "Stickers",
                 "20%OFF en cámaras",
@@ -1089,33 +1087,28 @@
             const numPrizes = prizes.length;
             const sliceAngle = 360 / numPrizes; // 60 grados
 
-            // --- ¡CORRECCIÓN 1! ---
-            // Esta función ahora alinea el TEXTO con el GRADIENTE,
-            // compensando el desfase de 90 grados.
+            // Función para posicionar los textos
             function positionPrizeTexts() {
                 const container = document.getElementById('roulette-container');
                 const radius = container.offsetWidth / 2;
                 
+                // Texto más cerca del centro (40%) para que no se corte
                 const isMobile = window.innerWidth <= 768;
                 const textDistance = isMobile ? (radius * 0.40) : (radius * 0.40); 
 
                 prizeSlices.forEach((slice, index) => {
                     const textWrapper = slice.querySelector('.text-wrapper');
                     
-                    // 1. Centro del gradiente (0deg = Derecha)
-                    const gradientCenterAngle = (index * sliceAngle) + (sliceAngle / 2); // ej: 30, 90, 150...
+                    // 1. Calcular el ángulo del centro de este slice
+                    const angle = (index * sliceAngle) + (sliceAngle / 2);
                     
-                    // 2. Convertir a ángulo de 'transform' (0deg = Arriba)
-                    // (90 - 30 = 60), (90 - 90 = 0), (90 - 150 = -60)
-                    const transformAngle = 90 - gradientCenterAngle; 
+                    // 2. Girar el slice a su posición en la rueda
+                    slice.style.transform = `rotate(${angle}deg)`;
 
-                    // 3. Girar el 'slice' (que es solo el contenedor del texto)
-                    slice.style.transform = `rotate(${transformAngle}deg)`;
-
-                    // 4. Posicionar y rotar el texto para que quede derecho
+                    // 3. Posicionar y rotar el texto dentro de cada slice
                     textWrapper.style.transform = `
                         translateY(-${textDistance}px) 
-                        rotate(${-transformAngle}deg)
+                        rotate(-${angle}deg)
                     `;
                 });
             }
@@ -1123,66 +1116,46 @@
             positionPrizeTexts();
             window.addEventListener('resize', positionPrizeTexts);
             
-            // --- ¡CORRECCIÓN 2! ---
-            // Esta función ahora gira la RUEDA para que aterrice
-            // en el ángulo 'transform' correcto.
             spinButton.addEventListener('click', () => {
                 spinButton.disabled = true;
                 spinButton.style.opacity = '0.5';
                 resultDisplay.style.display = 'none'; 
 
-                // 1. Reproducir el sonido
-                if(ruletaSound) {
-                    ruletaSound.currentTime = 0; 
-                    ruletaSound.play();
-                }
-
-                // 2. Elegir el premio PRIMERO
                 const prizeIndex = Math.floor(Math.random() * numPrizes);
                 const prize = prizes[prizeIndex];
                 
-                // 3. Calcular el centro del GRADIENTE (0deg = Derecha)
-                const gradientCenterAngle = (prizeIndex * sliceAngle) + (sliceAngle / 2); // ej: 30deg (Stickers)
+                // Ángulo del centro de la porción ganadora
+                const targetSliceCenterAngle = (prizeIndex * sliceAngle) + (sliceAngle / 2);
                 
-                // 4. Convertir al ángulo de TRANSFORM (0deg = Arriba)
-                // El puntero está en 0deg, así que este es nuestro objetivo
-                const transformTargetAngle = (90 - gradientCenterAngle + 360) % 360; // ej: 90 - 30 = 60deg
+                // ¡¡¡LA CORRECCIÓN!!! El puntero está ARRIBA (270deg)
+                const pointerOffset = 270; 
+                
+                const totalRotation = (360 * 5) - targetSliceCenterAngle + pointerOffset;
 
-                // 5. Calcular la rotación total
-                // (Usamos + transformTargetAngle para que la rotación % 360 sea el ángulo deseado)
-                const minSpins = 5; 
-                const totalRotation = (360 * minSpins) + transformTargetAngle;
-                
-                // 6. Aplicar la rotación precisa
-                const spinDuration = 5000; // 5 segundos
-                wheel.style.transition = `transform ${spinDuration / 1000}s cubic-bezier(0.25, 1, 0.5, 1)`;
+                wheel.style.transition = 'transform 5s cubic-bezier(0.25, 1, 0.5, 1)';
                 wheel.style.transform = `rotate(${totalRotation}deg)`;
 
-                // 7. Al terminar, mostrar el resultado y resetear
                 setTimeout(() => {
                     wheel.style.transition = 'none';
-                    // Reseteamos al ángulo final (normalizado)
-                    const normalizedRotation = totalRotation % 360; 
+                    const normalizedRotation = totalRotation % 360;
                     wheel.style.transform = `rotate(${normalizedRotation}deg)`;
 
                     resultDisplay.textContent = `¡Ganaste: ${prize}!`;
                     resultDisplay.style.display = 'block';
                     
-                    // 8. Reactivar el botón
+                    // ¡El botón se VUELVE a activar!
                     spinButton.disabled = false;
                     spinButton.style.opacity = '1';
 
-                }, spinDuration + 100); // 5100
+                }, 5100); 
             });
-            // =================================================================
-            // --- FIN: LÓGICA DE RULETA (PASO 7) ---
-            // =================================================================
 
 
             // --- CONTROLADOR PRINCIPAL (El flujo de la App) ---
             function mainFlow() {
                 const justScanned = checkUrlForVisit();
                 loadProgress();
+                // No hay que verificar el estado de la ruleta
 
                 if (checkAllCompleted()) {
                     goToStep('step-form');
@@ -1206,5 +1179,6 @@
             mainFlow();
         });
     </script>
-    </body>
+
+</body>
 </html>
